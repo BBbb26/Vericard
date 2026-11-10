@@ -1,0 +1,323 @@
+{
+  "schemaVersion": 1,
+  "events": [
+    {
+      "id": "342b85d8-1ed8-4f18-9c92-57b094ef925d",
+      "action": "observed",
+      "issueId": "[\"image:225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4\",null,\"refund\"]",
+      "packageId": "image:225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+      "analysisId": "ab10e275-2589-413b-98dc-760778e373a5",
+      "at": "2026-11-10T09:16:00.917Z",
+      "fingerprint": "e8d4b8ac35df9a9b8dfad09c937afa9125506a8ee4c07c2fc4880d50a9d82844",
+      "snapshot": {
+        "id": "[\"image:225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4\",null,\"refund\"]",
+        "packageId": "image:225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+        "version": null,
+        "offerName": "10次卡",
+        "topic": "refund",
+        "title": "退款条件与手续费",
+        "label": "适用条件待核对",
+        "summary": "手续费和退款条件要结合核销状态、已使用部分与适用版本核对。",
+        "impact": "这会影响购买后的退款损失，当前比较按购买支出展示。",
+        "question": "请分别说明未核销、已核销和部分使用后的退款条件，手续费按什么基数计算？",
+        "ruleIds": [
+          "R04",
+          "R09"
+        ],
+        "evidence": [
+          {
+            "key": "fee",
+            "value": "30% 手续费",
+            "version": null,
+            "scope": "适用范围未标注",
+            "scopeKnown": false,
+            "phase": null,
+            "day": null,
+            "sources": [
+              {
+                "imageId": "6db2ead20a17de8e4ee5106cc00019912625a49ad5fbcfabeab7333f9728ecc4",
+                "url": "/images/6db2ead20a17de8e4ee5106cc00019912625a49ad5fbcfabeab7333f9728ecc4.png",
+                "quote": "无 需 求 等 ） ， 需 缴 纳 未 消 费 金 额 30 ％ 的 手 续 费"
+              },
+              {
+                "imageId": "750867263d51250d24726bbb0e21b31567601048ab3ed2b7418841aec6e10c36",
+                "url": "/images/750867263d51250d24726bbb0e21b31567601048ab3ed2b7418841aec6e10c36.png",
+                "quote": "无 需 求 等 ） ， 需 缴 纳 未 消 费 金 额 30 ％ 的 手 续 费"
+              }
+            ]
+          },
+          {
+            "key": "refund",
+            "value": "部分未使用可退",
+            "version": null,
+            "scope": "部分使用或剩余权益",
+            "scopeKnown": true,
+            "phase": "部分使用或剩余权益",
+            "day": null,
+            "sources": [
+              {
+                "imageId": "6db2ead20a17de8e4ee5106cc00019912625a49ad5fbcfabeab7333f9728ecc4",
+                "url": "/images/6db2ead20a17de8e4ee5106cc00019912625a49ad5fbcfabeab7333f9728ecc4.png",
+                "quote": "〖 部 分 退 〗 部 分 未 使 用 可 退 还 余 额 ， 余 额 为 用 户 实 付"
+              },
+              {
+                "imageId": "750867263d51250d24726bbb0e21b31567601048ab3ed2b7418841aec6e10c36",
+                "url": "/images/750867263d51250d24726bbb0e21b31567601048ab3ed2b7418841aec6e10c36.png",
+                "quote": "〖 部 分 退 〗 部 分 未 使 用 可 退 还 余 额 ， 余 额 为 用 户 实 付"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "ab76b643-37cc-44a0-b234-938c3df21f5c",
+      "action": "observed",
+      "issueId": "[\"image:225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4\",null,\"stacking\"]",
+      "packageId": "image:225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+      "analysisId": "ab10e275-2589-413b-98dc-760778e373a5",
+      "at": "2026-11-10T09:16:00.917Z",
+      "fingerprint": "03b658153677a7155b84e7db9313208d63690592173704b630272f735ceebd74",
+      "snapshot": {
+        "id": "[\"image:225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4\",null,\"stacking\"]",
+        "packageId": "image:225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+        "version": null,
+        "offerName": "10次卡",
+        "topic": "stacking",
+        "title": "可买几份、权益能否合用",
+        "label": "适用条件待核对",
+        "summary": "原图尚未提供明确的购买上限和多份使用方式。",
+        "impact": "限购及合用条件决定多份权益能否覆盖计划，也会影响总支出。",
+        "question": "同一个人或账号最多可以买几份？买多份后能否在同一使用计划中使用，各份怎样核销和计算有效期？",
+        "ruleIds": [
+          "R01",
+          "R08"
+        ],
+        "evidence": []
+      }
+    },
+    {
+      "id": "d491bf4d-dca5-4c4f-b0a3-1dbaa10d8873",
+      "action": "observed",
+      "issueId": "[\"image:d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70\",null,\"validity\"]",
+      "packageId": "image:d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+      "analysisId": "ab10e275-2589-413b-98dc-760778e373a5",
+      "at": "2026-11-10T09:16:00.917Z",
+      "fingerprint": "1f7445b7cf470069245c60dce3795faef0aae35426e574f40b10db3c0a2ee9f1",
+      "snapshot": {
+        "id": "[\"image:d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70\",null,\"validity\"]",
+        "packageId": "image:d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+        "version": null,
+        "offerName": "晚自习月卡",
+        "topic": "validity",
+        "title": "核销截止与使用期限",
+        "label": "适用条件待核对",
+        "summary": "原图读到不同表述，版本、适用日期或使用阶段仍需核对。",
+        "impact": "适用的开卡期限和使用期限可能改变能覆盖的到访日期。",
+        "question": "这款套餐最晚何时需要首次核销？从哪个时点开始计算使用期，可使用多久？",
+        "ruleIds": [
+          "R02",
+          "R05"
+        ],
+        "evidence": [
+          {
+            "key": "duration",
+            "value": "30 天",
+            "version": null,
+            "scope": "核销后或连续使用期",
+            "scopeKnown": true,
+            "phase": null,
+            "day": null,
+            "sources": [
+              {
+                "imageId": "c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42",
+                "url": "/images/c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42.png",
+                "quote": "限 制 详 情 连 续 30 天 使 用"
+              }
+            ]
+          },
+          {
+            "key": "purchase",
+            "value": "15 天",
+            "version": null,
+            "scope": "购买后首次核销",
+            "scopeKnown": true,
+            "phase": null,
+            "day": null,
+            "sources": [
+              {
+                "imageId": "c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42",
+                "url": "/images/c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42.png",
+                "quote": "购 买 后 15 天 内 有 效 。"
+              }
+            ]
+          },
+          {
+            "key": "purchase",
+            "value": "90 天",
+            "version": null,
+            "scope": "购买后首次核销",
+            "scopeKnown": true,
+            "phase": null,
+            "day": null,
+            "sources": [
+              {
+                "imageId": "c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42",
+                "url": "/images/c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42.png",
+                "quote": "购 买 后 90 天 内 有 效"
+              },
+              {
+                "imageId": "d671127f9e2542fe53bb7889270cf0444454073dff139538bff75a973667f2bd",
+                "url": "/images/d671127f9e2542fe53bb7889270cf0444454073dff139538bff75a973667f2bd.png",
+                "quote": "购 买 后 90 天 内 有 效"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "822a6a2c-8fee-4ddb-adda-32e9fac94754",
+      "action": "observed",
+      "issueId": "[\"image:d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70\",null,\"booking\"]",
+      "packageId": "image:d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+      "analysisId": "ab10e275-2589-413b-98dc-760778e373a5",
+      "at": "2026-11-10T09:16:00.917Z",
+      "fingerprint": "68144e8aea509bd7dd87e2a3d71dd665b338cc0f2231d8084a7cf23c1d64c83f",
+      "snapshot": {
+        "id": "[\"image:d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70\",null,\"booking\"]",
+        "packageId": "image:d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+        "version": null,
+        "offerName": "晚自习月卡",
+        "topic": "booking",
+        "title": "到店是否需要预约",
+        "label": "适用条件待核对",
+        "summary": "原图读到不同表述，版本、适用日期或使用阶段仍需核对。",
+        "impact": "如果需要预约，约满可能影响能否按计划到访。",
+        "question": "请问首访和后续每次到访分别要预约吗？如需预约，提前多久、约满时如何处理？",
+        "ruleIds": [
+          "R08"
+        ],
+        "evidence": [
+          {
+            "key": "reserve",
+            "value": "无需预约",
+            "version": null,
+            "scope": "适用范围未标注",
+            "scopeKnown": false,
+            "phase": null,
+            "day": null,
+            "sources": [
+              {
+                "imageId": "d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+                "url": "/images/d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70.png",
+                "quote": "须 知 免 预 约 · 周 一 至 周 日 部 分 时 段 可 用 · 购 买 后 90 天 内 ． ·"
+              },
+              {
+                "imageId": "d671127f9e2542fe53bb7889270cf0444454073dff139538bff75a973667f2bd",
+                "url": "/images/d671127f9e2542fe53bb7889270cf0444454073dff139538bff75a973667f2bd.png",
+                "quote": "· 无 需 预 约 ， 如 遇 消 费 高 峰 时 段 您 可 能 需 要 排 队"
+              }
+            ]
+          },
+          {
+            "key": "reserve",
+            "value": "需要预约",
+            "version": null,
+            "scope": "适用范围未标注",
+            "scopeKnown": false,
+            "phase": null,
+            "day": null,
+            "sources": [
+              {
+                "imageId": "c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42",
+                "url": "/images/c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42.png",
+                "quote": "需 至 少 提 前 2 小 时 联 系 管 家 预 约 ！"
+              },
+              {
+                "imageId": "c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42",
+                "url": "/images/c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42.png",
+                "quote": "因 座 位 数 量 有 限 ， 请 务 必 与 管 家 预 约 后 进 店"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "69195538-9a18-434c-9fab-615efe358bae",
+      "action": "observed",
+      "issueId": "[\"image:d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70\",null,\"refund\"]",
+      "packageId": "image:d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+      "analysisId": "ab10e275-2589-413b-98dc-760778e373a5",
+      "at": "2026-11-10T09:16:00.917Z",
+      "fingerprint": "a0f7f955149c29b687e62d23205bc9e431450242169fa088dace53b5f1553d1b",
+      "snapshot": {
+        "id": "[\"image:d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70\",null,\"refund\"]",
+        "packageId": "image:d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+        "version": null,
+        "offerName": "晚自习月卡",
+        "topic": "refund",
+        "title": "退款条件与手续费",
+        "label": "适用条件待核对",
+        "summary": "原图读到不同表述，版本、适用日期或使用阶段仍需核对。",
+        "impact": "这会影响购买后的退款损失，当前比较按购买支出展示。",
+        "question": "请分别说明未核销、已核销和部分使用后的退款条件，手续费按什么基数计算？",
+        "ruleIds": [
+          "R04",
+          "R09"
+        ],
+        "evidence": [
+          {
+            "key": "fee",
+            "value": "30% 手续费",
+            "version": null,
+            "scope": "适用范围未标注",
+            "scopeKnown": false,
+            "phase": null,
+            "day": null,
+            "sources": [
+              {
+                "imageId": "d671127f9e2542fe53bb7889270cf0444454073dff139538bff75a973667f2bd",
+                "url": "/images/d671127f9e2542fe53bb7889270cf0444454073dff139538bff75a973667f2bd.png",
+                "quote": "无 需 求 等 ） ， 需 缴 纳 未 消 费 金 额 30 ％ 的 手 续 费"
+              }
+            ]
+          },
+          {
+            "key": "refund",
+            "value": "部分未使用可退",
+            "version": null,
+            "scope": "部分使用或剩余权益",
+            "scopeKnown": true,
+            "phase": "部分使用或剩余权益",
+            "day": null,
+            "sources": [
+              {
+                "imageId": "d671127f9e2542fe53bb7889270cf0444454073dff139538bff75a973667f2bd",
+                "url": "/images/d671127f9e2542fe53bb7889270cf0444454073dff139538bff75a973667f2bd.png",
+                "quote": "〖 部 分 退 〗 部 分 未 使 用 可 退 还 余 额 ， 余 额 为 用 户 实 付"
+              }
+            ]
+          },
+          {
+            "key": "refund",
+            "value": "核销后不可退",
+            "version": null,
+            "scope": "核销后",
+            "scopeKnown": true,
+            "phase": "核销后",
+            "day": null,
+            "sources": [
+              {
+                "imageId": "c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42",
+                "url": "/images/c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42.png",
+                "quote": "退 款 说 明 ： 消 费 前 可 退 ， 未 使 用 可 退 ， 验 券 后 不 可 退 。"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

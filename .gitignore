@@ -1,8 +1,12 @@
-/data/
+# data/ 必须入库：容器内需要历史原图、OCR 缓存与 Tesseract 语言包
+# 仅排除语言包的压缩源（运行时用的是解压后的 .traineddata）
+data/ocr-models/*.gz
 /HANDOFF.md
 /AGENT_PLAN.md
 /seed-reviewed.js
 /test-results.txt
+/tmp-*.js
+/tmp-*.txt
 node_modules/
 .env
 .env.*

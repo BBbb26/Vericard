@@ -1,0 +1,740 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "b82d35eb-758d-4d24-91ad-ae2acf5c388a",
+      "fingerprint": "4e032d007d3ae1ec84ce0b2183992aa6a584d65584c56fa4ae1b63c74132a19c",
+      "createdAt": "2026-11-09T12:00:25.828Z",
+      "purchase": {
+        "paidCents": 100000,
+        "purchasedOn": "2026-11-09",
+        "activationDate": "2026-11-09"
+      },
+      "plan": {
+        "id": "manual-134010726590185",
+        "version": 134010726590185,
+        "type": "stored_value",
+        "name": "理发",
+        "offerPriceCents": null,
+        "firstRedemptionWithinDays": null,
+        "rules": {
+          "validity": {
+            "kind": "from_activation",
+            "days": 60
+          },
+          "coverage": {
+            "kind": "all"
+          },
+          "principalCents": 100000,
+          "bonusCents": 20000,
+          "bonusCoverage": {
+            "kind": "all"
+          },
+          "bonusValidity": {
+            "kind": "same_as_plan"
+          },
+          "deduction": "principal_first"
+        },
+        "evidence": {},
+        "unsupportedRules": []
+      },
+      "source": {
+        "kind": "manual",
+        "offerType": "stored_value",
+        "imageIds": [],
+        "planVersion": 134010726590185,
+        "analysis": null,
+        "limitations": []
+      }
+    },
+    {
+      "id": "9e21d3dd-7e43-4f19-ba79-df73e18c3a2c",
+      "fingerprint": "9ab5030d9d3aecec854e7d5934b69f8fd0775d9f33c57c22d471991fb4213234",
+      "createdAt": "2026-11-09T12:01:24.994Z",
+      "purchase": {
+        "paidCents": 12000,
+        "purchasedOn": "2026-11-09",
+        "activationDate": "2026-11-09"
+      },
+      "plan": {
+        "id": "manual-214497060975270",
+        "version": 214497060975270,
+        "type": "visit_pack",
+        "name": "咖啡",
+        "offerPriceCents": null,
+        "firstRedemptionWithinDays": null,
+        "rules": {
+          "validity": {
+            "kind": "unlimited"
+          },
+          "coverage": {
+            "kind": "all"
+          },
+          "visits": 10,
+          "redemption": "per_visit"
+        },
+        "evidence": {},
+        "unsupportedRules": []
+      },
+      "source": {
+        "kind": "manual",
+        "offerType": "visits",
+        "imageIds": [],
+        "planVersion": 214497060975270,
+        "analysis": null,
+        "limitations": []
+      }
+    },
+    {
+      "id": "e218502b-5950-4812-b8cb-a0802b9b95bc",
+      "fingerprint": "bb798bbc85bb32439e6c0946e49e2aec0720470cb7e9fbd9566fd236d1e8020a",
+      "createdAt": "2026-11-09T12:02:53.120Z",
+      "purchase": {
+        "paidCents": 1500,
+        "purchasedOn": "2026-11-09",
+        "activationDate": "2026-11-09"
+      },
+      "plan": {
+        "id": "manual-225463493935779",
+        "version": 225463493935779,
+        "type": "time_pass",
+        "name": "奶茶",
+        "offerPriceCents": null,
+        "firstRedemptionWithinDays": null,
+        "rules": {
+          "validity": {
+            "kind": "from_activation",
+            "days": 30
+          },
+          "coverage": {
+            "kind": "all"
+          }
+        },
+        "evidence": {},
+        "unsupportedRules": []
+      },
+      "source": {
+        "kind": "manual",
+        "offerType": "period",
+        "imageIds": [],
+        "planVersion": 225463493935779,
+        "analysis": null,
+        "limitations": []
+      }
+    },
+    {
+      "id": "83cbb163-1d65-42d0-aa68-def40b856ba8",
+      "fingerprint": "07b45128863f71879cfaa8dd77d9784344ef74a6aad0fe7c690e8d88c2a662a2",
+      "createdAt": "2026-11-09T12:05:45.161Z",
+      "purchase": {
+        "paidCents": 25900,
+        "purchasedOn": "2026-11-09",
+        "activationDate": "2026-11-10"
+      },
+      "plan": {
+        "id": "comparison-83754987263743",
+        "version": 83754987263743,
+        "type": "visit_pack",
+        "name": "〖限时福利〕星巴克经典咖啡星冰乐组合",
+        "offerPriceCents": 22990,
+        "firstRedemptionWithinDays": null,
+        "rules": {
+          "validity": {
+            "kind": "unlimited"
+          },
+          "coverage": null,
+          "visits": 10,
+          "redemption": null
+        },
+        "evidence": {
+          "total": {
+            "label": "次数/小时/连续天数",
+            "verification": "待核对",
+            "evidence": [
+              {
+                "field": "total",
+                "value": "10",
+                "imageId": "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+                "lineId": 18,
+                "quote": "¥ 229 · 9 / 共 10 次",
+                "box": {
+                  "y": 687,
+                  "width": 200,
+                  "height": 34,
+                  "x": 37
+                },
+                "status": "待核对",
+                "sourceType": "ocr",
+                "method": "本地OCR＋规则提取"
+              }
+            ]
+          },
+          "unit": {
+            "label": "权益类型",
+            "verification": "待核对",
+            "evidence": [
+              {
+                "field": "unit",
+                "value": "次",
+                "imageId": "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+                "lineId": 18,
+                "quote": "¥ 229 · 9 / 共 10 次",
+                "box": {
+                  "y": 687,
+                  "width": 200,
+                  "height": 34,
+                  "x": 37
+                },
+                "status": "待核对",
+                "sourceType": "ocr",
+                "method": "本地OCR＋规则提取"
+              }
+            ]
+          },
+          "merchant": {
+            "label": "商家",
+            "verification": "待核对",
+            "evidence": [
+              {
+                "field": "merchant",
+                "value": "星巴克",
+                "imageId": "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+                "lineId": 23,
+                "quote": "〖 限 时 福 利 〕 星 巴 克 经 典 咖 啡 星 冰 乐 组 合",
+                "box": {
+                  "y": 768,
+                  "width": 547,
+                  "height": 31,
+                  "x": 56
+                },
+                "status": "待核对",
+                "sourceType": "ocr",
+                "method": "本地OCR＋规则提取"
+              }
+            ]
+          },
+          "title": {
+            "label": "套餐名称",
+            "verification": "待核对",
+            "evidence": [
+              {
+                "field": "title",
+                "value": "大杯10次卡(含新品)",
+                "imageId": "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+                "lineId": 24,
+                "quote": "大 杯 10 次 卡 （ 含 新 品 ）",
+                "box": {
+                  "y": 812,
+                  "width": 293,
+                  "height": 32,
+                  "x": 37
+                },
+                "status": "待核对",
+                "sourceType": "ocr",
+                "method": "本地OCR＋规则提取"
+              }
+            ]
+          },
+          "schedule": {
+            "label": "使用时段原文",
+            "verification": "待核对",
+            "evidence": [
+              {
+                "field": "schedule",
+                "value": "退款金额将根据退款规则计算“周一至周日可用“07:00.22:00.随〉",
+                "imageId": "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+                "lineId": 26,
+                "quote": "退 款 金 额 将 根 据 退 款 规 则 计 算 “ 周 一 至 周 日 可 用 “ 07 ： 00 ． 22 ： 00 ． 随 〉",
+                "box": {
+                  "y": 908,
+                  "width": 559,
+                  "height": 18,
+                  "x": 65
+                },
+                "status": "待核对",
+                "sourceType": "ocr",
+                "method": "本地OCR＋规则提取"
+              }
+            ]
+          },
+          "refund": {
+            "label": "退款条款原文",
+            "verification": "待核对",
+            "evidence": [
+              {
+                "field": "refund",
+                "value": "退款金额将根据退款规则计算“周一至周日可用“07:00.22:00.随〉",
+                "imageId": "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+                "lineId": 26,
+                "quote": "退 款 金 额 将 根 据 退 款 规 则 计 算 “ 周 一 至 周 日 可 用 “ 07 ： 00 ． 22 ： 00 ． 随 〉",
+                "box": {
+                  "y": 908,
+                  "width": 559,
+                  "height": 18,
+                  "x": 65
+                },
+                "status": "待核对",
+                "sourceType": "ocr",
+                "method": "本地OCR＋规则提取"
+              }
+            ]
+          }
+        },
+        "unsupportedRules": [
+          "截图中有时段、预约或其他未建模限制"
+        ]
+      },
+      "source": {
+        "kind": "comparison",
+        "offerType": "visits",
+        "imageIds": [
+          "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+          "36ae221e082b6f9359234ad5184de2c2cb4fe4c62d74fef030e99ce2803bee7a",
+          "8b299c882856bdb2caa0af1924f1f16e9c216226ee096e13a019d3171e949b47"
+        ],
+        "comparison": {
+          "name": "〖限时福利〕星巴克经典咖啡星冰乐组合",
+          "type": "visits",
+          "price": 22990,
+          "units": 10,
+          "limit": null,
+          "validity": "",
+          "from": null,
+          "until": null,
+          "days": null,
+          "window": "",
+          "opens": null,
+          "closes": null,
+          "weekdays": "all",
+          "visitMax": null,
+          "billing": null,
+          "minimum": null,
+          "redemption": "",
+          "restrictionsPending": false
+        },
+        "planVersion": 83754987263743,
+        "analysis": null,
+        "limitations": [
+          {
+            "key": "schedule",
+            "text": "退 款 金 额 将 根 据 退 款 规 则 计 算 “ 周 一 至 周 日 可 用 “ 07 ： 00 ． 22 ： 00 ． 随 〉",
+            "imageId": "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+            "box": {
+              "y": 908,
+              "width": 559,
+              "height": 18,
+              "x": 65
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "13d62570-5e58-460c-be10-004daca18e33",
+      "fingerprint": "a09901a52ed2e3dc714554db2a38920fc2d7e0843629ca4d9a7cfd46caea97b3",
+      "createdAt": "2026-11-10T10:04:23.901Z",
+      "purchase": {
+        "paidCents": 22900,
+        "purchasedOn": "2026-11-10",
+        "activationDate": "2026-11-10"
+      },
+      "plan": {
+        "id": "manual-115983720651124",
+        "version": 115983720651124,
+        "type": "visit_pack",
+        "name": "10次卡〖20楼南向一线上塘河景〗",
+        "offerPriceCents": null,
+        "firstRedemptionWithinDays": null,
+        "rules": {
+          "validity": {
+            "kind": "unlimited"
+          },
+          "coverage": {
+            "kind": "all"
+          },
+          "visits": 10,
+          "redemption": "per_visit"
+        },
+        "evidence": {
+          "planType": {
+            "label": "套餐类型（储值 / 次数 / 期限）",
+            "verification": "待核对",
+            "evidence": [
+              {
+                "field": "planType",
+                "value": "次数",
+                "imageId": "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+                "lineId": 8,
+                "quote": "10 次 卡 〖 20 楼 南 向 一 线 上 塘 河 景 〗",
+                "box": {
+                  "y": 1095,
+                  "width": 945,
+                  "height": 59,
+                  "x": 54
+                },
+                "status": "待核对",
+                "sourceType": "ocr",
+                "method": "本地OCR＋规则提取"
+              }
+            ]
+          },
+          "title": {
+            "label": "套餐名称",
+            "verification": "待核对",
+            "evidence": [
+              {
+                "field": "title",
+                "value": "10次卡〖20楼南向一线上塘河景〗",
+                "imageId": "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+                "lineId": 8,
+                "quote": "10 次 卡 〖 20 楼 南 向 一 线 上 塘 河 景 〗",
+                "box": {
+                  "y": 1095,
+                  "width": 945,
+                  "height": 59,
+                  "x": 54
+                },
+                "status": "待核对",
+                "sourceType": "ocr",
+                "method": "本地OCR＋规则提取"
+              }
+            ]
+          },
+          "total": {
+            "label": "次数/小时/连续天数",
+            "verification": "待核对",
+            "evidence": [
+              {
+                "field": "total",
+                "value": "10",
+                "imageId": "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+                "lineId": 8,
+                "quote": "10 次 卡 〖 20 楼 南 向 一 线 上 塘 河 景 〗",
+                "box": {
+                  "y": 1095,
+                  "width": 945,
+                  "height": 59,
+                  "x": 54
+                },
+                "status": "待核对",
+                "sourceType": "ocr",
+                "method": "本地OCR＋规则提取"
+              }
+            ]
+          },
+          "unit": {
+            "label": "权益类型",
+            "verification": "待核对",
+            "evidence": [
+              {
+                "field": "unit",
+                "value": "次",
+                "imageId": "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+                "lineId": 8,
+                "quote": "10 次 卡 〖 20 楼 南 向 一 线 上 塘 河 景 〗",
+                "box": {
+                  "y": 1095,
+                  "width": 945,
+                  "height": 59,
+                  "x": 54
+                },
+                "status": "待核对",
+                "sourceType": "ocr",
+                "method": "本地OCR＋规则提取"
+              }
+            ]
+          },
+          "schedule": {
+            "label": "使用时段原文",
+            "verification": "待核对",
+            "evidence": [
+              {
+                "field": "schedule",
+                "value": "须知免预约·周一至周日06:00.23:59可用·购买后90天...〉",
+                "imageId": "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+                "lineId": 9,
+                "quote": "须 知 免 预 约 · 周 一 至 周 日 06 ： 00 ． 23 ： 59 可 用 · 购 买 后 90 天 ． ． ． 〉",
+                "box": {
+                  "y": 1198,
+                  "width": 990,
+                  "height": 35,
+                  "x": 53
+                },
+                "status": "待核对",
+                "sourceType": "ocr",
+                "method": "本地OCR＋规则提取"
+              }
+            ]
+          },
+          "price": {
+            "label": "页面展示价（元）",
+            "verification": "待核对",
+            "evidence": [
+              {
+                "field": "price",
+                "value": "229",
+                "imageId": "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+                "lineId": 23,
+                "quote": "折 后 ¥ 229",
+                "box": {
+                  "y": 2368,
+                  "width": 167,
+                  "height": 35,
+                  "x": 684
+                },
+                "status": "待核对",
+                "sourceType": "ocr",
+                "method": "本地OCR＋规则提取"
+              }
+            ]
+          }
+        },
+        "unsupportedRules": [
+          "截图中有时段、预约或其他未建模限制"
+        ]
+      },
+      "source": {
+        "kind": "manual",
+        "offerType": "visits",
+        "imageIds": [
+          "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4"
+        ],
+        "planVersion": 115983720651124,
+        "analysis": null,
+        "limitations": [
+          {
+            "key": "schedule",
+            "text": "须 知 免 预 约 · 周 一 至 周 日 06 ： 00 ． 23 ： 59 可 用 · 购 买 后 90 天 ． ． ． 〉",
+            "imageId": "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+            "box": {
+              "y": 1198,
+              "width": 990,
+              "height": 35,
+              "x": 53
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "8bc1043e-1f80-41ef-b64f-c640cfeccf43",
+      "fingerprint": "12ce0755bce21a930af3067e251744e14c1df22e7cc7ae4e5f30873ebdef87f8",
+      "createdAt": "2026-11-10T12:54:51.736Z",
+      "purchase": {
+        "paidCents": 1800,
+        "purchasedOn": "2026-11-10",
+        "activationDate": "2026-11-10"
+      },
+      "plan": {
+        "id": "manual-257354703947952",
+        "version": 257354703947952,
+        "type": "time_pass",
+        "name": "视频会员",
+        "offerPriceCents": null,
+        "firstRedemptionWithinDays": null,
+        "rules": {
+          "validity": {
+            "kind": "from_activation",
+            "days": 30
+          },
+          "coverage": {
+            "kind": "all"
+          }
+        },
+        "evidence": {},
+        "unsupportedRules": []
+      },
+      "source": {
+        "kind": "manual",
+        "offerType": "period",
+        "imageIds": [],
+        "planVersion": 257354703947952,
+        "analysis": null,
+        "limitations": []
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "cbaee487-19aa-460c-8d1a-c1c5a30dba94",
+      "fingerprint": "55edd8d716750272df0e146feb8ec3a69255cd880928882d8305f8d30bdd0525",
+      "cardId": "b82d35eb-758d-4d24-91ad-ae2acf5c388a",
+      "type": "consume",
+      "confirmationFor": null,
+      "status": "confirmed",
+      "date": "2026-11-09",
+      "recordedAt": "2026-11-09T12:00:50.605Z",
+      "serviceId": "染发",
+      "referencePriceCents": null,
+      "extraPaidCents": null,
+      "note": "",
+      "debit": {
+        "totalCents": 15800,
+        "principalCents": null,
+        "bonusCents": null
+      }
+    },
+    {
+      "id": "15d39937-7e0f-482d-923c-2bd9ff83c9b2",
+      "fingerprint": "afccd0aa81e1d64c612e339988a13f3d9b90b46c914cbc120f4e09a0f55ff03b",
+      "cardId": "9e21d3dd-7e43-4f19-ba79-df73e18c3a2c",
+      "type": "consume",
+      "confirmationFor": null,
+      "status": "confirmed",
+      "date": "2026-11-09",
+      "recordedAt": "2026-11-09T12:01:58.503Z",
+      "serviceId": "1",
+      "referencePriceCents": null,
+      "extraPaidCents": null,
+      "note": "",
+      "debit": {
+        "visits": 1,
+        "covered": true
+      }
+    },
+    {
+      "id": "4bfbc757-e9c9-4e4e-8300-e76fa6fde597",
+      "fingerprint": "564b14425c672b85abf163f6a95e5622f48cb2e457b0adc0a097a467c65206a5",
+      "cardId": "e218502b-5950-4812-b8cb-a0802b9b95bc",
+      "type": "consume",
+      "confirmationFor": null,
+      "status": "confirmed",
+      "date": "2026-11-09",
+      "recordedAt": "2026-11-09T12:03:02.809Z",
+      "serviceId": "奶茶",
+      "referencePriceCents": null,
+      "extraPaidCents": null,
+      "note": "",
+      "debit": {
+        "covered": true
+      }
+    },
+    {
+      "id": "2648ec2c-4e7a-4128-ab9b-e1ed5b2fcba7",
+      "fingerprint": "74e9f46be09801d4fa1168652ffd70c4bcd18bb1f1d9ddaf7e3037df778dde7c",
+      "cardId": "83cbb163-1d65-42d0-aa68-def40b856ba8",
+      "type": "consume",
+      "confirmationFor": null,
+      "status": "confirmed",
+      "date": "2026-11-09",
+      "recordedAt": "2026-11-09T12:16:15.954Z",
+      "serviceId": "1",
+      "referencePriceCents": null,
+      "extraPaidCents": null,
+      "note": "",
+      "debit": {
+        "visits": 1,
+        "covered": true
+      }
+    },
+    {
+      "id": "e81cd24b-a5e4-4b1d-8f52-b0831c2566b5",
+      "fingerprint": "4024e4ae981d3b67090cbd960e4be0623f2c17e46e7b34b6ddb472485abdffe7",
+      "cardId": "83cbb163-1d65-42d0-aa68-def40b856ba8",
+      "type": "reconciliation",
+      "recordedAt": "2026-11-09T12:16:36.674Z",
+      "date": "2026-11-09",
+      "note": "",
+      "expected": {
+        "visits": 9
+      },
+      "observed": {
+        "visits": 9
+      },
+      "difference": 0,
+      "reasons": [
+        "可核实未登记消费、附加收费、赠送权益到期及商家显示口径。"
+      ],
+      "balanceVersion": "2648ec2c-4e7a-4128-ab9b-e1ed5b2fcba7"
+    },
+    {
+      "id": "9df7022f-0275-4983-bdce-db2765c19c2f",
+      "fingerprint": "f40696fcae30d20a8e59961ca4ed301fe71e69c29bfe3333332cb8a532aeb0e2",
+      "cardId": "83cbb163-1d65-42d0-aa68-def40b856ba8",
+      "type": "consume",
+      "confirmationFor": null,
+      "status": "confirmed",
+      "date": "2026-11-10",
+      "recordedAt": "2026-11-10T11:55:43.694Z",
+      "serviceId": "2",
+      "referencePriceCents": null,
+      "extraPaidCents": null,
+      "note": "",
+      "debit": {
+        "visits": 1,
+        "covered": true
+      }
+    },
+    {
+      "id": "e79121f8-f28a-4595-bf84-3c2247bb9a64",
+      "fingerprint": "95cb9bbbae8ee197d001c0972f928729e7ae6f25266e03dabba6498ba0244dff",
+      "cardId": "b82d35eb-758d-4d24-91ad-ae2acf5c388a",
+      "type": "reconciliation",
+      "recordedAt": "2026-11-10T12:15:46.444Z",
+      "date": "2026-11-10",
+      "note": "",
+      "expected": {
+        "totalCents": 104200,
+        "principalCents": null,
+        "bonusCents": null,
+        "principalRange": [
+          84200,
+          100000
+        ],
+        "bonusRange": [
+          4200,
+          20000
+        ]
+      },
+      "observed": {
+        "totalCents": 104200,
+        "principalCents": null
+      },
+      "difference": 0,
+      "splitChanged": false,
+      "splitConflict": false,
+      "splitOnly": false,
+      "reasons": [
+        "可核实未登记消费、附加收费、赠送权益到期及商家显示口径。"
+      ],
+      "balanceVersion": "cbaee487-19aa-460c-8d1a-c1c5a30dba94"
+    },
+    {
+      "id": "79560e7c-a394-47ac-9afe-581ebcef0e2e",
+      "cardId": "83cbb163-1d65-42d0-aa68-def40b856ba8",
+      "requestId": "74808b69-8133-4e53-8588-070757455ed1",
+      "fingerprint": "54b900c202277d69bc5d5ec4578d4d6da05fef7b6a6ba49650039815ae748cbe",
+      "type": "profile_update",
+      "date": "2026-11-10",
+      "recordedAt": "2026-11-10T12:50:10.534Z",
+      "before": {
+        "activationDate": null,
+        "validity": null
+      },
+      "after": {
+        "activationDate": "2026-11-10",
+        "validity": {
+          "kind": "unlimited"
+        }
+      },
+      "note": "补充卡片信息"
+    },
+    {
+      "id": "8b2f113f-e544-47fe-9dac-50d744eb8fca",
+      "fingerprint": "1cf77b1a554ef622f83bfc375235265d58a7e05a581f71432955499ce2244ec2",
+      "cardId": "e218502b-5950-4812-b8cb-a0802b9b95bc",
+      "type": "consume",
+      "confirmationFor": null,
+      "status": "confirmed",
+      "date": "2026-11-10",
+      "recordedAt": "2026-11-10T12:53:35.691Z",
+      "serviceId": "奶茶",
+      "referencePriceCents": null,
+      "extraPaidCents": null,
+      "note": "",
+      "debit": {
+        "covered": true
+      }
+    }
+  ]
+}

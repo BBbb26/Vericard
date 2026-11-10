@@ -1,0 +1,21 @@
+{
+  "name": "vericard",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build:threads": "esbuild frontend/threads-home.jsx --bundle --jsx=automatic --minify --outdir=assets --entry-names=home-threads --legal-comments=eof --target=es2022"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "tesseract.js": "^6.0.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

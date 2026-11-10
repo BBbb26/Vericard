@@ -1,0 +1,2463 @@
+{
+  "version": 1,
+  "groups": [
+    {
+      "id": "review-01",
+      "name": "星巴克 · 太妃榛果单杯",
+      "imageIds": [
+        "1f3a73621c9e353836ce99220377f64213c66b947e9ca45a2bd82f5eea2183c1",
+        "fd94b12fc570ad0d306ec632307f6630fc346f2f62875c60f3b709a4c07102ef",
+        "14304dd59a57b6f4b2e143d4d4e28c327312bcf7fcf96c1441005a79eac4d611"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "星巴克",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1f3a73621c9e353836ce99220377f64213c66b947e9ca45a2bd82f5eea2183c1",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "太妃榛果单杯",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1f3a73621c9e353836ce99220377f64213c66b947e9ca45a2bd82f5eea2183c1",
+              "quote": "前次逐图审阅记录：太妃榛果单杯；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "29.5",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1f3a73621c9e353836ce99220377f64213c66b947e9ca45a2bd82f5eea2183c1",
+              "quote": "前次逐图审阅记录：29.5；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "1",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1f3a73621c9e353836ce99220377f64213c66b947e9ca45a2bd82f5eea2183c1",
+              "quote": "前次逐图审阅记录：1；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1f3a73621c9e353836ce99220377f64213c66b947e9ca45a2bd82f5eea2183c1",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.087Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-02",
+      "name": "星巴克 · 猪柳滑蛋堡单份",
+      "imageIds": [
+        "c44b512af8e793296c5ea6095fe3b05d0ceda175e7b665f4d33413e1cc01505a",
+        "482ef03804799697b26d5dbf72d98ae0eb3db2fb74df0b2b70262bbcf927d3b1"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "星巴克",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c44b512af8e793296c5ea6095fe3b05d0ceda175e7b665f4d33413e1cc01505a",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "猪柳滑蛋堡单份",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c44b512af8e793296c5ea6095fe3b05d0ceda175e7b665f4d33413e1cc01505a",
+              "quote": "前次逐图审阅记录：猪柳滑蛋堡单份；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "15.9",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c44b512af8e793296c5ea6095fe3b05d0ceda175e7b665f4d33413e1cc01505a",
+              "quote": "前次逐图审阅记录：15.9；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "1",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c44b512af8e793296c5ea6095fe3b05d0ceda175e7b665f4d33413e1cc01505a",
+              "quote": "前次逐图审阅记录：1；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c44b512af8e793296c5ea6095fe3b05d0ceda175e7b665f4d33413e1cc01505a",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.088Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-03",
+      "name": "星巴克 · 太妃榛果单杯另一活动",
+      "imageIds": [
+        "37b5da1d2a3b08f199e30c7f49cc3415bb1a6536ae849974fca9726618d30be9",
+        "75f07c8642e1a1433407542b7ffbaadee4b2368a117dd003cfb27d29408bfd46",
+        "4bcbd6729fe216c23fde009b35c76f1c9e6e7f61a19d717c0fce4054673d13b3"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "星巴克",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "37b5da1d2a3b08f199e30c7f49cc3415bb1a6536ae849974fca9726618d30be9",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "太妃榛果单杯另一活动",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "37b5da1d2a3b08f199e30c7f49cc3415bb1a6536ae849974fca9726618d30be9",
+              "quote": "前次逐图审阅记录：太妃榛果单杯另一活动；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "29.9",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "37b5da1d2a3b08f199e30c7f49cc3415bb1a6536ae849974fca9726618d30be9",
+              "quote": "前次逐图审阅记录：29.9；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "1",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "37b5da1d2a3b08f199e30c7f49cc3415bb1a6536ae849974fca9726618d30be9",
+              "quote": "前次逐图审阅记录：1；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "37b5da1d2a3b08f199e30c7f49cc3415bb1a6536ae849974fca9726618d30be9",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.088Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-04",
+      "name": "星巴克 · 早餐饮品＋食品组合",
+      "imageIds": [
+        "873b9901fccfca2bac6086618214614808ab80ca5951191ea84722ce4d9c58c7",
+        "f1dcc0f1fd22afa11cb8b9052c5384628e179ea90e8bbd6564c14c39e9560f89",
+        "077819187e312e4218d8807ef4223645edefb74c22ec33de259713a922de39a9",
+        "e4194a627e5f58c118808f21be3d91f584ed18edadcd15972b6f0ebfe859de3a",
+        "7e7818af452c3a2ff4a3b26c03ceda92ca9acce2defa3c227ab9ccf2d8e5bbba"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "星巴克",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "873b9901fccfca2bac6086618214614808ab80ca5951191ea84722ce4d9c58c7",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "早餐饮品＋食品组合",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "873b9901fccfca2bac6086618214614808ab80ca5951191ea84722ce4d9c58c7",
+              "quote": "前次逐图审阅记录：早餐饮品＋食品组合；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "36.9",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "873b9901fccfca2bac6086618214614808ab80ca5951191ea84722ce4d9c58c7",
+              "quote": "前次逐图审阅记录：36.9；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "1",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "873b9901fccfca2bac6086618214614808ab80ca5951191ea84722ce4d9c58c7",
+              "quote": "前次逐图审阅记录：1；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "组合",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "873b9901fccfca2bac6086618214614808ab80ca5951191ea84722ce4d9c58c7",
+              "quote": "前次逐图审阅记录：组合；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.088Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-05",
+      "name": "星巴克 · 经典咖啡13选1",
+      "imageIds": [
+        "a04581619a9b693ba028b34a5e35690377ee99e4f670cdbf44e563e012273530",
+        "7f71e4ce56815cd49cc5fa9e8c23a17cc4696f574dfb9671b559c97c4d17614c",
+        "f4a9fcc7b2b656971f39d9ca5005a364739ff32950c40b51d4c2c643c12e9b11"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "星巴克",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "a04581619a9b693ba028b34a5e35690377ee99e4f670cdbf44e563e012273530",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "经典咖啡13选1",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "a04581619a9b693ba028b34a5e35690377ee99e4f670cdbf44e563e012273530",
+              "quote": "前次逐图审阅记录：经典咖啡13选1；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "28.9",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "a04581619a9b693ba028b34a5e35690377ee99e4f670cdbf44e563e012273530",
+              "quote": "前次逐图审阅记录：28.9；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "1",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "a04581619a9b693ba028b34a5e35690377ee99e4f670cdbf44e563e012273530",
+              "quote": "前次逐图审阅记录：1；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "a04581619a9b693ba028b34a5e35690377ee99e4f670cdbf44e563e012273530",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.088Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-06",
+      "name": "星巴克 · 太妃双杯组合",
+      "imageIds": [
+        "4a8b80e4c187da9cac20bb30e913d30552b8d3b59254ace0ce7c375a964331a6",
+        "8c3b88c8342f18aeefe09cee2ac9b05ecefc82ecb8ec02434209e8381f5e5f7e",
+        "e813b78f2340216428fdfce051f59aa0e560517040e1c1e6954d6403b1ec6700"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "星巴克",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "4a8b80e4c187da9cac20bb30e913d30552b8d3b59254ace0ce7c375a964331a6",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "太妃双杯组合",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "4a8b80e4c187da9cac20bb30e913d30552b8d3b59254ace0ce7c375a964331a6",
+              "quote": "前次逐图审阅记录：太妃双杯组合；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "53.99",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "4a8b80e4c187da9cac20bb30e913d30552b8d3b59254ace0ce7c375a964331a6",
+              "quote": "前次逐图审阅记录：53.99；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "1",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "4a8b80e4c187da9cac20bb30e913d30552b8d3b59254ace0ce7c375a964331a6",
+              "quote": "前次逐图审阅记录：1；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "组合",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "4a8b80e4c187da9cac20bb30e913d30552b8d3b59254ace0ce7c375a964331a6",
+              "quote": "前次逐图审阅记录：组合；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.088Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-07",
+      "name": "星巴克 · 星冰乐茶拿铁25选1",
+      "imageIds": [
+        "58d5af3d0f94c891e44850a72d94026c0246c0df9d18ab7fd43850b1bd572675",
+        "60a24af0a8d98ed52a0f7ba76bc0216daf1e5b7f641f928487a3e86961f7a944",
+        "9070c22e34ea89710735e4aca4acb12df3e263e7e78ab6e70d9b985b41815b15"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "星巴克",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "58d5af3d0f94c891e44850a72d94026c0246c0df9d18ab7fd43850b1bd572675",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "星冰乐茶拿铁25选1",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "58d5af3d0f94c891e44850a72d94026c0246c0df9d18ab7fd43850b1bd572675",
+              "quote": "前次逐图审阅记录：星冰乐茶拿铁25选1；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "28.9",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "58d5af3d0f94c891e44850a72d94026c0246c0df9d18ab7fd43850b1bd572675",
+              "quote": "前次逐图审阅记录：28.9；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "1",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "58d5af3d0f94c891e44850a72d94026c0246c0df9d18ab7fd43850b1bd572675",
+              "quote": "前次逐图审阅记录：1；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "58d5af3d0f94c891e44850a72d94026c0246c0df9d18ab7fd43850b1bd572675",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.088Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-08",
+      "name": "星巴克 · 经典大杯10次卡",
+      "imageIds": [
+        "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+        "36ae221e082b6f9359234ad5184de2c2cb4fe4c62d74fef030e99ce2803bee7a",
+        "8b299c882856bdb2caa0af1924f1f16e9c216226ee096e13a019d3171e949b47",
+        "2dd7c1fa51ea4f7d1eefb6d2ca3415cd746fa7ae6d61cfd4442d082992d084d2",
+        "5852c2a153b7dc6b2893ae7907d618cf0fa987e4f7049454c010e4607e903ce9"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "星巴克",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "经典大杯10次卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+              "quote": "前次逐图审阅记录：经典大杯10次卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "229.9",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+              "quote": "前次逐图审阅记录：229.9；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "10",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+              "quote": "前次逐图审阅记录：10；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "2e9d7f0b8be9f013da51628cdc53f660836d4b9201c68aef9857df82dcc52a23",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-09",
+      "name": "星巴克 · 太妃榛果10次卡",
+      "imageIds": [
+        "ce91ac6d34ade4d276a53202b3537a107f99b203f8923d9caae624616cca740d",
+        "d865f733d25d61eab5ab41027a168d8c948adfe2ae3d40a75311c3ba3acf44e0",
+        "37d9b02a3058850488db0a30f15b402e56f9300a8d74d37130d8504403ace16c",
+        "12573e845fc6273d90b0091fef20b88fc2a717d6bf9ab17ad9ec73fadd12a897"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "星巴克",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "ce91ac6d34ade4d276a53202b3537a107f99b203f8923d9caae624616cca740d",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "太妃榛果10次卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "ce91ac6d34ade4d276a53202b3537a107f99b203f8923d9caae624616cca740d",
+              "quote": "前次逐图审阅记录：太妃榛果10次卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "266.9",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "ce91ac6d34ade4d276a53202b3537a107f99b203f8923d9caae624616cca740d",
+              "quote": "前次逐图审阅记录：266.9；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "10",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "ce91ac6d34ade4d276a53202b3537a107f99b203f8923d9caae624616cca740d",
+              "quote": "前次逐图审阅记录：10；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "ce91ac6d34ade4d276a53202b3537a107f99b203f8923d9caae624616cca740d",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-10",
+      "name": "星巴克 · 经典大杯10次卡另一活动",
+      "imageIds": [
+        "c2eea5eaa5fc9a68b6f241e57aa3ecd544d101f8b95c3a17eedd4559b628339f",
+        "21075e9d736e28486aa3a23bb01a04866dbc999fb2ee3945a7732409126eee62",
+        "255151047c0c527109ce4fccd6b7af4ff5088f454e3556a8df5aed48f0b0e82f",
+        "9e68ebc8525f2f484d3d1806c0e436f9a0c5d59c3b813cbdadc58b7a4b3fbf8f",
+        "aa7e98b8728d8fde002d95ca2ebccbec1b795e6311ab50c96d7da761b78bef7f",
+        "7c46fe236a9e220893e4da5d2cb40bc4803c7222de54c7b044277fd6e15610c1"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "星巴克",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c2eea5eaa5fc9a68b6f241e57aa3ecd544d101f8b95c3a17eedd4559b628339f",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "经典大杯10次卡另一活动",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c2eea5eaa5fc9a68b6f241e57aa3ecd544d101f8b95c3a17eedd4559b628339f",
+              "quote": "前次逐图审阅记录：经典大杯10次卡另一活动；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "238",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c2eea5eaa5fc9a68b6f241e57aa3ecd544d101f8b95c3a17eedd4559b628339f",
+              "quote": "前次逐图审阅记录：238；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "10",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c2eea5eaa5fc9a68b6f241e57aa3ecd544d101f8b95c3a17eedd4559b628339f",
+              "quote": "前次逐图审阅记录：10；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c2eea5eaa5fc9a68b6f241e57aa3ecd544d101f8b95c3a17eedd4559b628339f",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-11",
+      "name": "星巴克 · 自由选5次卡",
+      "imageIds": [
+        "cdbb9da642afb49e680c523d02727f34bae2cef8fe95a4366758bc00d86735e2",
+        "f632ecbefc9986ccebb462deec77881f13d1029fa5c8686986099caf76158759",
+        "0923bd6a88b238826a6ee01ebcac04b699de0e50eb3244a170ef7b4c0d1012ad",
+        "8ecfb5567f7255ef92c45781592a2e37789c2df1900a7a1f72a3580870c303a0",
+        "0d577698134f18f2eea15a57c910c3ae4f3c17b01c11704a646aab2f4ff21439"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "星巴克",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "cdbb9da642afb49e680c523d02727f34bae2cef8fe95a4366758bc00d86735e2",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "自由选5次卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "cdbb9da642afb49e680c523d02727f34bae2cef8fe95a4366758bc00d86735e2",
+              "quote": "前次逐图审阅记录：自由选5次卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "142.5",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "cdbb9da642afb49e680c523d02727f34bae2cef8fe95a4366758bc00d86735e2",
+              "quote": "前次逐图审阅记录：142.5；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "5",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "cdbb9da642afb49e680c523d02727f34bae2cef8fe95a4366758bc00d86735e2",
+              "quote": "前次逐图审阅记录：5；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "cdbb9da642afb49e680c523d02727f34bae2cef8fe95a4366758bc00d86735e2",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-12",
+      "name": "王知之 · 连续30天月卡",
+      "imageIds": [
+        "2b3941437a3a45deb9665144e29b8a952c57bd7198b6bc8588fc650061189f50",
+        "b3dfbb06b9a220e3df9874263ae7cac45b5be0c1cb452b5bc84150194a0aee36",
+        "b918cabd2be864f860de2ae9ec82aa6ab894489de23c5389cc531ab6c1734786",
+        "d8d6de304a1791cd7f7437cd486373325a7b506da35ca30b77385a79f82cf391",
+        "0d34c26fd5660649f1fecc04fde4bc8b2681bf68cf0e795e4a880039ac55320e"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "王知之",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "2b3941437a3a45deb9665144e29b8a952c57bd7198b6bc8588fc650061189f50",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "连续30天月卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "2b3941437a3a45deb9665144e29b8a952c57bd7198b6bc8588fc650061189f50",
+              "quote": "前次逐图审阅记录：连续30天月卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "430",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "2b3941437a3a45deb9665144e29b8a952c57bd7198b6bc8588fc650061189f50",
+              "quote": "前次逐图审阅记录：430；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "30",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "2b3941437a3a45deb9665144e29b8a952c57bd7198b6bc8588fc650061189f50",
+              "quote": "前次逐图审阅记录：30；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "连续天",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "2b3941437a3a45deb9665144e29b8a952c57bd7198b6bc8588fc650061189f50",
+              "quote": "前次逐图审阅记录：连续天；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-13",
+      "name": "王知之 · 50小时卡",
+      "imageIds": [
+        "47b7cdec36073bf8154b8b010409a085afd253d768d53aa4f90d920c7484f98d",
+        "511c07fdf0e8c72ba762c2598ba2ecab704c0f034d9e7c619195128d436613d9",
+        "3bc6f3924b1c946a6369a7a547d3ba1e2e4af50f7da569541b31c685db1d7c35",
+        "fb8698aefc500d48615bd151704e526b22fab414d312633e6ce19ba1b3791965",
+        "ebc3416af25ebb82e8fd08bce60f555f04f2edcefa017137bf79580cf1bb5764"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "王知之",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "47b7cdec36073bf8154b8b010409a085afd253d768d53aa4f90d920c7484f98d",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "50小时卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "47b7cdec36073bf8154b8b010409a085afd253d768d53aa4f90d920c7484f98d",
+              "quote": "前次逐图审阅记录：50小时卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "206",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "47b7cdec36073bf8154b8b010409a085afd253d768d53aa4f90d920c7484f98d",
+              "quote": "前次逐图审阅记录：206；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "50",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "47b7cdec36073bf8154b8b010409a085afd253d768d53aa4f90d920c7484f98d",
+              "quote": "前次逐图审阅记录：50；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "小时",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "47b7cdec36073bf8154b8b010409a085afd253d768d53aa4f90d920c7484f98d",
+              "quote": "前次逐图审阅记录：小时；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-14",
+      "name": "王知之 · 30次卡",
+      "imageIds": [
+        "0dfea042c6d5ce037bf33d173557f7cf537e9ff2f05d5426fdfcf7943ef1ef0a",
+        "25bb651db52b287dd79ec68e9d211ea19efe1ac341c41f3e7b26ce79b2a328f3",
+        "9762685ab0bbda7f31d7aafa2edbf1a45b98b091f16512af0be4ff1e7d9087af",
+        "453ba123cb2aefab7a7b540ccd13bf251a8dd6f33fc3ff21b6ee7d7b40ce4b31",
+        "b1cf4bdc71532e1d776e2fdc52108e6057e1f0f65fdd2743c53aff6428c41446"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "王知之",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "0dfea042c6d5ce037bf33d173557f7cf537e9ff2f05d5426fdfcf7943ef1ef0a",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "30次卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "0dfea042c6d5ce037bf33d173557f7cf537e9ff2f05d5426fdfcf7943ef1ef0a",
+              "quote": "前次逐图审阅记录：30次卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "519",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "0dfea042c6d5ce037bf33d173557f7cf537e9ff2f05d5426fdfcf7943ef1ef0a",
+              "quote": "前次逐图审阅记录：519；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "30",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "0dfea042c6d5ce037bf33d173557f7cf537e9ff2f05d5426fdfcf7943ef1ef0a",
+              "quote": "前次逐图审阅记录：30；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "使用日",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "0dfea042c6d5ce037bf33d173557f7cf537e9ff2f05d5426fdfcf7943ef1ef0a",
+              "quote": "前次逐图审阅记录：使用日；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-15",
+      "name": "王知之 · 连续7天周卡",
+      "imageIds": [
+        "e09b13f6cf72b0dd4b1fea3df5a7cebada4181a6b187a5ef1ce1ab5ca5d5f029",
+        "a70dd101f6d2936ae0f183b0838eacc57e48a9959f41915292e04ff0e6b6bbdd",
+        "da78b7b9237cf8ffff56485cec8352602f3d2d0975e5c79b1181692c06b0cdfe",
+        "ba5f3d0ebf00e6cad455873dadf6c50ecddeea3de622e237f04bde557ae5db87"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "王知之",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "e09b13f6cf72b0dd4b1fea3df5a7cebada4181a6b187a5ef1ce1ab5ca5d5f029",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "连续7天周卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "e09b13f6cf72b0dd4b1fea3df5a7cebada4181a6b187a5ef1ce1ab5ca5d5f029",
+              "quote": "前次逐图审阅记录：连续7天周卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "179",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "e09b13f6cf72b0dd4b1fea3df5a7cebada4181a6b187a5ef1ce1ab5ca5d5f029",
+              "quote": "前次逐图审阅记录：179；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "7",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "e09b13f6cf72b0dd4b1fea3df5a7cebada4181a6b187a5ef1ce1ab5ca5d5f029",
+              "quote": "前次逐图审阅记录：7；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "连续天",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "e09b13f6cf72b0dd4b1fea3df5a7cebada4181a6b187a5ef1ce1ab5ca5d5f029",
+              "quote": "前次逐图审阅记录：连续天；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-16",
+      "name": "王知之 · 晚自习季卡",
+      "imageIds": [
+        "8266b2d643fc4e0272fecdd6d36b3bd61a20d11813ec458eec11afc41a74fe52",
+        "c29c24216abbefcb76e42ffb21a9da8ab845f8f128ce371dbfe370ced33b2678",
+        "db76b2e170082b5c28c994222a154c9489d4cd0ff85f5a39065f5867a73c3682",
+        "1981b117edaa39d5073a524ad642b28901ae8d72a9603c190a72a4889f0a6499",
+        "21a803c4fcad49ce3d7a69a24130517d39d652e4012b078079c9068cf25fb441"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "王知之",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "8266b2d643fc4e0272fecdd6d36b3bd61a20d11813ec458eec11afc41a74fe52",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "晚自习季卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "8266b2d643fc4e0272fecdd6d36b3bd61a20d11813ec458eec11afc41a74fe52",
+              "quote": "前次逐图审阅记录：晚自习季卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "749",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "8266b2d643fc4e0272fecdd6d36b3bd61a20d11813ec458eec11afc41a74fe52",
+              "quote": "前次逐图审阅记录：749；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "90",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "8266b2d643fc4e0272fecdd6d36b3bd61a20d11813ec458eec11afc41a74fe52",
+              "quote": "前次逐图审阅记录：90；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "连续天",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "8266b2d643fc4e0272fecdd6d36b3bd61a20d11813ec458eec11afc41a74fe52",
+              "quote": "前次逐图审阅记录：连续天；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-17",
+      "name": "王知之 · 晚自习月卡",
+      "imageIds": [
+        "1d902612ba2924b9862d546906ecfda88e7778d8cc19646b833f7c1ae9cad50c",
+        "d2ba309df6f5ed81503f449a8d99fe2ac603dc8a0b782e3e1d3a697236d09073",
+        "7506c1bafc7851d26be4bd451a920a0a532dfdec5878c8ce75ed410433ca74ee",
+        "eb09c374539f6db06ac99a2fdd8e15826e2084a8f59a25660a63f194e6234fe5"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "王知之",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1d902612ba2924b9862d546906ecfda88e7778d8cc19646b833f7c1ae9cad50c",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "晚自习月卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1d902612ba2924b9862d546906ecfda88e7778d8cc19646b833f7c1ae9cad50c",
+              "quote": "前次逐图审阅记录：晚自习月卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "305",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1d902612ba2924b9862d546906ecfda88e7778d8cc19646b833f7c1ae9cad50c",
+              "quote": "前次逐图审阅记录：305；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "30",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1d902612ba2924b9862d546906ecfda88e7778d8cc19646b833f7c1ae9cad50c",
+              "quote": "前次逐图审阅记录：30；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "连续天",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1d902612ba2924b9862d546906ecfda88e7778d8cc19646b833f7c1ae9cad50c",
+              "quote": "前次逐图审阅记录：连续天；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-18",
+      "name": "乐橙自习空间 · 10次卡",
+      "imageIds": [
+        "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+        "750867263d51250d24726bbb0e21b31567601048ab3ed2b7418841aec6e10c36",
+        "6db2ead20a17de8e4ee5106cc00019912625a49ad5fbcfabeab7333f9728ecc4"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "乐橙自习空间",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "10次卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+              "quote": "前次逐图审阅记录：10次卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "229",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+              "quote": "前次逐图审阅记录：229；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "10",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+              "quote": "前次逐图审阅记录：10；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "使用日",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "225862f8440035f5f64d36c2763876eb0427fbbe45c326861a8169c4980ba2b4",
+              "quote": "前次逐图审阅记录：使用日；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-19",
+      "name": "乐橙自习空间 · 晚自习月卡",
+      "imageIds": [
+        "d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+        "c255f6e74398f8b745af88030179b1f1cebd97b004677ad3f5b81c528bd89c42",
+        "d671127f9e2542fe53bb7889270cf0444454073dff139538bff75a973667f2bd"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "乐橙自习空间",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "晚自习月卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+              "quote": "前次逐图审阅记录：晚自习月卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "359",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+              "quote": "前次逐图审阅记录：359；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "30",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+              "quote": "前次逐图审阅记录：30；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "连续天",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "d183c3e24974ec7df6c02b85a51cbcf59aa8740c3f6c2fb6313040195de47c70",
+              "quote": "前次逐图审阅记录：连续天；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-20",
+      "name": "乐橙自习空间 · 20次卡",
+      "imageIds": [
+        "01d669c00a09c2020a18ee1fcd5fe40cbe149f1667bc63a3da6e6f7e5994bd08",
+        "394ed826d3cdcb8b0949f3052f532991e08c8ba0060abdaef3952bc499216763"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "乐橙自习空间",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "01d669c00a09c2020a18ee1fcd5fe40cbe149f1667bc63a3da6e6f7e5994bd08",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "20次卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "01d669c00a09c2020a18ee1fcd5fe40cbe149f1667bc63a3da6e6f7e5994bd08",
+              "quote": "前次逐图审阅记录：20次卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "439",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "01d669c00a09c2020a18ee1fcd5fe40cbe149f1667bc63a3da6e6f7e5994bd08",
+              "quote": "前次逐图审阅记录：439；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "20",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "01d669c00a09c2020a18ee1fcd5fe40cbe149f1667bc63a3da6e6f7e5994bd08",
+              "quote": "前次逐图审阅记录：20；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "使用日",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "01d669c00a09c2020a18ee1fcd5fe40cbe149f1667bc63a3da6e6f7e5994bd08",
+              "quote": "前次逐图审阅记录：使用日；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-21",
+      "name": "乐橙自习空间 · 30次卡",
+      "imageIds": [
+        "659b2f157901aa69342797fce1e0e07049bce2a2a6e7b9fa521b2ca1acfbab3d",
+        "9ab4967dec57c11b16b25f267fc33b342ba7f938b7799f580cd1eae345af661f",
+        "847371643240d111f882071461983cd43a6f27a98cbfa035738c33538ccff487"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "乐橙自习空间",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "659b2f157901aa69342797fce1e0e07049bce2a2a6e7b9fa521b2ca1acfbab3d",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "30次卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "659b2f157901aa69342797fce1e0e07049bce2a2a6e7b9fa521b2ca1acfbab3d",
+              "quote": "前次逐图审阅记录：30次卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "599",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "659b2f157901aa69342797fce1e0e07049bce2a2a6e7b9fa521b2ca1acfbab3d",
+              "quote": "前次逐图审阅记录：599；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "30",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "659b2f157901aa69342797fce1e0e07049bce2a2a6e7b9fa521b2ca1acfbab3d",
+              "quote": "前次逐图审阅记录：30；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "使用日",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "659b2f157901aa69342797fce1e0e07049bce2a2a6e7b9fa521b2ca1acfbab3d",
+              "quote": "前次逐图审阅记录：使用日；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-22",
+      "name": "乐橙自习空间 · 50次卡",
+      "imageIds": [
+        "22a6d9e99ebd7e90ac0386ced2fee00a811e3d31ea5f54ec77e72fd40fcdc51c",
+        "5bb8a8bb1ca6a1e96122a408e1212b88cb2bfc9fb803fc860d7ba75f4dbe8c46"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "乐橙自习空间",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "22a6d9e99ebd7e90ac0386ced2fee00a811e3d31ea5f54ec77e72fd40fcdc51c",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "50次卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "22a6d9e99ebd7e90ac0386ced2fee00a811e3d31ea5f54ec77e72fd40fcdc51c",
+              "quote": "前次逐图审阅记录：50次卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "899",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "22a6d9e99ebd7e90ac0386ced2fee00a811e3d31ea5f54ec77e72fd40fcdc51c",
+              "quote": "前次逐图审阅记录：899；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "50",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "22a6d9e99ebd7e90ac0386ced2fee00a811e3d31ea5f54ec77e72fd40fcdc51c",
+              "quote": "前次逐图审阅记录：50；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "使用日",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "22a6d9e99ebd7e90ac0386ced2fee00a811e3d31ea5f54ec77e72fd40fcdc51c",
+              "quote": "前次逐图审阅记录：使用日；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-23",
+      "name": "三条锦鲤24h沉浸自习室 · 50小时卡",
+      "imageIds": [
+        "97f5beb5e0e7b182dec937adcc04eb1fd030d556e5d6ca550ef052e5ea5acee0",
+        "7ab067aa706117cf460bd085081e6cdab1c58475704bebac9cd21be76f4f616a",
+        "073f80630317f84dbb7657433a1aad12952651a04a5399b2b27973bf6e01da81"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "三条锦鲤24h沉浸自习室",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "97f5beb5e0e7b182dec937adcc04eb1fd030d556e5d6ca550ef052e5ea5acee0",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "50小时卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "97f5beb5e0e7b182dec937adcc04eb1fd030d556e5d6ca550ef052e5ea5acee0",
+              "quote": "前次逐图审阅记录：50小时卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "264.2",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "97f5beb5e0e7b182dec937adcc04eb1fd030d556e5d6ca550ef052e5ea5acee0",
+              "quote": "前次逐图审阅记录：264.2；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "50",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "97f5beb5e0e7b182dec937adcc04eb1fd030d556e5d6ca550ef052e5ea5acee0",
+              "quote": "前次逐图审阅记录：50；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "小时",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "97f5beb5e0e7b182dec937adcc04eb1fd030d556e5d6ca550ef052e5ea5acee0",
+              "quote": "前次逐图审阅记录：小时；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-24",
+      "name": "三条锦鲤24h沉浸自习室 · 双月卡",
+      "imageIds": [
+        "a17fd4f4eef17de187eabc08907dca7eb3fa53fcd0bab1c666865d9896b55313",
+        "15f8fdb8086577ff852a2d18ebf9c5ee20dc6a522a949d74115f13362aa39052"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "三条锦鲤24h沉浸自习室",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "a17fd4f4eef17de187eabc08907dca7eb3fa53fcd0bab1c666865d9896b55313",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "双月卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "a17fd4f4eef17de187eabc08907dca7eb3fa53fcd0bab1c666865d9896b55313",
+              "quote": "前次逐图审阅记录：双月卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "695",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "a17fd4f4eef17de187eabc08907dca7eb3fa53fcd0bab1c666865d9896b55313",
+              "quote": "前次逐图审阅记录：695；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "62",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "a17fd4f4eef17de187eabc08907dca7eb3fa53fcd0bab1c666865d9896b55313",
+              "quote": "前次逐图审阅记录：62；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "连续天",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "a17fd4f4eef17de187eabc08907dca7eb3fa53fcd0bab1c666865d9896b55313",
+              "quote": "前次逐图审阅记录：连续天；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-25",
+      "name": "三条锦鲤24h沉浸自习室 · 上班族30次卡（连续周期存疑）",
+      "imageIds": [
+        "4cc26ce19fb4d2009a675f7f30050f73a563ddd56da47d1e04c43b254650126f",
+        "f0bf4526c96d1e4193d03287bf491176575b0e812826fe7946540532105732f5",
+        "34b8a49706a3c73a5925a83a0891a1fc0c18f8dd4ad6bd77755e4b38aa1b4631"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "三条锦鲤24h沉浸自习室",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "4cc26ce19fb4d2009a675f7f30050f73a563ddd56da47d1e04c43b254650126f",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "上班族30次卡（连续周期存疑）",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "4cc26ce19fb4d2009a675f7f30050f73a563ddd56da47d1e04c43b254650126f",
+              "quote": "前次逐图审阅记录：上班族30次卡（连续周期存疑）；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "395",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "4cc26ce19fb4d2009a675f7f30050f73a563ddd56da47d1e04c43b254650126f",
+              "quote": "前次逐图审阅记录：395；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "30",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "4cc26ce19fb4d2009a675f7f30050f73a563ddd56da47d1e04c43b254650126f",
+              "quote": "前次逐图审阅记录：30；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "待确认",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "4cc26ce19fb4d2009a675f7f30050f73a563ddd56da47d1e04c43b254650126f",
+              "quote": "前次逐图审阅记录：待确认；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-26",
+      "name": "三条锦鲤24h沉浸自习室 · 100小时卡",
+      "imageIds": [
+        "1f00ef8bce5a68fbff94d1ec11c175de6276725a0df91aa61e1e5a01cff5f9ec",
+        "5be4a5bdb6f1229c4c8d5e4e52314ec3e69a5a0589165119f2bb4ed3bc56f7c7",
+        "072f46e7eee129317ca98256b2c050f7f439799561b4a27b84c7ec87b5e20d09"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "三条锦鲤24h沉浸自习室",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1f00ef8bce5a68fbff94d1ec11c175de6276725a0df91aa61e1e5a01cff5f9ec",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "100小时卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1f00ef8bce5a68fbff94d1ec11c175de6276725a0df91aa61e1e5a01cff5f9ec",
+              "quote": "前次逐图审阅记录：100小时卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "435",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1f00ef8bce5a68fbff94d1ec11c175de6276725a0df91aa61e1e5a01cff5f9ec",
+              "quote": "前次逐图审阅记录：435；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "100",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1f00ef8bce5a68fbff94d1ec11c175de6276725a0df91aa61e1e5a01cff5f9ec",
+              "quote": "前次逐图审阅记录：100；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "小时",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "1f00ef8bce5a68fbff94d1ec11c175de6276725a0df91aa61e1e5a01cff5f9ec",
+              "quote": "前次逐图审阅记录：小时；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-27",
+      "name": "三条锦鲤24h沉浸自习室 · 季卡",
+      "imageIds": [
+        "5ddd53aa501d44b79149a9fbbf76adebec6893d213d21955b9a129e1ddb98e87",
+        "83c21b1e35c59041f14026c84bf0a9bc0b1b9e022c85db8f844b5e38db8e2b82"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "三条锦鲤24h沉浸自习室",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "5ddd53aa501d44b79149a9fbbf76adebec6893d213d21955b9a129e1ddb98e87",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "季卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "5ddd53aa501d44b79149a9fbbf76adebec6893d213d21955b9a129e1ddb98e87",
+              "quote": "前次逐图审阅记录：季卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "1096",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "5ddd53aa501d44b79149a9fbbf76adebec6893d213d21955b9a129e1ddb98e87",
+              "quote": "前次逐图审阅记录：1096；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "90",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "5ddd53aa501d44b79149a9fbbf76adebec6893d213d21955b9a129e1ddb98e87",
+              "quote": "前次逐图审阅记录：90；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "连续天",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "5ddd53aa501d44b79149a9fbbf76adebec6893d213d21955b9a129e1ddb98e87",
+              "quote": "前次逐图审阅记录：连续天；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-28",
+      "name": "三条锦鲤24h沉浸自习室 · 30次赠6次",
+      "imageIds": [
+        "b19df27f5f7a92ecb13a68d33e7be6e63ccffe569bdf488fee21b530e2440c9e",
+        "564358def2b346508e68e028b0a620d3591ef133aac7f0f4eb38a3aa5da7cd11",
+        "3d2c98672b26beaa2b183b89678f3b21f5a1d86651ed5655697765b2c7b2bfcb"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "三条锦鲤24h沉浸自习室",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "b19df27f5f7a92ecb13a68d33e7be6e63ccffe569bdf488fee21b530e2440c9e",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "30次赠6次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "b19df27f5f7a92ecb13a68d33e7be6e63ccffe569bdf488fee21b530e2440c9e",
+              "quote": "前次逐图审阅记录：30次赠6次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "531",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "b19df27f5f7a92ecb13a68d33e7be6e63ccffe569bdf488fee21b530e2440c9e",
+              "quote": "前次逐图审阅记录：531；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "36",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "b19df27f5f7a92ecb13a68d33e7be6e63ccffe569bdf488fee21b530e2440c9e",
+              "quote": "前次逐图审阅记录：36；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "使用日",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "b19df27f5f7a92ecb13a68d33e7be6e63ccffe569bdf488fee21b530e2440c9e",
+              "quote": "前次逐图审阅记录：使用日；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-29",
+      "name": "EONE · 3次洗吹卡",
+      "imageIds": [
+        "53603bfa166c76fc7c51e151ded502215e3d01009c7e63a3cfa411c387a4c880",
+        "c64aa118c14aa9c0ff6f0d7d40bd2d591c74e8d455a07da46b0db4277621469a",
+        "813aca900e40cc4e58c05488dad5f0f21487c41818abb03291ecfd03b72d43dc",
+        "f83bfce7a2e2f1af898f1161ce27fe7c0e2faab22a3202ac8abb512dc6e07f2c"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "EONE",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "53603bfa166c76fc7c51e151ded502215e3d01009c7e63a3cfa411c387a4c880",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "3次洗吹卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "53603bfa166c76fc7c51e151ded502215e3d01009c7e63a3cfa411c387a4c880",
+              "quote": "前次逐图审阅记录：3次洗吹卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "156",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "53603bfa166c76fc7c51e151ded502215e3d01009c7e63a3cfa411c387a4c880",
+              "quote": "前次逐图审阅记录：156；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "3",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "53603bfa166c76fc7c51e151ded502215e3d01009c7e63a3cfa411c387a4c880",
+              "quote": "前次逐图审阅记录：3；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "53603bfa166c76fc7c51e151ded502215e3d01009c7e63a3cfa411c387a4c880",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-30",
+      "name": "EONE · 工作日洗吹券",
+      "imageIds": [
+        "59aa8a769aa4797fde39a5c7c83bc6a1130105c9a6c88cb957cae96d88253f5c",
+        "0b39e46d36564bce04b2a4209a97651ff8a308b0a4c26cabb83324002fae1b95",
+        "8f16dd94de083aca7cb6f3faf774061616335b855679f8f667d98b0123c56a83"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "EONE",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "59aa8a769aa4797fde39a5c7c83bc6a1130105c9a6c88cb957cae96d88253f5c",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "工作日洗吹券",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "59aa8a769aa4797fde39a5c7c83bc6a1130105c9a6c88cb957cae96d88253f5c",
+              "quote": "前次逐图审阅记录：工作日洗吹券；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "36",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "59aa8a769aa4797fde39a5c7c83bc6a1130105c9a6c88cb957cae96d88253f5c",
+              "quote": "前次逐图审阅记录：36；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "1",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "59aa8a769aa4797fde39a5c7c83bc6a1130105c9a6c88cb957cae96d88253f5c",
+              "quote": "前次逐图审阅记录：1；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "59aa8a769aa4797fde39a5c7c83bc6a1130105c9a6c88cb957cae96d88253f5c",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-31",
+      "name": "EONE · 单次洗吹券",
+      "imageIds": [
+        "9426d66657486f7f3409853d108697fb761daa11c2a148ff3edd9bcc593f9969",
+        "fdfe804061f6366e1d1763591f920ffb7b3734b22bbe3606031c8cb6ab173f3b",
+        "262c95d6b4a949d82f30f2de4d861845ad1b366dd81cc142d752bbfe86829e73"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "EONE",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "9426d66657486f7f3409853d108697fb761daa11c2a148ff3edd9bcc593f9969",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "单次洗吹券",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "9426d66657486f7f3409853d108697fb761daa11c2a148ff3edd9bcc593f9969",
+              "quote": "前次逐图审阅记录：单次洗吹券；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "56",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "9426d66657486f7f3409853d108697fb761daa11c2a148ff3edd9bcc593f9969",
+              "quote": "前次逐图审阅记录：56；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "1",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "9426d66657486f7f3409853d108697fb761daa11c2a148ff3edd9bcc593f9969",
+              "quote": "前次逐图审阅记录：1；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "9426d66657486f7f3409853d108697fb761daa11c2a148ff3edd9bcc593f9969",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-32",
+      "name": "EONE · 3次剪发卡",
+      "imageIds": [
+        "c229d4a7e7a2558368be8323876fe0ef228638fbbb054108b62dc31ce4769631",
+        "63008d25f917f85d3727dcdcda569074e54d254d2b675829512ef97e9833f8a6",
+        "c0139bf2aa6e11894ec93f36f636b14e73f0881f09e69f0a153ce46ef22fd1fd"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "EONE",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c229d4a7e7a2558368be8323876fe0ef228638fbbb054108b62dc31ce4769631",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "3次剪发卡",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c229d4a7e7a2558368be8323876fe0ef228638fbbb054108b62dc31ce4769631",
+              "quote": "前次逐图审阅记录：3次剪发卡；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "257",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c229d4a7e7a2558368be8323876fe0ef228638fbbb054108b62dc31ce4769631",
+              "quote": "前次逐图审阅记录：257；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "3",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c229d4a7e7a2558368be8323876fe0ef228638fbbb054108b62dc31ce4769631",
+              "quote": "前次逐图审阅记录：3；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "c229d4a7e7a2558368be8323876fe0ef228638fbbb054108b62dc31ce4769631",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    },
+    {
+      "id": "review-33",
+      "name": "EONE · 单次剪发券",
+      "imageIds": [
+        "bea0dd8799a1e81ea6a35461b00cf9c854196dad4da2e3a37a415638434fa2bc",
+        "ecb02626414b0934a0360c62c208fcbc135dcb236e7abdbdaf92f9767fb113fc",
+        "274f73bca857267e5310eca13e1df951cbb5b77be573a967f92f68c0cb9cb75a"
+      ],
+      "fields": {
+        "merchant": {
+          "value": "EONE",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "bea0dd8799a1e81ea6a35461b00cf9c854196dad4da2e3a37a415638434fa2bc",
+              "quote": "商家归属来自对话确认/前次逐图审阅；不声称本图一定显示商家名",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "title": {
+          "value": "单次剪发券",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "bea0dd8799a1e81ea6a35461b00cf9c854196dad4da2e3a37a415638434fa2bc",
+              "quote": "前次逐图审阅记录：单次剪发券；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "price": {
+          "value": "84",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "bea0dd8799a1e81ea6a35461b00cf9c854196dad4da2e3a37a415638434fa2bc",
+              "quote": "前次逐图审阅记录：84；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "total": {
+          "value": "1",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "bea0dd8799a1e81ea6a35461b00cf9c854196dad4da2e3a37a415638434fa2bc",
+              "quote": "前次逐图审阅记录：1；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        },
+        "unit": {
+          "value": "次",
+          "status": "待核对",
+          "evidence": [
+            {
+              "imageId": "bea0dd8799a1e81ea6a35461b00cf9c854196dad4da2e3a37a415638434fa2bc",
+              "quote": "前次逐图审阅记录：次；请点击原图再次核对",
+              "method": "前次对话人工/助手审阅，非本次OCR自动结果"
+            }
+          ]
+        }
+      },
+      "history": [
+        {
+          "action": "载入前次逐图审阅归组及字段，不作为自动OCR成绩",
+          "at": "2026-11-08T16:50:21.089Z"
+        }
+      ],
+      "confirmed": false,
+      "note": "已载入此前对话的审阅值。候选区保留本次OCR原文，可能存在误读；请核对后标记。小时卡、组合及类型存疑的套餐暂不转入P0。"
+    }
+  ]
+}
