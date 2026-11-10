@@ -4,8 +4,12 @@
   const $ = id => document.getElementById(id);
   const { request, money, today } = window.KDZWallet;
   const Compare = window.KDZCompare;
+  const Issues = window.VericardIssues;
+  const IssueUI = window.VericardIssueUI;
   const storageKey = 'kdz-agent-analysis';
   const questionsKey = 'kdz-agent-questions';
+  const modelPreferenceKey = 'kdz-agent-use-deepseek';
+  const homePrompt = $('agentPrompt').placeholder;
   const planIds = {
     serviceId: 'agentService', referencePrice: 'agentPrice', startDate: 'agentStart',
     activationDate: 'agentActivation', extraFees: 'agentFees',
@@ -16,8 +20,11 @@
   };
   let current;
   let comparison;
+  let packages = [];
+  let purchaseLimits = {};
   let previewVisits;
   let previewDays;
+  let savedPreview;
   let chat = [];
   let pendingQuestion = '';
   let busy = false;
@@ -68,7 +75,11 @@
   function restoreChat(id) {
     try {
       const saved = JSON.parse(sessionStorage.getItem(questionsKey));
-      if (saved?.id === id && Array.isArray(saved.chat)) return saved.chat.slice(-12);
+      if (saved?.id === id && Array.isArray(saved.chat)) {
+        purchaseLimits = saved.purchaseLimits ?? null;
+        savedPreview = saved.preview;
+        return saved.chat.slice(-12);
+      }
     } catch {}
     return [];
   }
@@ -79,9 +90,13 @@
 
   async function recordQuestion(question, useDeepSeek, opening = false) {
     if (!question) return;
-    const previousPlan = comparison ? chat.findLast(turn => turn.plan)?.plan : null;
-    const newPlan = comparison ? Compare.parseVisitPlan(question, previousPlan ?? {}) : null;
-    if (opening && comparison && !newPlan) {
+    const previousPlan = packages.length ? chat.findLast(turn => turn.plan)?.plan : null;
+    const newPlan = packages.length ? Compare.parseVisitPlan(question, previousPlan ?? {}) : null;
+    const purchase = packages.length ? Compare.parsePurchaseLimits(question, packages) : { limits: {}, ambiguous: false };
+    const purchaseChanged = Object.keys(purchase.limits).length > 0;
+    purchaseLimits ??= {};
+    Object.assign(purchaseLimits, purchase.limits);
+    if (opening && comparison && !newPlan && !purchaseChanged && !purchase.ambiguous) {
       chat = [{ question, opening }, ...chat.filter(turn => !turn.opening)].slice(0, 12);
       saveChat();
       return;
@@ -102,22 +117,28 @@
       }
     }
     if (newPlan) applyPlanPreview(newPlan);
-    const answer = answerQuestion(question, selection.topics ?? [], newPlan ?? previousPlan, Boolean(newPlan));
+    const plan = newPlan ?? previousPlan;
+    const updated = Boolean(newPlan || purchaseChanged);
+    const response = !comparison && Object.keys(purchaseLimits).length && (updated || /划算|怎么买|怎么选|要买几张|需要买几张/.test(question))
+      ? answerPlan(plan)
+      : answerQuestion(question, selection.topics ?? [], plan, updated);
+    const answer = purchase.ambiguous
+      ? '请告诉我是哪一个套餐可以多买，避免把张数套到另一款卡上。' + (newPlan ? '\n' + response : '')
+      : response;
     chat = [...chat, { question, answer, provider: selection.provider, opening, ...(newPlan ? { plan: newPlan } : {}) }].slice(-12);
     saveChat();
   }
 
   function saveChat() {
     if (current) {
-      try { sessionStorage.setItem(questionsKey, JSON.stringify({ id: current.analysisId, chat })); } catch {}
+      const preview = comparison ? { visits: previewVisits, days: previewDays } : null;
+      try { sessionStorage.setItem(questionsKey, JSON.stringify({ id: current.analysisId, chat, purchaseLimits, preview })); } catch {}
     }
   }
 
-  function takeModelChoice() {
+  function useSelectedModel() {
     const input = $('agentDeepSeek');
-    const enabled = !input.disabled && input.checked;
-    input.checked = false;
-    return enabled;
+    return !input.disabled && input.checked;
   }
 
   function fieldText(key, missing) {
@@ -207,7 +228,8 @@
   function renderBadges() {
     const recognized = $('agentRecognized');
     const pending = $('agentPending');
-    const count = comparison ? comparison.offers.flatMap(packageConflicts).length : (current?.questions.length ?? 0);
+    const count = comparison ? rankedIssues(scenarioSummary(previewVisits), previewVisits).filter(issue => !issue.deferred).length :
+      (current?.questions.length ?? 0);
     recognized.hidden = !comparison && !current?.review?.type;
     recognized.querySelector('span').textContent = current?.source === 'demo' ? '次卡示例' :
       '已识别 ' + (comparison?.offers.length ?? 1) + ' 个套餐';
@@ -343,11 +365,6 @@
     daily: '每天最长使用', reserve: '预约要求', refund: '退款口径', fee: '退款手续费',
   };
 
-  function packageConflicts(offer) {
-    return Object.keys(termLabels).filter(key => (offer.evidence[key]?.length ?? 0) > 1)
-      .map(key => ({ key, offer, entries: offer.evidence[key] }));
-  }
-
   function term(offer, key, unknown = '未识别') {
     const values = (offer.evidence[key] ?? []).map(item => item.value);
     if (values.length > 1) return values.join(' / ') + '（待核对）';
@@ -382,7 +399,7 @@
     const cards = node('div', undefined, 'agent-package-grid');
     for (const offer of comparison.offers) {
       const tile = node('article', undefined, 'agent-package');
-      tile.append(node('h3', offer.shortName), node('p', offer.price === null ? '价格待确认' : money(offer.price), 'agent-package-price'));
+      tile.append(node('h3', offer.shortName + (offer.version ? ' · ' + offer.version : '')), node('p', offer.price === null ? '价格待确认' : money(offer.price), 'agent-package-price'));
       if (offer.detail) tile.append(node('p', offer.detail, 'muted'));
       let metric = benefits(offer);
       if (offer.price !== null && offer.type === 'visits' && offer.units) {
@@ -421,15 +438,33 @@
     parent.append(frame);
   }
 
-  function scenarioSummary(visits, horizon = comparison.horizon) {
-    const rows = comparison.offers.map(offer => ({ offer, row: Compare.onePackPreview(offer, visits, horizon) }));
+  function previewHorizon(visits) {
+    return previewDays ?? (comparison?.horizon && Math.max(comparison.horizon, visits));
+  }
+
+  function scenarioSummary(visits, horizon = previewHorizon(visits)) {
+    const rows = packages.map(offer => {
+      const limit = purchaseLimits[offer.images[0].id];
+      const row = Compare.packagePreview(offer, visits, horizon, limit);
+      const alternative = Compare.purchaseAlternative(offer, visits, horizon, limit);
+      let durationScenario;
+      if (!row && offer.type === 'period' && horizon && !offer.duration) {
+        for (const candidate of offer.evidence.duration ?? []) {
+          const days = Number.parseInt(candidate.value, 10);
+          const result = Compare.packagePreview({ ...offer, duration: days }, visits, horizon);
+          if (result?.missing === 0 && (!durationScenario || days < durationScenario.days)) durationScenario = { days, row: result };
+        }
+      }
+      return { offer, row, alternative, durationScenario };
+    });
     const complete = rows.filter(item => item.row?.missing === 0).sort((a, b) => a.row.paid - b.row.paid);
-    const short = rows.filter(item => item.row?.missing > 0).map(({ offer, row }) => offer.shortName + '还差 ' + row.missing + ' 天');
+    const short = rows.filter(item => item.row?.missing > 0).map(({ offer, row, alternative }) =>
+      offer.shortName + '按当前条件还差 ' + row.missing + ' 次' + (alternative ? '，可查看多份条件试算' : ''));
     let recommendation = '';
     if (complete.length > 1 && complete[0].row.paid < complete[1].row.paid) {
-      recommendation = '如果都能在适用时段内用完这 ' + visits + ' 天，' + complete[0].offer.shortName + '的试算支出更低。';
+      recommendation = '如果这 ' + visits + ' 次都符合日期和时段，' + complete[0].offer.shortName + '的试算支出更低。';
     } else if (complete.length === 1 && short.length) {
-      recommendation = complete[0].offer.shortName + '的额度可覆盖计划。' + short.join('，') + '，还需核实补买费用。';
+      recommendation = complete[0].offer.shortName + '按当前条件可覆盖计划。' + short.join('；') + '。';
     } else if (short.length) {
       recommendation = short.join('，') + '。';
     }
@@ -437,51 +472,68 @@
   }
 
   function answerPlan(plan) {
+    const caps = packages.flatMap(offer => {
+      const requested = purchaseLimits[offer.images[0].id];
+      if (!requested) return [];
+      if (offer.stackingBlocked && requested > 1) {
+        return [offer.shortName + '的截图写有同款不可叠加，本次按一份试算。'];
+      }
+      if (offer.limit > 0 && requested > offer.limit) {
+        return [offer.shortName + '的截图限购 ' + offer.limit + ' 份，和你提供的 ' + requested + ' 份有出入，先按截图限购试算。'];
+      }
+      return ['按你提供的条件，' + offer.shortName + '最多购买 ' + requested + ' 份。'];
+    });
     if (plan?.conflicting) return '你提到的用量有不同口径。请确认每周几次、持续几周，或者直接告诉我总共去几次。';
     if (!plan?.visits) {
-      if (plan?.frequency) return '已按每周 ' + plan.frequency + ' 次记录。你准备持续几周？';
-      if (plan?.weeks) return '已按连续 ' + plan.weeks + ' 周记录。你每周准备去几次？';
-      return '你每周计划去几次、持续几周？也可以直接告诉我总次数，我会按你的用量比较。';
+      const question = plan?.frequency ? '已按每周 ' + plan.frequency + ' 次记录。你准备持续几周？' :
+        plan?.weeks ? '已按连续 ' + plan.weeks + ' 周记录。你每周准备去几次？' :
+          '你计划总共去几次？也可以告诉我每周频率和持续周数。';
+      return [...caps, question].join(' ');
     }
     const { visits, weeks, frequency, days } = plan;
     if (days && visits > days) return '这段计划有 ' + visits + ' 次到访、' + days + ' 天。请确认是否同一天会去多次，再核对卡券的扣次方式。';
     const planned = frequency && weeks
       ? '每周 ' + frequency + ' 次，连续 ' + weeks + ' 周，共 ' + visits + ' 次。'
       : '按你计划的 ' + visits + ' 次比较。';
-    const { rows, complete, recommendation } = scenarioSummary(visits, days ?? comparison.horizon);
-    const notes = rows.filter(({ offer, row }) => !row && offer.type === 'period' && days && offer.duration && days > offer.duration)
-      .map(({ offer }) => offer.shortName + '的 ' + offer.duration + ' 天使用期限无法覆盖连续 ' + weeks + ' 周。');
-    const known = complete.slice(0, 2);
-    const [first, second] = known;
-    if (first && second && first.row.paid < second.row.paid) {
-      const rest = first.offer.type === 'visits' && first.offer.units > visits
-        ? '，还余 ' + (first.offer.units - visits) + ' 次' : '';
-      return planned + ' 如果到访日期和时段都符合条款，建议选 ' + money(first.row.paid) + ' 的' + first.offer.shortName +
-        '，可覆盖 ' + visits + ' 次' + rest + '，比' + second.offer.shortName + '（' + money(second.row.paid) +
-        '）少付 ' + money(second.row.paid - first.row.paid) + '。' + notes.join('');
-    }
-    const details = rows.filter(({ row }) => row).map(({ offer, row }) =>
-      offer.shortName + '付 ' + money(row.paid) + '，可覆盖 ' + row.covered + '/' + visits + ' 次。');
-    return [planned, ...details, recommendation, ...notes].filter(Boolean).join(' ');
+    const horizon = days ?? (comparison?.horizon && Math.max(visits, comparison.horizon));
+    const { rows, recommendation } = scenarioSummary(visits, horizon);
+    const details = rows.map(({ offer, row, alternative }) => {
+      if (!row) {
+        if (offer.type === 'period' && offer.duration && horizon > offer.duration) {
+          return offer.shortName + '的 ' + offer.duration + ' 天使用期限覆盖不了这 ' + horizon + ' 天的计划。';
+        }
+        return offer.shortName + '的价格、时长或有效期条件不足，暂不能完整比较。';
+      }
+      const purchase = row.quantity + ' 份' + offer.shortName + '共 ' + money(row.paid);
+      const coverage = '，可覆盖 ' + row.covered + '/' + visits + ' 次';
+      const remainder = offer.type === 'visits' ? '，' + row.quota + ' 次权益中剩 ' + row.left + ' 次' : '';
+      const branch = alternative ? ' 若可买并合用 ' + alternative.quantity + ' 份，' + money(alternative.paid) +
+        ' 可覆盖全部 ' + visits + ' 次。' : '';
+      return purchase + coverage + remainder + '。' + branch;
+    });
+    return [planned, ...caps, ...details, recommendation || '按到访日期和时段符合条款试算。'].join(' ');
   }
 
   function applyPlanPreview(plan) {
-    if (!plan?.visits || plan.visits > comparison.maximum ||
-        (plan.days && plan.visits > plan.days) || (comparison.horizon && plan.days > comparison.horizon)) return;
+    if (!comparison || !plan?.visits || (plan.days && plan.visits > plan.days)) return;
     previewVisits = plan.visits;
     previewDays = plan.days ?? null;
   }
 
-  function renderComparisonPreview(parent) {
-    const horizonDays = previewDays ?? comparison.horizon;
+  function renderComparisonPreview(parent, updateIssues) {
+    const horizonDays = previewHorizon(previewVisits);
     const sample = scenarioSummary(previewVisits, horizonDays);
-    if (sample.rows.filter(item => item.row).length < 2) return;
+    if (!sample.rows.some(item => item.row)) {
+      updateIssues(sample, previewVisits);
+      return;
+    }
     parent.append(node('h2', '实际使用成本'));
     const preview = node('section', undefined, 'agent-compare-preview');
     const caption = node('label');
     caption.htmlFor = 'agentCompareVisits';
+    caption.tabIndex = -1;
     const slider = node('input');
-    Object.assign(slider, { type: 'range', id: 'agentCompareVisits', min: '1', max: String(Math.min(comparison.maximum, horizonDays ?? comparison.maximum)), step: '1', value: String(previewVisits) });
+    Object.assign(slider, { type: 'range', id: 'agentCompareVisits', min: '1', max: String(Math.min(Math.max(comparison.maximum, previewVisits), horizonDays ?? Infinity)), step: '1', value: String(previewVisits) });
     const grid = node('div', undefined, 'agent-preview-grid');
     const note = node('p', undefined, 'agent-compare-note');
     const refresh = () => {
@@ -489,51 +541,67 @@
       previewVisits = count;
       const horizon = horizonDays ? horizonDays + ' 天内' : '';
       caption.textContent = '假设' + horizon + '到访 ' + count + ' 天';
-      const { rows, recommendation } = scenarioSummary(count, horizonDays);
-      grid.replaceChildren(...rows.map(({ offer, row }) => {
+      const summary = scenarioSummary(count, horizonDays);
+      grid.replaceChildren(...summary.rows.map(({ offer, row, alternative }) => {
         const item = node('div');
         item.append(node('p', offer.shortName, 'muted'));
         if (!row) item.append(node('strong', '条件不足'));
         else {
           item.append(node('strong', money(row.perVisit) + '/到访日'),
-            node('p', '付 ' + money(row.paid) + ' · 可覆盖 ' + row.covered + '/' + count + ' 天', 'muted'));
-          if (row.missing) item.append(node('p', '另有 ' + row.missing + ' 天未覆盖', 'agent-cost-gap'));
+            node('p', row.quantity + ' 份 · ' + money(row.paid) + ' · 可覆盖 ' + row.covered + '/' + count + ' 天', 'muted'));
+          if (row.missing) {
+            const gap = alternative ? '按一份条件，还差 ' : '按当前条件，还差 ';
+            item.append(node('p', gap + row.missing + ' 天', 'agent-cost-gap'));
+          }
+          const key = offer.images[0].id;
+          if (alternative) {
+            const branch = node('div', undefined, 'agent-stack-trial');
+            const label = '若能买并合用 ' + alternative.quantity + ' 份，' + money(alternative.paid) +
+              ' 可覆盖 ' + alternative.covered + '/' + count + ' 天。';
+            branch.append(node('strong', label), node('p', '是否允许同一人多买并合用，仍需向商家核实。', 'muted'),
+              action('按此条件试算', () => {
+                purchaseLimits[key] = alternative.quantity;
+                saveChat();
+                refresh();
+                caption.focus({ preventScroll: true });
+              }));
+            item.append(branch);
+          } else if (Object.hasOwn(purchaseLimits, key) && !offer.stackingBlocked && ['visits','single'].includes(offer.type)) {
+            item.append(node('p', '购卡份数按当前试算条件，以商家条款为准。', 'muted'),
+              action('移除这项试算条件', () => {
+                delete purchaseLimits[key];
+                saveChat();
+                refresh();
+                caption.focus({ preventScroll: true });
+              }, 'ghost'));
+          }
         }
         return item;
       }));
-      note.textContent = recommendation || '具体能否覆盖，要按你的到访日期与时段核对。';
+      note.textContent = summary.recommendation || '具体能否覆盖，要按你的到访日期与时段核对。';
+      updateIssues(summary, count);
+      renderBadges();
     };
     slider.addEventListener('input', refresh);
+    slider.addEventListener('change', saveChat);
     refresh();
     preview.append(caption, slider, grid,
-      node('p', '按每个到访日使用一次、各买一份且符合条款试算。未覆盖的天数不计入单价，补买费用也未计。', 'muted'), note);
+      node('p', '按每个到访日使用一次。已知购买上限和已选试算条件会计入结果，未计额外补买费用。', 'muted'), note);
     parent.append(preview);
   }
 
-  function renderComparisonRisks(parent) {
-    const issues = comparison.offers.flatMap(packageConflicts);
-    const fees = comparison.offers.filter(offer => offer.evidence.fee?.length === 1)
-      .map(offer => ({ offer, key: 'fee', entries: offer.evidence.fee }));
-    if (!issues.length && !fees.length) return;
-    parent.append(node('h2', '买前需要确认的条款'));
-    for (const { offer, key, entries } of [...issues, ...fees]) {
-      const item = node('article', undefined, 'agent-compare-risk');
-      item.append(node('h3', offer.shortName + ' · ' + termLabels[key]));
-      const explanation = {
-        purchase: '截图写了不同的购买后有效期，请确认最晚何时开卡。套餐的使用期限另见上表。',
-        reserve: '有的页面写免预约，有的要求提前预约。请确认是否每次到店都需要预约。',
-        refund: '截图对使用后能否退款的说明有出入，请确认核销后可退多少、如何扣费。',
-        fee: '截图提到部分退款可能产生手续费，请确认适用条件和扣费基数。',
-      };
-      item.append(node('p', explanation[key] ?? '截图有不同口径，请按原文核对。'));
-      for (const entry of entries) {
-        const image = current.images.find(file => file.id === entry.imageId);
-        const row = node('p', '「' + entry.quote + '」 ', 'agent-compare-quote');
-        if (image) row.append(link('看原图', image.url));
-        item.append(row);
-      }
-      parent.append(item);
-    }
+  function rankedIssues(summary, count) {
+    return Issues.rank(comparison.issues, summary, count, comparison.histories);
+  }
+
+  async function requestIssues(input) {
+    const target = comparison;
+    const result = await request(endpoint(current.analysisId) + '/issues', input);
+    if (target !== comparison || result.history.length < target.historyCount) return;
+    const histories = Object.create(null);
+    for (const event of result.history) (histories[event.issueId] ??= []).push(event);
+    Object.assign(target, { issues: result.issues, histories, historyCount: result.history.length,
+      rules: result.rules, historyError: '' });
   }
 
   function answerComparison(question, topics, plan, updatedPlan) {
@@ -555,46 +623,61 @@
       collect(offer => offer.price === null ? '价格待确认。' : money(offer.price) + '。');
     }
     if (topics.includes('conflicts') || /冲突|矛盾|还缺什么/.test(question)) {
-      const issues = comparison.offers.flatMap(packageConflicts);
-      lines.push(issues.length ? '待核对的条款包括 ' +
-        issues.map(({ offer, key }) => offer.shortName + '的' + termLabels[key]).join('、') + '。' : '当前截图未发现明确的条款冲突。');
+      const visits = plan?.visits ?? previewVisits;
+      const issues = rankedIssues(scenarioSummary(visits, plan?.days ?? previewHorizon(visits)), visits).filter(issue => !issue.deferred);
+      lines.push(issues.length ? '当前优先核对：' +
+        issues.slice(0, 2).map(issue => issue.offerName + '的' + issue.title).join('、') + '。' : '当前截图未发现需要优先核对的疑点。');
     }
     return lines.length ? lines.join('\n') : comparisonIntro();
   }
 
   async function loadComparison(session) {
-    if (session.source !== 'agent' || !session.review || session.images.length < 2) return;
+    if (session.source !== 'agent' || !session.review || !session.images.length) return;
     try {
       const { images } = await request(endpoint(session.analysisId) + '/comparison');
       const byId = new Map(images.map(image => [image.id, image]));
       const ordered = session.images.map(image => byId.get(image.id)).filter(Boolean);
       const grouped = Compare.groupPackages(ordered);
-      if (grouped.groups.length < 2) return;
-      const offers = grouped.groups.map((images, index) => {
+      packages = grouped.groups.map((images, index) => {
         const offer = Compare.packageSummary(images);
         return { ...offer, shortName: offer.shortName || '方案 ' + (index + 1) };
       });
+      const offers = packages;
       const horizon = Math.min(60, ...offers.filter(offer => offer.type === 'period' && offer.duration).map(offer => offer.duration));
       const hasHorizon = offers.some(offer => offer.type === 'period' && offer.duration);
       const maximum = hasHorizon ? horizon : Math.min(60, Math.max(15, ...offers.map(offer => offer.units ?? 0)));
-      comparison = { offers, horizon: hasHorizon ? horizon : null, maximum, ...grouped };
+      if (offers.length > 1) comparison = { offers, horizon: hasHorizon ? horizon : null, maximum, ...grouped,
+        issues: Issues.catalog(offers), histories: Object.create(null), historyCount: 0, rules: [], historyError: '' };
       previewVisits = Math.max(1, Math.round(maximum * .4));
       previewDays = null;
+      const recoverLimits = purchaseLimits === null;
+      purchaseLimits ??= {};
       let recoveredPlan;
-      let changed = false;
+      let changed = recoverLimits;
       chat = chat.map(turn => {
-        if (turn.plan) {
-          recoveredPlan = turn.plan;
-          return turn;
-        }
-        const plan = Compare.parseVisitPlan(turn.question, recoveredPlan ?? {});
-        if (!plan) return turn;
-        recoveredPlan = plan;
+        const plan = turn.plan ?? Compare.parseVisitPlan(turn.question, recoveredPlan ?? {});
+        if (plan) recoveredPlan = plan;
+        const purchase = recoverLimits ? Compare.parsePurchaseLimits(turn.question, offers) : null;
+        const recoveredPurchase = Object.keys(purchase?.limits ?? {}).length > 0;
+        if (recoveredPurchase) Object.assign(purchaseLimits, purchase.limits);
+        if ((!plan || turn.plan) && !recoveredPurchase) return turn;
         changed = true;
-        return { ...turn, plan, answer: answerComparison(turn.question, [], plan, true) };
+        if (comparison || Object.keys(purchaseLimits).length) {
+          return { ...turn, ...(plan ? { plan } : {}), answer: answerPlan(recoveredPlan) };
+        }
+        return { ...turn, plan };
       });
-      if (changed) saveChat();
       applyPlanPreview(recoveredPlan);
+      if (comparison && Number.isInteger(savedPreview?.visits) && savedPreview.visits > 0 &&
+          (!savedPreview.days || savedPreview.visits <= savedPreview.days)) {
+        previewVisits = savedPreview.visits;
+        previewDays = savedPreview.days ?? null;
+      }
+      if (changed) saveChat();
+      if (comparison) {
+        try { await requestIssues({ action: 'sync' }); }
+        catch { comparison.historyError = '暂时无法加载历史疑点，仍可查看本次试算。'; }
+      }
     } catch {
       // The original single-package view is still available if supporting evidence cannot load.
     }
@@ -611,8 +694,10 @@
       if (comparison.unmatched.length) parts.push(comparison.unmatched.length + ' 张截图暂未分组');
       parent.append(node('p', parts.join('，') + '，请在对比面板核对。', 'muted'));
     }
-    renderComparisonPreview(parent);
-    renderComparisonRisks(parent);
+    const { panel, update } = IssueUI.create({ state: comparison, send: requestIssues,
+      onChange: renderBadges, node, action, link });
+    renderComparisonPreview(parent, update);
+    parent.append(panel);
     parent.append(node('h2', '怎么选'));
     const schedules = comparison.offers.filter(offer => offer.evidence.weekday?.length === 1)
       .sort((a, b) => term(a, 'weekday').localeCompare(term(b, 'weekday')));
@@ -624,7 +709,9 @@
     } else {
       parent.append(node('p', '先确认每份套餐能覆盖你的到访日期、时段和次数，再比较所需支出。'));
     }
-    parent.append(node('p', '你计划一周去几天，通常是工作日白天还是晚上？', 'agent-compare-followup'));
+    if (!chat.findLast(turn => turn.plan)?.plan.visits) {
+      parent.append(node('p', '你计划总共去几次，通常在什么时段？', 'agent-compare-followup'));
+    }
     const links = node('div', undefined, 'agent-actions');
     links.append(link('进入多套餐对比', comparisonHref(), 'button'),
       action('继续提问', () => $('agentPrompt').focus()));
@@ -633,9 +720,10 @@
 
   function render() {
     const conversation = $('conversation');
+    const scrollTop = conversation.scrollTop;
     conversation.replaceChildren();
     conversation.hidden = !current && !chat.length;
-    $('agentTitle').textContent = conversation.hidden ? '今天想比较什么？' : '套餐对话';
+    $('agentPrompt').placeholder = conversation.hidden ? homePrompt : '继续问套餐条款或调整计划…';
     $('agentMain').classList.toggle('has-chat', !conversation.hidden);
     const composer = $('agentForm');
     if (conversation.hidden && conversation.previousElementSibling !== composer) conversation.before(composer);
@@ -680,6 +768,7 @@
       $('agentRecalculate').hidden = true;
       renderComparison(reply);
       renderChat(conversation);
+      conversation.scrollTop = scrollTop;
       return;
     }
     if (current.error) reply.append(node('p', '识别没有完成：' + current.error));
@@ -765,12 +854,18 @@
     if (result) links.append(action('继续提问', () => $('agentPrompt').focus()));
     if (links.childNodes.length) reply.append(links);
     renderChat(conversation);
+    conversation.scrollTop = scrollTop;
   }
 
   async function apply(session, question, useDeepSeek) {
     const isNewAnalysis = current?.analysisId !== session.analysisId;
     const needsComparison = isNewAnalysis || current?.error;
-    if (isNewAnalysis) chat = restoreChat(session.analysisId);
+    if (isNewAnalysis) {
+      packages = [];
+      purchaseLimits = {};
+      savedPreview = null;
+      chat = restoreChat(session.analysisId);
+    }
     current = session;
     if (needsComparison) {
       comparison = undefined;
@@ -828,6 +923,7 @@
 
   $('agentCancel').addEventListener('click', () => uploadController?.abort());
   $('agentChoose').addEventListener('click', () => $('agentFiles').click());
+  $('agentFocus')?.addEventListener('click', () => $('agentPrompt').focus());
   $('agentFiles').addEventListener('change', renderAttachments);
   $('agentPrompt').addEventListener('keydown', event => {
     if (event.key !== 'Enter' || event.shiftKey || event.isComposing || event.keyCode === 229) return;
@@ -846,7 +942,7 @@
         $('agentPrompt').focus();
         return;
       }
-      const useDeepSeek = takeModelChoice();
+      const useDeepSeek = useSelectedModel();
       $('agentPrompt').value = '';
       setStatus('');
       busy = true;
@@ -868,7 +964,7 @@
     if (!$('agentForm').reportValidity()) return;
     const firstQuestion = question || (!current ? chat.at(-1)?.question : '');
     const input = collectPlan();
-    const useDeepSeek = takeModelChoice();
+    const useDeepSeek = useSelectedModel();
     uploadController = new AbortController();
     $('agentCancel').hidden = false;
     try {
@@ -897,7 +993,7 @@
   });
   $('agentDemo').addEventListener('click', () => run('正在读取示例…', () => request('/api/agent/sessions', { demoId: 'visits' })));
   $('agentRetry').addEventListener('click', () => {
-    const useDeepSeek = takeModelChoice();
+    const useDeepSeek = useSelectedModel();
     run('正在重试识别…', () => request(endpoint(current.analysisId) + '/retry', { useDeepSeek }));
   });
   $('agentRecalculate').addEventListener('click', () => {
@@ -906,6 +1002,8 @@
   $('agentReset').addEventListener('click', () => {
     current = undefined;
     comparison = undefined;
+    packages = [];
+    purchaseLimits = {};
     chat = [];
     try { sessionStorage.removeItem(questionsKey); } catch {}
     remember(null);
@@ -917,10 +1015,21 @@
     setStatus('');
     $('agentPrompt').focus();
   });
+  const modelToggle = $('agentDeepSeek');
+  function restoreModelPreference() {
+    try { modelToggle.checked = localStorage.getItem(modelPreferenceKey) === 'true'; } catch {}
+  }
+  modelToggle.addEventListener('change', () => {
+    try { localStorage.setItem(modelPreferenceKey, String(modelToggle.checked)); } catch {}
+  });
+  window.addEventListener('storage', event => {
+    if (event.key === modelPreferenceKey && !modelToggle.disabled) restoreModelPreference();
+  });
   request('/api/agent/capabilities').then(({ deepseek }) => {
     if (!deepseek) return;
-    $('agentDeepSeek').disabled = false;
-    $('agentModelLabel').textContent = '本次使用 DeepSeek · 发送脱敏文字';
+    restoreModelPreference();
+    modelToggle.disabled = false;
+    $('agentModelLabel').textContent = '使用 DeepSeek · 发送脱敏文字';
   }).catch(() => {});
   fillPlan();
   const id = initialId();

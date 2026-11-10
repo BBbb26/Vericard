@@ -4,7 +4,7 @@ window.KDZWalletDashboard = (() => {
   const W = window.KDZWallet;
   const $ = id => document.getElementById(id);
   const selectionKey = 'kdz-wallet-selected';
-  const labels = { all:'全部', held:'使用中', expiring:'临期', pending:'待核对', ended:'已结束', archived:'已归档' };
+  const labels = { all:'全部', held:'使用中', expiring:'临期', pending:'待核对', info:'信息待补充', ended:'已结束', archived:'已归档' };
   const dayLabels = { active:'正常使用', not_started:'尚未生效', activation_unknown:'生效日待核对', validity_unknown:'有效期待核对', expired:'已到期', closed:'权益已终止' };
   const useTypes = ['consume','consume_confirmation'];
   let cards = [], today = '', filter = 'all', selectedId = '', detail = null, listMode = false;
@@ -69,7 +69,11 @@ window.KDZWalletDashboard = (() => {
   }
 
   function pending(card) {
-    return W.pendingCount(card) > 0 || ['activation_unknown','validity_unknown'].includes(card.status) ||
+    return W.pendingCount(card) > 0;
+  }
+
+  function needsInfo(card) {
+    return ['activation_unknown','validity_unknown'].includes(card.status) ||
       (card.type === 'stored_value' && card.remaining.principalCents === null);
   }
 
@@ -121,6 +125,7 @@ window.KDZWalletDashboard = (() => {
       if (key === 'held') return !ended(card) && card.status === 'active';
       if (key === 'expiring') return !ended(card) && W.isExpiring(card);
       if (key === 'pending') return pending(card);
+      if (key === 'info') return needsInfo(card);
       return key !== 'ended' || ended(card);
     });
   }
@@ -146,7 +151,7 @@ window.KDZWalletDashboard = (() => {
   function filters() {
     const overview = $('walletStats');
     overview.replaceChildren(...[
-      ['held','使用中','layers'],['expiring','临期提醒','calendar'],['pending','待核对','target'],
+      ['held','使用中','layers'],['expiring','临期提醒','calendar'],['pending','待核对','target'],['info','信息待补充','message'],
     ].map(([key,label,image]) => {
       const tile = button('',() => changeFilter(key),'panel wallet-stat');
       tile.dataset.filter = key;
@@ -188,6 +193,7 @@ window.KDZWalletDashboard = (() => {
     $('walletListPicker').hidden = !listMode;
     $('walletViewMode').setAttribute('aria-pressed',String(listMode));
     $('walletViewMode').textContent = listMode ? '卡片模式' : '列表模式';
+    $('walletScrollHint').hidden = listMode || visible.length <= 5;
     $('walletPrev').disabled = $('walletNext').disabled = visible.length < 2;
     if (listMode) {
       $('walletListPicker').replaceChildren(...visible.map(card => {
@@ -198,7 +204,13 @@ window.KDZWalletDashboard = (() => {
         return node;
       }));
     } else {
-      deck.replaceChildren(...visible.slice(0,3).map((_,layer) => {
+      const view = index >= 0 ? primary(visible[index]) : null;
+      $('walletPocketLabel').textContent = view ? view.label : '';
+      $('walletPocketValue').textContent = view ? view.value : '';
+      deck.dataset.count = String(Math.min(5, visible.length));
+      deck.dataset.scroll = String(visible.length > 5);
+      deck.closest('.wallet-deck-panel')?.classList.toggle('single-card', visible.length === 1);
+      $('walletDeckCards').replaceChildren(...visible.map((_,layer) => {
         const card = visible[(index + layer) % visible.length];
         const view = primary(card);
         const face = button('',() => { if (Date.now() >= ignoreClickUntil) choose(card.id,true); },'wallet-stack-card');
@@ -226,7 +238,7 @@ window.KDZWalletDashboard = (() => {
         })));
     }
     if (animate && !listMode && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      deck.querySelector('[data-layer="0"]')?.animate([{translate:'0 7px',opacity:.88},{translate:'0 0',opacity:1}],
+      deck.querySelector('[data-layer="0"]')?.animate([{translate:'0 7px'},{translate:'0 0'}],
         {duration:220,easing:'ease-out'});
     }
     if (focus) {
@@ -251,11 +263,72 @@ window.KDZWalletDashboard = (() => {
     title.append(icon('spark'),document.createTextNode('权益助手'));
     group.append(title);
     const notice = card.attention?.[0];
-    const message = notice ? W.attentionText(notice) : pending(card) ? '有权益信息待核对，可在详情查看。' : '当前没有需要处理的权益事项。';
+    const message = notice ? W.attentionText(notice) :
+      pending(card) ? '有消费或对账待处理，可在详情查看。' :
+        needsInfo(card) ? '点击「补充信息」补全后，剩余权益和到期日会自动计算。' : '当前没有需要处理的权益事项。';
     group.append(element('p',message,'muted'));
     if (notice) group.append(link('查看' + notice.label + ' →',route(card,notice.anchor),'home-link'));
     group.append(element('small','基于本机已记录的规则和流水','muted'));
     return group;
+  }
+
+  let infoCard = null;
+  function infoRow(labelText, control) {
+    const label = element('label');
+    label.append(element('span', labelText), control);
+    return label;
+  }
+  function openInfo(card) {
+    infoCard = card;
+    const dialog = $('walletInfoDialog');
+    const fields = $('walletInfoFields');
+    fields.replaceChildren();
+    $('walletInfoStatus').hidden = true;
+    $('walletInfoStatus').textContent = '';
+    $('walletInfoLead').textContent = '正在读取卡片规则…';
+    dialog.showModal();
+    const render = full => {
+      if (!full || infoCard?.id !== card.id) return;
+      const validity = full.plan?.rules?.validity;
+      const deduction = full.plan?.rules?.deduction;
+      const validityMissing = !validity || ['activation_unknown','validity_unknown'].includes(full.status);
+      const deductionMissing = full.plan?.type === 'stored_value' && (full.remaining?.principalCents === null || !deduction);
+      const notes = [];
+      if (deductionMissing) notes.push('这张储值卡还没确认先扣本金还是先扣赠送金，所以剩余金额只能显示区间。');
+      if (validityMissing) notes.push('这张卡还缺生效日或有效期，所以无法计算到期日。');
+      $('walletInfoLead').textContent = notes.length ? notes.join('') + ' 补充后会自动重新计算。' : '这张卡的信息已经完整。';
+      if (!notes.length) return;
+      if (validityMissing) {
+        const activation = element('input'); activation.id = 'infoActivation';
+        activation.type = 'date'; activation.max = today;
+        activation.value = full.purchase?.activationDate || full.purchase?.purchasedOn || today;
+        fields.append(infoRow('生效日', activation));
+        const select = element('select'); select.id = 'infoValidity';
+        select.append(new Option('生效后固定天数','from_activation'), new Option('固定截止日','fixed'), new Option('无固定截止','unlimited'));
+        select.value = ['from_activation','fixed','unlimited'].includes(validity?.kind) ? validity.kind : 'from_activation';
+        fields.append(infoRow('有效期', select));
+        const days = element('input'); days.id = 'infoDays';
+        days.type = 'number'; days.min = '1'; days.step = '1'; days.value = validity?.days ?? ''; days.placeholder = '例如 90';
+        fields.append(infoRow('生效后有效天数', days));
+        const end = element('input'); end.id = 'infoEnd';
+        end.type = 'date'; end.value = validity?.endDate ?? '';
+        fields.append(infoRow('固定截止日', end));
+        const sync = () => {
+          days.parentElement.hidden = select.value !== 'from_activation';
+          end.parentElement.hidden = select.value !== 'fixed';
+        };
+        select.addEventListener('change', sync); sync();
+      }
+      if (deductionMissing) {
+        const select = element('select'); select.id = 'infoDeduction';
+        select.append(new Option('请选择',''), new Option('先扣本金','principal_first'), new Option('先扣赠送金','bonus_first'), new Option('按初始比例扣','proportional'));
+        if (['principal_first','bonus_first','proportional'].includes(deduction)) select.value = deduction;
+        fields.append(infoRow('消费先扣哪一部分', select));
+      }
+    };
+    if (detail?.id === card.id) render(detail);
+    else W.request('/api/wallet/cards/' + card.id).then(({ card: full }) => { detail = full; render(full); })
+      .catch(error => { $('walletInfoLead').textContent = '读取失败：' + error.message; });
   }
 
   function renderSelected(card) {
@@ -285,10 +358,16 @@ window.KDZWalletDashboard = (() => {
       meta.append(element('div','已记录实扣 ' + W.money(total),'muted'));
     }
     const actions = element('div',undefined,'actions wallet-selected-actions');
-    const quick = button(card.type === 'time_pass' ? '记录到访' : '记录消费',() => openQuick(card),'');
-    quick.id = 'walletQuickOpen';
-    quick.disabled = card.archived || ended(card) || card.status === 'not_started';
-    actions.append(quick,link('查看详情',route(card),'button secondary'));
+    if (needsInfo(card)) {
+      const fix = button('补充信息',() => openInfo(card),'');
+      fix.id = 'walletInfoOpen';
+      actions.append(fix, link('查看完整详情',route(card),'button secondary'));
+    } else {
+      const quick = button(card.type === 'time_pass' ? '记录到访' : '记录消费',() => openQuick(card),'');
+      quick.id = 'walletQuickOpen';
+      quick.disabled = card.archived || ended(card) || card.status === 'not_started';
+      actions.append(quick,link('查看详情',route(card),'button secondary'));
+    }
     const result = [head,balance,meta,actions,assistant(card)];
     if (card.archived || ended(card)) {
       const action = button(card.archived ? '取消归档' : '归档此卡',() => archive(card),'ghost');
@@ -604,6 +683,63 @@ window.KDZWalletDashboard = (() => {
       }
     });
     $('walletDeck').addEventListener('pointercancel',() => { swipe = null; });
+    $('walletInfoCancel').addEventListener('click',() => $('walletInfoDialog').close());
+    $('walletInfoDialog').addEventListener('close',() => { infoCard = null; });
+    $('walletInfoSave').addEventListener('click', async () => {
+      if (!infoCard) return;
+      const status = $('walletInfoStatus');
+      const report = (message,state='error') => { status.textContent = message; status.dataset.state = state; status.hidden = false; };
+      const activation = $('infoActivation'), validity = $('infoValidity');
+      const days = $('infoDays'), end = $('infoEnd'), deduction = $('infoDeduction');
+      const data = {};
+      if (validity) {
+        if (!activation?.value) return report('请填写生效日。');
+        const kind = validity.value;
+        data.activationDate = activation.value;
+        data.validity = { kind };
+        if (kind === 'from_activation') {
+          const count = Number(days?.value);
+          if (!Number.isInteger(count) || count < 1) return report('请填写有效天数。');
+          data.validity.days = String(count);
+        }
+        if (kind === 'fixed') {
+          if (!end?.value) return report('请填写固定截止日。');
+          data.validity.endDate = end.value;
+        }
+      }
+      if (deduction) {
+        if (!deduction.value) return report('请选择消费先扣哪一部分。');
+        data.deduction = deduction.value;
+      }
+      if (!Object.keys(data).length) return report('没有需要补充的信息。');
+      $('walletInfoSave').disabled = true;
+      report('正在保存…','loading');
+      try {
+        const id = infoCard.id;
+        await W.write('/api/wallet/cards/' + id + '/profile','profile:' + id,data);
+        $('walletInfoDialog').close();
+        filter = 'all';
+        await load(id,'卡片信息已补充，已重新计算。');
+      } catch (error) { report(error.message); }
+      finally { $('walletInfoSave').disabled = false; }
+    });
+    const maybeOpenEnroll = () => {
+      let saved = null;
+      try { saved = JSON.parse(sessionStorage.getItem('kdz-wallet-enroll') || 'null'); } catch {}
+      if (!saved) return;
+      try { sessionStorage.removeItem('kdz-wallet-enroll'); } catch {}
+      try { history.replaceState(null, '', 'wallet.html'); } catch {}
+      if (!window.KDZWalletEnroll) return;
+      window.KDZWalletEnroll.open({
+        prefill: saved,
+        images: (saved.imageIds || []).map(id => ({ id })),
+        offerId: saved.groupId || '',
+        onSaved: id => {
+          filter = 'all';
+          load(id, '卡片已加入卡包。').catch(error => status('卡片已保存，列表刷新失败 · ' + error.message, 'warning'));
+        },
+      });
+    };
     return load().catch(error => {
       status('暂无法读取卡包 · ' + error.message,'error');
       const retry = button('重新读取卡包', async () => {
@@ -613,7 +749,7 @@ window.KDZWalletDashboard = (() => {
         finally { retry.disabled = false; }
       });
       $('walletStatus').after(retry);
-    });
+    }).finally(maybeOpenEnroll);
   }
 
   return { init, primary };

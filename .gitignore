@@ -7,6 +7,7 @@ data/ocr-models/*.gz
 /test-results.txt
 /tmp-*.js
 /tmp-*.txt
+/ERR
 node_modules/
 .env
 .env.*

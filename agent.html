@@ -9,40 +9,46 @@
   <title>Vericard · 套餐分析</title>
   <link rel="stylesheet" href="design-system.css">
   <link rel="stylesheet" href="agent.css">
+  <link rel="stylesheet" href="/assets/home-threads.css">
 </head>
 <body class="agent-page">
 <aside class="app-shell-sidebar" data-app-shell data-page="agent" aria-label="Vericard 导航"></aside>
 <div class="shell-content">
+  <div id="agentThreads" class="agent-threads" aria-hidden="true"></div>
   <header class="shell-header">
-    <nav class="breadcrumb" aria-label="页面位置"><span aria-current="page">AI 助手</span></nav>
-    <div class="shell-header-actions"><span class="shell-local">本机运行</span></div>
+    <a class="agent-home-brand" href="/"><span data-icon="spark" aria-hidden="true"></span>Vericard AI 助手</a>
+    <nav class="breadcrumb agent-chat-crumb" aria-label="页面位置"><span aria-current="page">AI 助手</span></nav>
+    <div class="shell-header-actions">
+      <span class="shell-local">本机运行</span>
+    </div>
   </header>
   <main id="agentMain" class="agent-main">
     <header class="agent-intro" data-enter>
-      <p class="eyebrow agent-wordmark"><span data-icon="brand" aria-hidden="true"></span>Vericard</p>
-      <h1 id="agentTitle">今天想比较什么？</h1>
-      <p class="agent-intro-copy">上传套餐截图，或描述你想买的套餐和使用计划。</p>
+      <h1 id="agentTitle"><span class="agent-home-title">Vericard <span aria-hidden="true">·</span> <strong>智能对比助手</strong></span><span class="agent-chat-title">套餐对话</span></h1>
+      <p class="agent-intro-copy">上传套餐截图，整理关键信息、发现条款疑点，再按你的使用计划比较。</p>
       <div id="agentBadges" class="agent-badges" aria-live="polite" hidden>
         <span id="agentRecognized" class="agent-badge" data-icon="check" hidden><span></span></span>
         <span id="agentPending" class="agent-badge agent-badge-pending" data-icon="message" hidden><span></span></span>
       </div>
     </header>
 
-    <form id="agentForm" class="agent-composer" novalidate aria-label="开始套餐分析">
+    <form id="agentForm" class="agent-composer" data-enter novalidate aria-label="开始套餐分析">
       <div id="agentComposer" class="agent-composer-box">
         <label class="agent-visually-hidden" for="agentPrompt">问一个套餐问题</label>
-        <textarea id="agentPrompt" rows="2" maxlength="480" placeholder="例如：我每周去三次，哪种套餐更适合？" aria-describedby="agentHint"></textarea>
+        <textarea id="agentPrompt" rows="2" maxlength="480" placeholder="上传套餐截图，或描述你的需求。例如，我每周去三次，哪种套餐更适合？" aria-describedby="agentHint"></textarea>
         <ul id="agentAttachments" class="agent-attachments" aria-label="已选截图" hidden></ul>
         <div class="agent-composer-actions">
           <input class="agent-visually-hidden" id="agentFiles" type="file" accept="image/png,image/jpeg" multiple tabindex="-1" aria-label="选择套餐截图">
-          <button id="agentChoose" class="secondary agent-attach" type="button" data-icon="image"><span>上传图片</span></button>
+          <div class="agent-compose-tools">
+            <button id="agentChoose" class="secondary agent-attach" type="button" data-icon="image"><span>上传图片</span></button>
+          </div>
           <button id="agentUpload" class="agent-submit" type="submit" data-icon="send"><span>开始分析</span></button>
         </div>
       </div>
       <p id="agentHint" class="agent-visually-hidden">支持 1–8 张 PNG 或 JPEG 截图，每张不超过 12 MB。</p>
       <div class="agent-tools">
         <details id="agentPlan">
-          <summary>填写使用计划</summary>
+          <summary>填写使用计划<span class="agent-plan-optional">（可选）</span></summary>
           <div class="agent-inputs">
             <label>计划使用的项目<input id="agentService" maxlength="120" placeholder="例如：日间自习"></label>
             <label>单次参考价（元）<input id="agentPrice" type="number" min="0" step=".01"></label>
@@ -59,7 +65,7 @@
           <span id="agentModelLabel">DeepSeek 未配置 · 本地分析</span>
         </label>
         <div class="agent-secondary">
-          <button id="agentDemo" type="button" class="ghost">体验次卡示例</button>
+          <button id="agentDemo" type="button" class="ghost agent-example">体验示例<span data-icon="chevron" aria-hidden="true"></span></button>
           <button id="agentRetry" type="button" class="secondary" hidden>重试识别</button>
           <button id="agentReset" type="button" class="ghost" hidden>开始新分析</button>
         </div>
@@ -70,15 +76,38 @@
       </div>
     </form>
 
-    <section id="conversation" class="agent-thread" aria-label="套餐对话" aria-live="polite" hidden></section>
+    <ul class="agent-home-features" aria-label="AI 助手功能" data-enter>
+      <li><span class="agent-feature-icon" data-icon="image" aria-hidden="true"></span><div><strong>识别套餐信息</strong><p>提取价格、权益和有效期。</p></div></li>
+      <li><span class="agent-feature-icon" data-icon="spark" aria-hidden="true"></span><div><strong>发现条款疑点</strong><p>找出值得核对的歧义和差异。</p></div></li>
+      <li><span class="agent-feature-icon" data-icon="chart" aria-hidden="true"></span><div><strong>智能对比推荐</strong><p>按使用计划比较支出和覆盖。</p></div></li>
+    </ul>
+
+    <section id="conversation" class="agent-thread" aria-label="套餐对话" aria-live="polite" tabindex="0" hidden></section>
 
   </main>
 </div>
+<dialog id="agentIssueDialog" class="shell-dialog" aria-labelledby="agentIssueDialogTitle">
+  <form id="agentIssueReply">
+    <h2 id="agentIssueDialogTitle">记录商家回复</h2>
+    <p id="agentIssueSubject" class="muted"></p>
+    <label for="agentIssueText">商家回复原文</label>
+    <textarea id="agentIssueText" rows="5" maxlength="1200" required></textarea>
+    <p class="muted">回复保存在本机，供你复核。试算条件可在比较区单独修改。</p>
+    <p id="agentIssueReplyStatus" class="state-line" role="status" hidden></p>
+    <div class="actions">
+      <button type="submit">保存回复</button>
+      <button type="button" class="secondary" id="agentIssueClose">关闭</button>
+    </div>
+  </form>
+</dialog>
 <script src="app-shell.js" defer></script>
 <script src="wallet-client.js" defer></script>
 <script src="offer-terms.js" defer></script>
 <script src="extract.js" defer></script>
 <script src="comparison.js" defer></script>
+<script src="agent-issues.js" defer></script>
+<script src="agent-issue-ui.js" defer></script>
 <script src="agent-ui.js" defer></script>
+<script src="/assets/home-threads.js" defer></script>
 </body>
 </html>

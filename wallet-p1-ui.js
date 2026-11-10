@@ -4,7 +4,7 @@ function createWalletP1({ updateCard, wallet, cardId, reveal }) {
   const $ = id => document.getElementById(id);
   const eventNames = {
     recharge: '追加充值或次数', refund: '退款记录', reconciliation: '商家余额对账', adjustment: '余额校正',
-    reversal: '流水冲正', promise: '补录办卡前约定', evidence: '凭证记录', fulfillment_review: '扣费差异核对',
+    reversal: '撤销错误记录', profile_update: '补充卡片信息', promise: '补录办卡前约定', evidence: '凭证记录', fulfillment_review: '扣费差异核对',
   };
   const categories = { purchase: '支付凭证', statement: '消费或余额账单', terms: '原始套餐条款', other: '其他材料' };
   const statuses = { matched: '账面一致', needs_review: '差异待核对', split_review: '分账待确认',
@@ -70,7 +70,7 @@ function createWalletP1({ updateCard, wallet, cardId, reveal }) {
     $('advancedConfirmText').textContent = ({
       recharge: '我已核对追加权益沿用原卡的规则、比例和期限',
       adjustment: '我确认按这条商家记录校正账面',
-      reversal: '我确认用新流水冲正这条记录',
+      reversal: '我确认撤销这条记录',
       fulfillment_review: '我已核实这笔差异并记录结果',
       promise: '这段原文来自办卡前的约定并适用于这张卡',
     })[type] ?? '';
@@ -113,7 +113,7 @@ function createWalletP1({ updateCard, wallet, cardId, reveal }) {
     $('advancedHint').textContent = ({
       reconciliation: '按当前账面比较。保存商家显示值后，可另行确认校正。',
       adjustment: target ? '确认将这条对账记录应用到账面。填写依据后保存。' : '',
-      reversal: target ? '新建冲正流水，原记录保留。填写冲正原因后保存。' : '',
+      reversal: target ? '会新增一条撤销记录，原记录保留。填写撤销原因后保存。' : '',
       promise: '适用明确到项目和金额的固定扣费。备注写明合同、海报或商家答复来源。',
       fulfillment_review: '填写商家答复或核对结果。实扣和历史流水照常保留。',
       evidence: '图片和文字来源保存在本机，可关联到具体流水。',
@@ -195,8 +195,8 @@ function createWalletP1({ updateCard, wallet, cardId, reveal }) {
   }
 
   function decorate(item, event) {
-    if (event.reversed) item.append(node('p', '已冲正 · 原记录保留', 'badge'));
-    if (event.canReverse) item.append(action('冲正此记录', () => begin('reversal', event)));
+    if (event.reversed) item.append(node('p', '已撤销 · 原记录保留', 'badge'));
+    if (event.canReverse) item.append(action('撤销这条记录', () => begin('reversal', event)));
     return item;
   }
 
@@ -234,7 +234,9 @@ function createWalletP1({ updateCard, wallet, cardId, reveal }) {
     } else if (event.type === 'archive') {
       item.append(node('p', event.archived ? '卡片已归档' : '卡片已取消归档'));
     } else if (event.type === 'reversal') {
-      item.append(node('p', '被冲正记录 ' + event.targetId, 'muted'));
+      item.append(node('p', '被撤销的记录 ' + event.targetId, 'muted'));
+    } else if (event.type === 'profile_update') {
+      item.append(node('p', '已补充生效日、有效期或扣减顺序', 'muted'));
     }
     if (event.note) item.append(node('p', event.note));
     return decorate(item, event);

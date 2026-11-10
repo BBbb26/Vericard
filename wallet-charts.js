@@ -3,7 +3,7 @@
 window.KDZWalletCharts = (() => {
   const W = window.KDZWallet;
   const shapes = { opening:'开卡', consume:'消费入账', consume_confirmation:'补录实扣', recharge:'追加权益',
-    refund:'退款', adjustment:'余额校正', reversal:'冲正', reconciliation:'商家余额对账' };
+    refund:'退款', adjustment:'余额校正', reversal:'撤销记录', reconciliation:'商家余额对账',profile_update:'补充卡片信息' };
 
   function node(tag, value, className) {
     const item = document.createElement(tag);

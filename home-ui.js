@@ -64,7 +64,7 @@
     }
     if (draft && !done) {
       $('homeResume').hidden = false;
-      $('homeResumeTitle').textContent = draft.mode === 'study' ? '自习室比较' : '咖啡比较';
+      $('homeResumeTitle').textContent = '套餐比较';
       $('homeResumeMeta').textContent = draft.offers.length + ' 个方案 · ' + (draft.confirmed ? '待填写用法' : '待核对方案');
       $('homeResumeLink').href = 'comparison.html#' + (draft.confirmed ? 'profileSection' : 'optionsSection');
     } else {
@@ -123,7 +123,7 @@
     if (comparison.done) {
       const { draft } = comparison;
       rows.push(item(
-        draft.mode === 'study' ? '自习室比较' : '咖啡比较',
+        '套餐比较',
         '当前标签页 · ' + draft.offers.length + ' 个方案',
         'comparison.html#resultSection', 'chart', '已完成', '多方案', 'success',
       ));

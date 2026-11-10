@@ -2,34 +2,34 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Vericard · 套餐信息核对</title>
+  <title>Vericard · 套餐确认</title>
   <link rel="stylesheet" href="design-system.css"><link rel="stylesheet" href="app-pages.css">
 </head>
 <body>
 <aside class="app-shell-sidebar" data-app-shell data-page="workspace" aria-label="Vericard 导航"></aside>
 <div class="shell-content">
   <header class="shell-header">
-    <nav class="breadcrumb" aria-label="页面位置"><a href="/home.html">工作台</a><span data-icon="chevron"></span><span>购前分析</span><span data-icon="chevron"></span><span aria-current="page">单套餐核对</span></nav>
+    <nav class="breadcrumb" aria-label="页面位置"><a href="/home.html">工作台</a><span data-icon="chevron"></span><span>购前分析</span><span data-icon="chevron"></span><span aria-current="page">套餐确认</span></nav>
     <div class="shell-header-actions"><span class="shell-local">本机运行</span><button id="save" class="secondary" type="button">保存项目</button></div>
   </header>
   <main class="product-page extract-page">
     <header class="product-heading">
-      <p class="eyebrow">办卡前 · 截图取证</p>
-      <h1>套餐上传与信息核对</h1>
-      <p class="muted">核对截图里的价格、权益和使用限制，再继续试算。</p>
+      <p class="eyebrow">办卡前 · 信息确认</p>
+      <h1>套餐确认</h1>
+      <p class="muted">核对截图中影响花费的关键信息，再进入消费分析。</p>
       <p id="status" class="state-line" role="status" aria-live="polite" data-state="loading">正在读取本地项目…</p>
     </header>
     <div class="product-columns review-columns">
       <div class="product-stack review-evidence">
-        <section id="uploadPanel" class="panel panel-featured" aria-labelledby="uploadHeading">
-          <div class="section-heading"><h2 id="uploadHeading">上传套餐截图</h2><span class="badge">本地 OCR</span></div>
+        <details id="uploadPanel" class="panel upload-fold">
+          <summary>补充截图与识别</summary>
           <p id="typeGuide" class="muted">可选择多张 PNG 或 JPEG。请优先上传价格页及完整使用条款。</p>
           <label class="file-drop">选择截图<input id="files" type="file" accept="image/png,image/jpeg" multiple></label>
           <div class="actions"><button id="upload" type="button">上传并识别</button><button id="retry" class="secondary" type="button">识别未完成图片</button></div>
           <p id="uploadHint" class="state-line" role="status" aria-live="polite" hidden></p>
-        </section>
+        </details>
         <section class="panel evidence-panel">
-          <div class="section-heading"><h2>原图证据</h2><button id="backEditor" class="ghost" type="button">回到核对字段</button></div>
+          <div class="section-heading"><h2>原图证据</h2><button id="backEditor" class="ghost" type="button">回到关键信息</button></div>
           <p id="imageName" class="muted evidence-name">选择图片或字段证据。</p>
           <div id="imageScroll" class="image-scroll"><div id="stage" class="evidence-stage"><img id="original" alt="所选商品截图" hidden><div id="box" hidden></div></div></div>
           <a id="fullImage" target="_blank" rel="noopener" hidden>打开完整原图</a>
@@ -39,8 +39,7 @@
         </section>
       </div>
       <div class="product-stack review-form-column">
-        <section class="panel">
-          <div class="section-heading"><h2>核对套餐信息</h2><span id="groupState" class="badge" data-tone="neutral">待载入</span></div>
+        <section class="panel review-main-panel">
           <details class="group-picker">
             <summary id="groupPickerTitle">切换套餐分组</summary><div id="groups" class="group-list"></div>
             <div class="actions"><button id="newGroup" class="secondary" type="button">新建空组</button><button id="suggest" class="ghost" type="button">重新建议归组</button></div>
@@ -50,21 +49,27 @@
           <div id="editor" hidden>
             <section class="review-summary" id="reviewSummary" aria-labelledby="reviewSummaryTitle">
               <div class="review-summary-head">
-                <h3 id="reviewSummaryTitle">套餐摘要</h3>
+                <h2 id="reviewSummaryTitle">关键信息</h2>
+                <span id="groupState" class="badge" data-tone="neutral">待载入</span>
                 <button id="aiSummarize" class="secondary" type="button">AI 整理</button>
               </div>
-              <div id="knownChips" class="review-chips"></div>
+              <div id="knownChips" class="review-chips review-rows"></div>
               <details class="review-unprovided" id="reviewUnprovided">
-                <summary>资料待补充 <span id="unknownCount"></span></summary>
+                <summary>其他资料与条款 <span id="unknownCount"></span></summary>
                 <div id="unknownChips" class="review-chips"></div>
               </details>
+              <div id="reviewHints" class="review-hints" hidden><h3>需要你确认</h3><div id="hintItems"></div></div>
+              <div class="review-confirm-row">
+                <p class="muted">「按截图确认」只确认截图中已提取的内容，冲突项不会被自动确认。</p>
+                <button id="confirmAll" class="secondary" type="button">按截图确认以上信息</button>
+              </div>
             </section>
-            <div id="reviewHints" class="review-hints" hidden><h3>优先核对</h3><div id="hintItems"></div></div>
-            <div class="actions"><button id="toDecision" type="button">确认信息并继续分析</button><a href="/home.html" class="button ghost">返回工作台</a></div>
+            <label class="page-check review-group-check"><input id="groupConfirmed" type="checkbox">以上截图属于同一套餐</label>
+            <p id="reviewError" class="state-line" data-state="error" role="status" hidden></p>
+            <div class="actions"><button id="toDecision" type="button">确认并分析</button><a href="/home.html" class="button ghost">返回工作台</a></div>
             <details id="advancedReview" class="review-advanced">
-              <summary>编辑字段、来源和历史</summary>
+              <summary>全部字段、来源与历史</summary>
               <label>分组名称<input id="groupName"></label>
-              <label class="page-check"><input id="groupConfirmed" type="checkbox">已核对这些截图属于同一商品</label>
               <div id="fields" class="review-fields"></div>
               <label>补充说明 / 用户或商家确认记录<textarea id="groupNote" rows="3"></textarea></label>
               <details>
@@ -82,6 +87,7 @@
 <dialog id="aiDialog" class="shell-dialog ai-summary" aria-labelledby="aiTitle">
   <div class="section-heading"><h2 id="aiTitle">AI 整理</h2><button id="aiClose" class="ghost" type="button">关闭</button></div>
   <p id="aiStatus" class="state-line" role="status" aria-live="polite"></p>
+  <label id="aiModel" class="ai-model" hidden><input id="aiDeepSeek" type="checkbox" disabled><span id="aiModelLabel">使用 DeepSeek 文本整理</span></label>
   <div id="aiMeta" class="ai-meta"></div>
   <div id="aiFields"></div>
   <div id="aiQuestions"></div>

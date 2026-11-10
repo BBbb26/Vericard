@@ -21,6 +21,12 @@ function positive(value) {
   return Number.isSafeInteger(count) && count > 0 ? count : null;
 }
 
+function dayCount(value) {
+  const match = /^(\d+)\s*(?:天|日)?$/.exec(String(value ?? '').trim());
+  const count = match ? Number(match[1]) : null;
+  return Number.isSafeInteger(count) && count > 0 ? count : null;
+}
+
 function day(value) {
   try { return date(value); } catch { return null; }
 }
@@ -42,7 +48,7 @@ function validity(read, bonus = false) {
   if (selected !== 1) return null;
   if (mode === '同主卡' && bonus) return { kind: 'same_as_plan' };
   if (mode === '无期限') return { kind: 'unlimited' };
-  if (days && positive(days)) return { kind: 'from_activation', days: positive(days) };
+  if (days && dayCount(days)) return { kind: 'from_activation', days: dayCount(days) };
   if (ends && day(ends) && (bonus || !start || (day(start) && start <= ends))) {
     return { kind: 'fixed', startDate: bonus ? null : day(start), endDate: day(ends) };
   }
@@ -50,7 +56,7 @@ function validity(read, bonus = false) {
 }
 
 function reviewGroup(group, images) {
-  if (!group || !group.confirmed) throw new Error('请先在截图工作台确认归组。');
+  if (!group || !group.confirmed) throw new Error('请先回到套餐确认页，勾选「以上截图属于同一套餐」。');
   return buildReview(group, E.candidates(group, images));
 }
 

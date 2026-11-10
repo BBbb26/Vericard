@@ -38,13 +38,11 @@
       <p id="offerError" class="state-line" data-state="error" role="status" hidden></p>
     </section>
     <section id="profileSection" class="panel" hidden aria-labelledby="profileHeading">
-      <div class="section-heading"><h2 id="profileHeading" tabindex="-1">你准备怎么用？</h2>
-        <label class="compare-mode">比较场景<select id="compareMode"><option value="coffee">咖啡与按次消费</option><option value="study">自习室与按时使用</option></select></label>
-      </div>
+      <div class="section-heading"><h2 id="profileHeading" tabindex="-1">你准备怎么用？</h2></div>
       <p class="muted">先填写使用量。日期和时段只在影响套餐适用性时补充。</p>
       <form id="profileForm">
         <div id="coffeeFields" class="input-grid">
-          <label>预计买几杯？<input id="cupCount" type="number" min="1" max="60" inputmode="numeric" placeholder="例如 10"></label>
+          <label>预计使用几次？<input id="cupCount" type="number" min="1" max="60" inputmode="numeric" placeholder="例如 10"></label>
         </div>
         <div id="studyFields" hidden>
           <div class="input-grid">
@@ -54,15 +52,16 @@
           </div>
         </div>
         <details id="scheduleDetails">
-          <summary>补充消费日期或到访时段（可选）</summary>
+          <summary>补充使用日期或时段（可选）</summary>
           <div class="input-grid">
             <label>预计开始日<input id="profileStart" type="date"></label>
             <label>通常几点开始<input id="profileTime" type="time"></label>
-            <label id="coffeeGapLabel">每隔几天买一次<input id="coffeeGap" type="number" min="1" max="365" placeholder="例如 3"></label>
+            <label id="coffeeGapLabel">每隔几天使用一次<input id="coffeeGap" type="number" min="1" max="365" placeholder="例如 3"></label>
           </div>
+          <button class="ghost" id="profileArrivalAsk" type="button" data-icon="spark" hidden>到访时间不固定？问 AI 助手</button>
           <fieldset id="weekdays" class="compare-days" hidden><legend>具体哪几天？选填，勾选后按所选日期计算</legend></fieldset>
         </details>
-        <label class="page-check"><input type="checkbox" id="sameProduct"><span id="sameLabel">这些券适用于我想买的同款商品</span></label>
+        <label class="page-check"><input type="checkbox" id="sameProduct"><span>这些方案都适用于同一项消费需求</span></label>
         <label class="page-check" id="mixLabel"><input type="checkbox" id="allowMix">我确认可以分别购买单次券和次卡来覆盖计划</label>
         <div class="actions"><button type="submit" id="compareSubmit">比较怎么买</button></div>
         <p id="profileError" class="state-line" data-state="error" role="status" hidden></p>
@@ -74,47 +73,138 @@
         <p id="resultTitle" class="compare-verdict" aria-live="polite"></p>
         <p id="resultDetail" class="muted"></p>
         <div id="resultQuestions" class="compare-questions"></div>
-        <details id="issueDetails" hidden><summary>查看其余条件</summary><ul id="resultIssues"></ul></details>
+        <details id="issueDetails" hidden><summary>查看其余计划条件</summary><ul id="resultIssues"></ul></details>
+        <button id="openVerification" class="ghost" type="button" hidden>查看待核实条款</button>
       </div>
-      <section class="flat-section compare-overview" aria-labelledby="coverageHeading">
-        <div class="section-heading"><h2 id="coverageHeading">费用与覆盖</h2><span class="badge" id="coverageGoal"></span></div>
-        <p class="muted">覆盖条以同一份计划为满格。仅对能完整覆盖的方案绘制费用条。</p>
-        <div id="resultRows" class="compare-overview-rows"></div>
-      </section>
+      <div class="compare-result-workspace">
       <section id="quickPlan" class="panel compare-quick-plan" aria-labelledby="quickPlanHeading">
         <div class="section-heading"><h3 id="quickPlanHeading" tabindex="-1">调整用法，即时试算</h3><button class="ghost" id="fullPlan" type="button">完整计划</button></div>
         <div id="quickCoffee" class="compare-quick-grid">
-          <label for="cupSlider">预计购买杯数 <output id="quickCupValue" for="cupSlider"></output><input id="cupSlider" type="range" min="1" max="30" value="10"></label>
+          <label for="cupSlider">预计使用次数 <output id="quickCupValue" for="cupSlider"></output><input id="cupSlider" type="range" min="1" max="30" value="10"></label>
         </div>
         <div id="quickStudy" hidden>
           <div class="compare-quick-grid">
             <label for="quickFrequency">每周到访 <output id="quickFrequencyValue" for="quickFrequency"></output><input id="quickFrequency" type="range" min="1" max="7" value="3"></label>
             <label for="quickDuration">每次停留 <output id="quickDurationValue" for="quickDuration"></output><input id="quickDuration" type="range" min="30" max="720" step="30" value="240"></label>
-            <label for="quickTime">通常几点到<input id="quickTime" type="time"></label>
-            <label for="quickWeeks">计划周期（周）<input id="quickWeeks" type="number" min="1" max="12" value="4"></label>
+            <div class="compare-time-field"><label>固定到访时间<input id="quickTime" type="time"></label><button class="ghost" id="quickArrivalAsk" type="button" data-icon="spark">问 AI 助手</button><button class="ghost" id="clearArrival" type="button" hidden>清除试算时段</button></div>
+            <div>
+              <label for="quickWeeks">计划周期（周）<input id="quickWeeks" type="number" min="1" max="12" value="4"></label>
+              <div id="weekPresets" class="compare-week-presets" role="group" aria-label="常用计划周期">
+                <button type="button" class="secondary" data-weeks="2" aria-pressed="false">2 周</button>
+                <button type="button" class="secondary" data-weeks="4" aria-pressed="false">4 周</button>
+                <button type="button" class="secondary" data-weeks="8" aria-pressed="false">8 周</button>
+              </div>
+            </div>
           </div>
           <details id="quickSchedule"><summary id="quickScheduleTitle">选择具体星期（可选）</summary><fieldset id="quickWeekdays" class="compare-days"><legend>勾选后按具体星期计算</legend></fieldset></details>
         </div>
         <p id="quickPlanSummary" class="compare-plan-summary"></p>
       </section>
       <section id="comparisonChart" class="panel" hidden aria-labelledby="chartHeading">
-        <div class="section-heading"><h3 id="chartHeading">推荐何时切换</h3><span id="chartCount" class="badge"></span></div>
-        <p class="muted" id="chartHint"></p>
-        <label id="chartMetricLabel" hidden>探索维度<select id="chartMetric"><option value="frequency">每周到访天数</option><option value="duration">单次停留时长</option></select></label>
-        <div id="chartArea"></div>
-        <div id="chartLegend" class="compare-legend"></div>
-        <div id="chartReadout" class="compare-chart-readout"></div>
+        <div class="section-heading"><h3 id="chartHeading">比较视图</h3><span id="chartCount" class="badge"></span></div>
+        <div id="compareViews" class="compare-view-tabs" role="tablist" aria-label="比较视图">
+          <button id="curveTab" type="button" role="tab" aria-selected="true" aria-controls="curveView" data-view="curve">费用曲线</button>
+          <button id="pricesTab" type="button" role="tab" aria-selected="false" aria-controls="pricesView" data-view="prices" tabindex="-1">价格坐标</button>
+          <button id="calendarTab" type="button" role="tab" aria-selected="false" aria-controls="calendarView" data-view="calendar" tabindex="-1">使用日历</button>
+        </div>
+        <div id="curveView" role="tabpanel" aria-labelledby="curveTab" tabindex="0">
+        <div class="compare-chart-layout">
+          <div class="compare-chart-visual">
+            <div class="compare-chart-controls">
+              <label id="chartMetricLabel" hidden><select id="chartMetric" aria-label="探索维度"><option value="frequency">每周到访天数</option><option value="duration">单次停留时长</option></select></label>
+              <p id="chartHint" class="muted"></p>
+            </div>
+            <div id="chartArea"></div>
+            <div id="chartLegend" class="compare-legend"></div>
+            <label class="compare-chart-slider" for="chartScrub"><span>调整用量</span><input id="chartScrub" type="range" min="0" max="6" value="0"></label>
+          </div>
+          <div id="chartReadout" class="compare-chart-readout"></div>
+        </div>
         <div id="switchPoints" class="compare-chart-switches"></div>
+        </div>
+        <div id="pricesView" class="compare-view" role="tabpanel" aria-labelledby="pricesTab" tabindex="0" hidden>
+          <p class="muted">每个圆点对应当前计划下的支出。空心点表示方案仍有覆盖缺口。</p>
+          <div id="priceMap"></div>
+        </div>
+        <div id="calendarView" class="compare-view" role="tabpanel" aria-labelledby="calendarTab" tabindex="0" hidden>
+          <div class="section-heading">
+            <p id="calendarHint" class="muted" role="status"></p>
+            <button class="ghost" id="resetCalendar" type="button" hidden>恢复每周计划</button>
+          </div>
+          <div id="calendarPager" class="compare-calendar-pager" hidden>
+            <button id="calendarBack" class="secondary" type="button" aria-label="前四周">上一段</button>
+            <label><span id="calendarPageLabel"></span><input id="calendarPage" type="number" min="1" value="1" aria-label="日历页码"></label>
+            <button id="calendarForward" class="secondary" type="button" aria-label="后四周">下一段</button>
+          </div>
+          <div id="visitCalendar" class="compare-calendar-grid"></div>
+        </div>
+      </section>
+      </div>
+      <section class="flat-section compare-overview" aria-labelledby="coverageHeading">
+        <div class="section-heading">
+          <h2 id="coverageHeading">费用与覆盖</h2>
+          <div class="compare-overview-actions">
+            <span class="badge" id="coverageGoal"></span>
+            <button id="openResultCalendar" class="secondary" type="button" data-icon="calendar">打开使用日历</button>
+          </div>
+        </div>
+        <p class="muted">每张卡片显示当前试算支出、能覆盖的次数和剩余权益。</p>
+        <div id="resultRows" class="compare-overview-rows"></div>
+      </section>
+      <section id="decisionVerification" class="panel compare-verification" aria-labelledby="verificationHeading">
+        <div class="section-heading">
+          <h2 id="verificationHeading" tabindex="-1">决策前值得核实</h2>
+          <span id="verificationCount" class="badge" data-tone="neutral"></span>
+        </div>
+        <p id="verificationEmpty" class="muted" hidden>当前试算没有需要向商家核实的条款。</p>
+        <ul id="verificationMain" class="compare-verification-list"></ul>
+        <details id="verificationMore" hidden>
+          <summary id="verificationMoreLabel"></summary>
+          <ul id="verificationOther" class="compare-verification-list"></ul>
+        </details>
+        <button id="copyVerification" class="secondary compare-verification-copy" type="button" hidden>复制给商家的询问话术</button>
       </section>
     </section>
   </main>
 </div>
+<dialog id="merchantDialog" class="shell-dialog compare-merchant" aria-labelledby="merchantHeading">
+  <div class="section-heading">
+    <h2 id="merchantHeading" tabindex="-1">给商家的询问话术</h2>
+    <button id="closeMerchant" class="ghost" type="button">关闭</button>
+  </div>
+  <p class="muted">勾选想问的内容，预览后复制。AI 润色只会发送所选问题的脱敏文字。</p>
+  <div id="merchantQuestions" class="compare-merchant-questions"></div>
+  <fieldset id="merchantVariants" class="compare-merchant-variants" hidden>
+    <legend>选择话术版本</legend>
+    <label class="page-check"><input id="merchantOriginal" name="merchantVersion" type="radio" checked>原话术</label>
+    <label class="page-check"><input id="merchantPolished" name="merchantVersion" type="radio">AI 润色版</label>
+  </fieldset>
+  <label for="verificationText">话术预览</label>
+  <textarea id="verificationText" rows="5" readonly></textarea>
+  <p id="verificationStatus" class="state-line" role="status" hidden></p>
+  <div class="compare-merchant-actions">
+    <button id="polishMerchant" class="secondary" type="button" data-icon="spark">AI 润色</button>
+    <button id="copyMerchant" type="button">复制所选话术</button>
+  </div>
+</dialog>
+<dialog id="arrivalDialog" class="shell-dialog compare-arrival" aria-labelledby="arrivalTitle">
+  <div class="section-heading"><h2 id="arrivalTitle">商量到访时间</h2><button class="ghost" id="arrivalClose" type="button">关闭</button></div>
+  <p class="muted">说说哪几天可能去、几点能到。我会按当前计划对照截图里的时段。</p>
+  <div id="arrivalMessages" class="compare-arrival-messages" role="log" aria-live="polite"></div>
+  <form id="arrivalForm">
+    <textarea id="arrivalQuestion" aria-label="输入到访问题" rows="2" maxlength="480" required placeholder="例如：工作日晚上 7 点，周末下午 2 点，哪张卡合适？"></textarea>
+    <div class="compare-arrival-actions">
+      <label id="arrivalAiLabel" class="page-check" hidden><input id="arrivalAi" type="checkbox">使用 DeepSeek · 发送脱敏问题</label>
+      <button id="arrivalSend" type="submit">发送问题</button>
+    </div>
+  </form>
+</dialog>
 <dialog id="sourceDialog" class="shell-dialog compare-source">
   <form method="dialog" class="section-heading"><h2>原图依据</h2><button class="secondary" type="submit">关闭</button></form>
   <p id="sourceQuote"></p><div id="sourceScroll" class="image-scroll"><div class="evidence-stage"><img id="sourceImage" alt="方案原始截图"><span id="sourceBox" hidden></span></div></div>
   <div class="actions"><a id="sourceFull" target="_blank" rel="noopener">打开完整原图</a><button id="sourceReview" class="secondary" type="button" hidden>核对这项条款</button></div>
 </dialog>
-<script src="app-shell.js" defer></script><script src="wallet-client.js" defer></script><script src="offer-terms.js" defer></script><script src="extract.js" defer></script><script src="comparison.js" defer></script><script src="wallet-enroll-ui.js" defer></script><script src="comparison-ui.js" defer></script>
+<script src="app-shell.js" defer></script><script src="wallet-client.js" defer></script><script src="offer-terms.js" defer></script><script src="extract.js" defer></script><script src="comparison.js" defer></script><script src="agent-issues.js" defer></script><script src="wallet-enroll-ui.js" defer></script><script src="comparison-ui.js" defer></script>
 </body>
 </html>
 

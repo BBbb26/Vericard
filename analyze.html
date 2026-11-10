@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Vericard · 套餐分析</title>
+  <link rel="stylesheet" href="design-system.css">
+  <link rel="stylesheet" href="analyze.css">
+</head>
+<body>
+<aside class="app-shell-sidebar" data-app-shell data-page="workspace" aria-label="Vericard 导航"></aside>
+<div class="shell-content">
+  <header class="shell-header">
+    <nav class="breadcrumb" aria-label="页面位置">
+      <a href="/home.html">工作台</a><span data-icon="chevron"></span><span>购前分析</span>
+      <span data-icon="chevron"></span><span aria-current="page">套餐分析</span>
+    </nav>
+    <div class="shell-header-actions">
+      <span class="shell-local">本机运行</span>
+      <button id="save" class="secondary" type="button">保存核对结果</button>
+    </div>
+  </header>
+  <main class="analyze-page">
+    <header class="analyze-heading">
+      <div class="analyze-copy">
+        <p class="eyebrow">办卡前 · 核对与试算</p>
+        <h1>套餐分析</h1>
+        <p id="sourceLine" class="muted">正在读取本地套餐…</p>
+        <p id="status" class="state-line" role="status" aria-live="polite" data-state="loading">正在读取本地项目…</p>
+      </div>
+      <div class="analyze-actions">
+        <label class="mini-select">切换套餐<select id="groupSelect"></select></label>
+        <button id="aiOpen" class="secondary" type="button">AI 整理</button>
+        <a class="ghost button" href="extract.html">上传新截图</a>
+      </div>
+    </header>
+
+    <div class="analyze-grid">
+      <section class="verify-column" aria-label="套餐要素核对">
+        <article class="panel plan-card">
+          <div class="plan-names">
+            <label>商家<input id="fieldMerchant" maxlength="80" placeholder="商家名称"></label>
+            <label>套餐名<input id="fieldTitle" maxlength="120" placeholder="套餐名称"></label>
+          </div>
+          <div class="type-row">
+            <span class="type-label">套餐类别</span>
+            <div id="typeSeg" class="type-seg" role="group" aria-label="套餐类别">
+              <button type="button" data-type="次数">次数卡</button>
+              <button type="button" data-type="储值">储值卡</button>
+              <button type="button" data-type="期限">期限卡</button>
+              <button type="button" data-type="时长">小时卡</button>
+            </div>
+          </div>
+          <div class="group-confirm-row">
+            <label class="page-check group-check"><input id="groupConfirmed" type="checkbox">以上截图属于同一套餐</label>
+            <button id="groupEvidence" class="secondary" type="button">查看本组原图</button>
+          </div>
+          <p id="groupNote" class="muted"></p>
+        </article>
+
+        <article class="panel core-card">
+          <div class="section-heading">
+            <div><h2>核心要素</h2><p class="muted">自动提取，点击数值可以直接修改</p></div>
+            <span id="verifyState" class="badge" data-tone="neutral">待确认</span>
+          </div>
+          <div id="coreGrid" class="core-grid"></div>
+        </article>
+
+        <article class="panel limits-card">
+          <div class="section-heading">
+            <div><h2>核心使用限制</h2><p class="muted">直接影响能否使用和能否退款</p></div>
+            <span id="limitState" class="badge" data-tone="neutral"></span>
+          </div>
+          <div id="limitGrid" class="limit-grid"></div>
+        </article>
+
+        <details id="advancedCard" class="panel advanced-card">
+          <summary>高级条款与全部字段 <span id="advancedCount" class="badge" data-tone="neutral"></span></summary>
+          <p class="muted">用于补充字段、查看来源和修改历史。日常核对通常不需要展开。</p>
+          <div id="advancedGrid" class="advanced-grid"></div>
+          <div class="actions">
+            <button id="exportGroup" class="secondary" type="button">导出本组证据</button>
+            <a class="button ghost" href="extract.html">打开完整核对页</a>
+          </div>
+        </details>
+      </section>
+
+      <section class="decision-column" aria-label="实时消费分析">
+        <article id="verdictCard" class="panel panel-featured verdict-card" data-tone="neutral">
+          <div class="verdict-top">
+            <span id="verdictBadge" class="badge" data-tone="neutral">正在计算</span>
+            <span id="verdictMode" class="muted"></span>
+          </div>
+          <h2 id="verdictTitle">正在分析这份套餐</h2>
+          <p id="verdictLead" class="muted">读取套餐和计划后给出判断。</p>
+          <ul id="verdictPoints" class="verdict-points"></ul>
+        </article>
+
+        <article class="panel sandbox-card">
+          <div class="section-heading">
+            <div><h2>你的使用计划</h2><p class="muted">改变频率或单次价格，右侧结果即时重算</p></div>
+            <span class="badge" data-tone="info" id="planModeBadge">实时试算</span>
+          </div>
+          <div class="sandbox-frequency">
+            <label for="freq">每周到访</label>
+            <input id="freq" type="range" min="1" max="7" step="1" value="3">
+            <output id="freqValue" for="freq">3 次 / 周</output>
+          </div>
+          <div id="freqPresets" class="preset-row"></div>
+          <div class="sandbox-grid">
+            <label>计划持续（周）<input id="weeks" type="number" min="1" max="52" step="1" value="4"></label>
+            <label>额外费用（元）<input id="extraFees" type="number" min="0" step=".01" value="0"></label>
+            <label>计划开始日<input id="startDate" type="date"></label>
+            <label>计划使用的项目<input id="serviceId" maxlength="80" placeholder="例如：晚间自习（限定范围时填写）"></label>
+          </div>
+          <p id="simHint" class="muted"></p>
+        </article>
+
+        <div class="kpi-grid" aria-label="关键指标">
+          <article class="panel kpi"><span>回本临界</span><strong id="kpiBreakEven">—</strong><small id="kpiBreakEvenNote">填写单次正价后计算</small></article>
+          <article class="panel kpi"><span>到期预计消耗</span><strong id="kpiUsage">—</strong><small id="kpiUsageNote"></small></article>
+          <article class="panel kpi"><span>真实单次成本</span><strong id="kpiCost">—</strong><small id="kpiCostNote"></small></article>
+          <article class="panel kpi"><span>净节省 / 多花</span><strong id="kpiSaving">—</strong><small id="kpiSavingNote"></small></article>
+        </div>
+
+        <article class="panel wallet-cta">
+          <div>
+            <strong>已经办卡了？</strong>
+            <p class="muted">保存核对结果后，去卡包登记实付、实际权益和生效日，之后可以记录消费和到期提醒。</p>
+          </div>
+          <a id="toWallet" class="button secondary" href="wallet.html">我已开卡，去卡包登记 →</a>
+        </article>
+
+        <article class="panel timeline-card">
+          <div class="section-heading"><div><h2>回本进度</h2><p class="muted">回本线与预计使用量的位置</p></div><span id="timelineTotal" class="muted"></span></div>
+          <div class="timeline">
+            <div class="timeline-track"><span id="timelineBreak" class="timeline-break"></span><span id="timelineExpected" class="timeline-expected"></span></div>
+            <div class="timeline-labels"><span id="timelineBreakLabel">回本线</span><span id="timelineExpectedLabel">预计到访</span></div>
+          </div>
+          <div class="timeline-legend">
+            <span><i class="legend-break"></i>卡费回收区间</span>
+            <span><i class="legend-safe"></i>更省区间</span>
+            <span><i class="legend-waste"></i>未使用区间</span>
+          </div>
+        </article>
+
+        <article class="panel risk-card">
+          <div class="section-heading"><div><h2>条款与风险</h2><p class="muted">来自原文和计算引擎的待核对项</p></div><span id="riskCount" class="badge" data-tone="warning"></span></div>
+          <div id="riskList" class="risk-list"></div>
+          <button id="riskToggle" class="risk-toggle" type="button" hidden>展开全部</button>
+        </article>
+
+        <details class="panel basis-card">
+          <summary>依据：计算前提、规则与证据 <span id="basisCount" class="badge" data-tone="neutral"></span></summary>
+          <div id="basisList" class="basis-list"></div>
+        </details>
+      </section>
+    </div>
+  </main>
+</div>
+
+<div id="drawerScrim" class="drawer-scrim" hidden></div>
+<aside id="evidenceDrawer" class="evidence-drawer" aria-label="原图证据" hidden>
+  <div class="drawer-head"><div><p class="eyebrow">原图证据</p><h2 id="drawerTitle">证据</h2></div><button id="drawerClose" class="ghost" type="button">关闭</button></div>
+  <p id="drawerQuote" class="evidence-quote"></p>
+  <div class="drawer-image"><img id="drawerImage" alt="原图证据" hidden></div>
+  <a id="drawerFull" target="_blank" rel="noopener" hidden>打开完整原图</a>
+  <details><summary>查看整张图 OCR</summary><pre id="drawerOcr" class="raw-text"></pre></details>
+</aside>
+
+<dialog id="aiDialog" class="shell-dialog ai-dialog" aria-labelledby="aiTitle">
+  <div class="section-heading"><h2 id="aiTitle">AI 整理</h2><button id="aiClose" class="ghost" type="button">关闭</button></div>
+  <p id="aiStatus" class="state-line" role="status" aria-live="polite"></p>
+  <label id="aiModel" class="ai-model" hidden><input id="aiDeepSeek" type="checkbox" disabled>使用 DeepSeek 文本整理</label>
+  <div id="aiMeta" class="ai-meta"></div>
+  <div id="aiRows" class="ai-rows"></div>
+  <div class="actions"><button id="aiAdopt" class="secondary" type="button" hidden>采用全部并确认</button><button id="aiCloseBottom" class="ghost" type="button">关闭</button></div>
+</dialog>
+
+<script src="app-shell.js" defer></script>
+<script src="offer-terms.js" defer></script>
+<script src="extract.js" defer></script>
+<script src="analyze.js" defer></script>
+</body>
+</html>

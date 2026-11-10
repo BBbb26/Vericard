@@ -5,10 +5,10 @@ window.KDZWalletEnroll = (() => {
   const options = [['','请选择卡型'],['stored_value','储值卡'],['visits','次数卡'],['period','期限会员'],['hours','时长包'],['single','已购未核销的单次券']];
   const labels = Object.fromEntries(options);
 
-  function open({ offer = null, images = [], offerId = '', onSaved } = {}) {
+  function open({ offer = null, images = [], offerId = '', prefill = null, onSaved } = {}) {
     const comparing = Boolean(offer);
     const kind = comparing ? 'comparison' : 'manual';
-    const operation = 'enroll:' + kind + (comparing ? ':' + offerId : '');
+    const operation = 'enroll:' + kind + (offerId ? ':' + offerId : '');
     const dialog = document.createElement('dialog');
     dialog.className = 'shell-dialog wallet-enroll';
     dialog.setAttribute('aria-label', comparing ? '登记实际购买' : '添加已有卡片');
@@ -16,7 +16,7 @@ window.KDZWalletEnroll = (() => {
       '<p class="muted" data-role="source"></p><form class="wallet-dialog-form"><div class="input-grid"></div>' +
       '<div class="actions"><button type="submit">确认并加入卡包</button><button type="button" class="secondary" data-role="retry" hidden>重试上次提交</button></div>' +
       '<p class="state-line" role="status" aria-live="polite" hidden></p></form>';
-    dialog.querySelector('h2').textContent = comparing ? '登记实际购买' : '添加已有卡片';
+    dialog.querySelector('h2').textContent = prefill ? '确认开卡并加入卡包' : comparing ? '登记实际购买' : '添加已有卡片';
     const form = dialog.querySelector('form');
     const grid = form.querySelector('.input-grid');
     const status = form.querySelector('[role=status]');
@@ -60,13 +60,13 @@ window.KDZWalletEnroll = (() => {
     }
 
     const sourceLine = dialog.querySelector('[data-role=source]');
-    sourceLine.textContent = comparing ?
+    sourceLine.textContent = prefill?.sourceLine || (comparing ?
       '截图报价 ' + W.money(window.KDZCompare.cents(offer.price)) + '。请核对订单实付与实际取得的权益。' :
-      '登记已经实际购买的权益。已有消费可在详情中补录或核对商家余额。';
+      '登记已经实际购买的权益。已有消费可在详情中补录或核对商家余额。');
     const photo = field('上传截图辅助填写（可选）','file');
     photo.input.accept = 'image/png,image/jpeg';
     photo.wrapper.className = 'wallet-form-wide';
-    setVisible(photo,!comparing);
+    setVisible(photo,!comparing && !prefill?.imageIds?.length);
     const name = field('卡片名称','text',offer?.name ?? '',true);
     name.input.maxLength = 120;
     const type = select('卡型',options,offer?.type ?? '');
@@ -104,7 +104,7 @@ window.KDZWalletEnroll = (() => {
     const unused = checked('该单次券尚未核销');
     const confirm = checked('我已实际购买，并核对上述支付与权益。');
 
-    function prefill(values) {
+    function prefillFromOffer(values) {
       if (!name.input.value) name.input.value = values.name || '';
       if (!type.input.value && labels[values.type]) type.input.value = values.type;
       if (type.input.value === 'hours') {
@@ -122,6 +122,51 @@ window.KDZWalletEnroll = (() => {
         end.input.value = values.until ?? '';
         days.input.value = values.days ?? '';
       }
+    }
+
+    function setValidity(selectControl, startControl, endControl, daysControl, value = {}) {
+      const kind = ['fixed', 'from_activation', 'unlimited'].includes(value.kind) ? value.kind : 'unknown';
+      selectControl.input.value = kind;
+      if (kind === 'fixed') {
+        startControl.input.value = value.startDate || '';
+        endControl.input.value = value.endDate || '';
+      }
+      if (kind === 'from_activation') daysControl.input.value = value.days ?? '';
+    }
+
+    function setScope(selectControl, scopeControl, value = {}) {
+      const kind = ['all', 'services'].includes(value.kind) ? value.kind : 'unknown';
+      selectControl.input.value = kind;
+      if (kind === 'services') {
+        scopeControl.input.value = Array.isArray(value.services) ? value.services.join('、') : String(value.services || '');
+      }
+    }
+
+    function applyPrefill(values = {}) {
+      if (values.name) name.input.value = values.name;
+      if (values.type && labels[values.type]) type.input.value = values.type;
+      if (values.paid != null && values.paid !== '') paid.input.value = values.paid;
+      else if (values.price != null && values.price !== '') paid.input.value = values.price;
+      purchased.input.value = values.purchasedOn || W.today();
+      activation.input.value = values.activationDate || '';
+      setValidity(validity, start, end, days, values.validity);
+      setScope(coverage, scope, values.coverage);
+      if (values.principal != null) principal.input.value = values.principal;
+      if (values.bonus != null) bonus.input.value = values.bonus;
+      if (values.deduction && ['principal_first', 'bonus_first', 'proportional'].includes(values.deduction)) {
+        deduction.input.value = values.deduction;
+      }
+      if (values.bonusCoverage) setScope(bonusCoverage, bonusScope, values.bonusCoverage);
+      if (values.bonusValidity?.kind === 'same_as_plan') bonusValidity.input.value = 'same_as_plan';
+      else if (values.bonusValidity) setValidity(bonusValidity, bonusEnd, bonusEnd, bonusDays, values.bonusValidity);
+      if (values.visits != null && values.visits !== '') visits.input.value = values.visits;
+      if (values.redemption && ['per_visit', 'per_day'].includes(values.redemption)) {
+        redemption.input.value = values.redemption;
+      }
+      if (values.minutes != null && values.minutes !== '') minutes.input.value = values.minutes;
+      if (values.billingMinutes != null && values.billingMinutes !== '') billing.input.value = values.billingMinutes;
+      if (values.unredeemed != null) unused.input.checked = Boolean(values.unredeemed);
+      if (values.sourceLine) sourceLine.textContent = values.sourceLine;
     }
 
     function update() {
@@ -213,7 +258,7 @@ window.KDZWalletEnroll = (() => {
         image.ocr ??= await W.request('/api/ocr',{id:image.id});
         const values = window.KDZCompare.draft(evidence).values;
         if (!values.type && window.KDZExtract.extract(image).some(item => item.field === 'planType' && item.value === '储值')) values.type = 'stored_value';
-        prefill(values);
+        prefillFromOffer(values);
         update();
         report('截图已关联，请核对识别信息并填写实际支付。','success');
       } catch (error) { report(error.message + (evidence.length ? ' 已关联的原图可保留。' : ''),'warning'); }
@@ -231,7 +276,8 @@ window.KDZWalletEnroll = (() => {
     bonusCoverage.input.addEventListener('change',update);
     bonusValidity.input.addEventListener('change',update);
     bonus.input.addEventListener('input',update);
-    if (offer) prefill(offer);
+    if (offer) prefillFromOffer(offer);
+    if (prefill) applyPrefill(prefill);
     update();
     document.body.append(dialog);
     dialog.showModal();

@@ -199,3 +199,66 @@
   .dashboard { padding-inline:var(--page-gutter); }
   .questions-panel,.key-terms-panel,.rules-panel { padding:var(--space-5); }
 }
+
+/* 消费分析：结论优先，依据后置 */
+.analysis-flow { display: grid; gap: var(--space-5); max-width: 1080px; }
+.blocked-panel { max-width: 760px; padding: var(--space-6); }
+.blocked-panel h2 { margin: 4px 0 var(--space-3); }
+.blocked-panel ul { display: grid; gap: var(--space-3); margin: 0 0 var(--space-4); padding: 0; list-style: none; }
+.blocked-panel li { padding: var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-control); background: var(--color-background); }
+.blocked-panel li a { font-weight: 650; color: var(--color-primary-dark); }
+.blocked-panel li p { margin: 4px 0 0; }
+body[data-blocked="true"] .decision-summary,
+body[data-blocked="true"] .context-strip { display: none; }
+
+.context-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: var(--space-5); padding: var(--space-3) var(--space-4); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-card); }
+.context-item { min-width: 0; padding: 0 var(--space-4); border-left: 1px solid var(--color-divider); }
+.context-item:first-child { padding-left: 0; border-left: 0; }
+.context-label { display: block; color: var(--color-muted-text); font-size: var(--font-label); }
+.context-value { display: block; margin-top: 2px; font-size: 18px; font-weight: 650; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.context-detail { display: block; margin-top: 2px; color: var(--color-muted-text); font-size: 12px; overflow-wrap: anywhere; }
+
+.plan-panel { padding: 0; }
+.plan-panel > summary { display: flex; align-items: center; gap: var(--space-3); min-height: 60px; padding: var(--space-3) var(--space-5); cursor: pointer; list-style: none; }
+.plan-panel > summary::-webkit-details-marker { display: none; }
+.plan-panel > summary .eyebrow { margin: 0; }
+.plan-summary-title { font-size: 18px; font-weight: 650; }
+.plan-panel > summary .badge { margin-left: auto; }
+.plan-panel > form { padding: 0 var(--space-5) var(--space-5); }
+.plan-panel[open] > summary { margin-bottom: var(--space-3); border-bottom: 1px solid var(--color-divider); }
+
+.basis-drawer { padding: 0; }
+.basis-drawer > summary { display: flex; align-items: center; gap: var(--space-2); min-height: 56px; padding: var(--space-3) var(--space-5); cursor: pointer; font-weight: 650; color: var(--color-primary-dark); list-style: none; }
+.basis-drawer > summary::-webkit-details-marker { display: none; }
+.basis-drawer > summary .badge { margin-left: auto; }
+.basis-drawer > :not(summary) { margin-inline: var(--space-5); }
+.basis-drawer #keyTermsPanel, .basis-drawer #rulesPanel, .basis-drawer #evidencePanel { padding: var(--space-4) 0; border-top: 1px solid var(--color-divider); }
+.basis-drawer .section-heading { margin-bottom: var(--space-2); }
+.evidence-inline label { display: block; margin-top: var(--space-3); }
+.basis-drawer #ranges article { padding: var(--space-3); margin-top: var(--space-3); }
+.basis-drawer #ranges:last-child, .basis-drawer #assumptionsPanel { margin-bottom: var(--space-4); }
+
+@media (max-width: 767px) {
+  .context-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--space-3); }
+  .context-item { padding: 0 var(--space-3); }
+  .context-item:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .blocked-panel { padding: var(--space-4); }
+  .analysis-flow { gap: var(--space-4); }
+  .plan-panel > summary, .basis-drawer > summary { padding-inline: var(--space-4); }
+  .plan-panel > form, .basis-drawer > :not(summary) { padding-inline: var(--space-4); margin-inline: 0; }
+}
+
+#basisCount:empty { display: none; }
+
+.judgment-action { margin: 2px 0 10px; }
+.judgment-action .button { min-height: 40px; padding: 6px 14px; font-size: var(--font-secondary); }
+
+@media (max-width: 767px) {
+  .analysis-flow { display: flex; flex-direction: column; }
+  .analysis-flow > #questionsPanel { order: 1; }
+  .analysis-flow > #resultsPanel { order: 2; }
+  .analysis-flow > #purchasePanel { order: 3; }
+  .analysis-flow > #planPanel { order: 4; }
+  .analysis-flow > #basisDrawer { order: 5; }
+  #download { white-space: nowrap; }
+}

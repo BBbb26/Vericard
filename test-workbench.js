@@ -80,10 +80,14 @@ test('conflicting OCR and incompatible card fields do not become executable fact
   const mismatch = reviewGroup(projectGroup({ ...storedFields, unit: '次' }), []);
   assert.equal(mismatch.plan, null);
   assert.equal(mismatch.fields.planType.status, 'conflicting');
-  assert.throws(() => reviewGroup(projectGroup({}, [], { confirmed: false }), []), /确认归组/);
+  assert.throws(() => reviewGroup(projectGroup({}, [], { confirmed: false }), []), /同一套餐/);
   const dates = reviewGroup(projectGroup({ ...storedFields, expiryDays: '90' }), []);
   assert.equal(dates.fields.expiryDays.status, 'conflicting');
   assert.equal(dates.plan.rules.validity, null);
+  const written = reviewGroup(projectGroup({
+    planType: '期限', price: '430', total: '30', unit: '连续天', expiryDays: '30天',
+  }), []);
+  assert.deepEqual(written.plan.rules.validity, { kind: 'from_activation', days: 30 });
 });
 
 test('field edits replace the effective version while assumed values stay outside Plan', () => {

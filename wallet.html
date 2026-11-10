@@ -34,10 +34,24 @@
             <div class="section-heading"><h2 id="walletDeckHeading">我的持卡</h2><button id="walletViewMode" class="ghost" type="button" aria-pressed="false">列表模式</button></div>
             <div id="walletStackView" class="wallet-stack-view">
               <button id="walletPrev" class="secondary wallet-stack-arrow" type="button" aria-label="上一张卡">‹</button>
-              <div id="walletDeck" class="wallet-deck" aria-label="卡片堆叠"></div>
+              <div id="walletDeck" class="wallet-deck" role="group" aria-label="卡片堆叠">
+                <div class="wallet-pocket-back" aria-hidden="true"></div>
+                <div id="walletDeckCards"></div>
+                <div class="wallet-pocket">
+                  <svg viewBox="0 0 280 160" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M 0 20 C 0 10, 5 10, 10 10 C 20 10, 25 25, 40 25 L 240 25 C 255 25, 260 10, 270 10 C 275 10, 280 10, 280 20 L 280 120 C 280 155, 260 160, 240 160 L 40 160 C 20 160, 0 155, 0 120 Z"/>
+                    <path class="wallet-pocket-seam" d="M 8 22 C 8 16, 12 16, 15 16 C 23 16, 27 29, 40 29 L 240 29 C 253 29, 257 16, 265 16 C 268 16, 272 16, 272 22 L 272 120 C 272 150, 255 152, 240 152 L 40 152 C 25 152, 8 152, 8 120 Z"/>
+                  </svg>
+                  <div class="wallet-pocket-copy">
+                    <span id="walletPocketLabel"></span>
+                    <strong id="walletPocketValue"></strong>
+                  </div>
+                </div>
+              </div>
               <button id="walletNext" class="secondary wallet-stack-arrow" type="button" aria-label="下一张卡">›</button>
             </div>
             <div id="walletPositions" class="wallet-positions"></div>
+            <p id="walletScrollHint" class="wallet-scroll-hint" hidden>卡内上下滑动查看全部</p>
             <div id="walletListPicker" class="wallet-picker" hidden></div>
           </section>
           <section class="panel wallet-selected" aria-label="当前卡片权益"><div id="walletSelected"></div></section>
@@ -157,6 +171,14 @@
     <a class="button secondary" id="walletFromComparison" href="comparison.html#resultSection">从已完成比较添加</a>
     <p id="walletAddHint" class="muted"></p>
   </div>
+</dialog>
+
+<dialog id="walletInfoDialog" class="shell-dialog wallet-info-dialog" aria-labelledby="walletInfoTitle">
+  <form method="dialog" class="section-heading"><h2 id="walletInfoTitle">补充卡片信息</h2><button type="submit" class="ghost">关闭</button></form>
+  <p id="walletInfoLead" class="muted"></p>
+  <div id="walletInfoFields" class="input-grid"></div>
+  <p id="walletInfoStatus" class="state-line" role="status" hidden></p>
+  <div class="actions"><button id="walletInfoSave" type="button">保存补充信息</button><button id="walletInfoCancel" class="secondary" type="button">取消</button></div>
 </dialog>
 
 <script src="app-shell.js" defer></script><script src="wallet-client.js" defer></script>

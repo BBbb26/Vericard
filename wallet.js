@@ -306,8 +306,57 @@ function createWallet(file, clock = () => new Date()) {
     return { card: detail(state, card, today), eventId: event.id, replayed: false };
   }
 
+  function update(id, input) {
+    const key = request(input);
+    const state = read();
+    const card = find(state, id);
+    const today = localDay.format(clock());
+    const previous = state.events.find(event => event.type === 'profile_update' && event.requestId === key.id);
+    if (previous) {
+      if (previous.fingerprint !== key.fingerprint) throw new WalletError('该提交编号已用于另一份内容，请重新提交。', 409);
+      return { card: detail(state, card, today) };
+    }
+    const before = {
+      activationDate: card.purchase.activationDate,
+      validity: card.plan.rules.validity,
+      deduction: card.plan.rules.deduction,
+    };
+    let activationDate = card.purchase.activationDate;
+    if (input.activationDate !== undefined) {
+      activationDate = calendar(input.activationDate, '生效日');
+      if (activationDate < card.purchase.purchasedOn) throw new WalletError('生效日不能早于购买日。');
+      card.purchase.activationDate = activationDate;
+    }
+    if (input.validity !== undefined) {
+      const validity = dateRule(input.validity, '主卡有效期', activationDate);
+      if (!validity) throw new WalletError('请选择有效期。');
+      card.plan.rules.validity = validity;
+    }
+    if (input.deduction !== undefined) {
+      if (card.plan.type !== 'stored_value') throw new WalletError('只有储值卡需要扣减顺序。');
+      if (!['principal_first', 'bonus_first', 'proportional'].includes(input.deduction)) {
+        throw new WalletError('请选择扣减顺序。');
+      }
+      card.plan.rules.deduction = input.deduction;
+    }
+    const after = {
+      activationDate: card.purchase.activationDate,
+      validity: card.plan.rules.validity,
+      deduction: card.plan.rules.deduction,
+    };
+    if (JSON.stringify(before) === JSON.stringify(after)) return { card: detail(state, card, today) };
+    state.events.push({
+      id: randomUUID(), cardId: id, requestId: key.id, fingerprint: key.fingerprint,
+      type: 'profile_update', date: today, recordedAt: clock().toISOString(),
+      before, after, note: '补充卡片信息',
+    });
+    write(state);
+    return { card: detail(state, card, today) };
+  }
+
   return {
     create,
+    update,
     consume: (id, input, attachProof) => append(id, input, (card, events, data, today, recordedAt) =>
       newConsumption(card, events, data, today, recordedAt, fixedEstimate), attachProof),
     activity(offset = 0, limit = 5) {

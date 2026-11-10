@@ -24,9 +24,20 @@ function calendar(value, label) {
 }
 
 function applyStoredDebit(state, debit) {
-  const { totalCents, principalCents, bonusCents } = debit;
+  let { totalCents, principalCents, bonusCents } = debit;
   const remainingTotal = state.totalCents - totalCents;
   if (remainingTotal < 0) throw new WalletError('扣减超过账面剩余总额，可以先保存为待核对。');
+  if (principalCents === null && state.deduction && state.principalMin === state.principalMax) {
+    if (state.deduction === 'principal_first') {
+      principalCents = Math.min(totalCents, state.principalMin);
+    } else if (state.deduction === 'bonus_first') {
+      const bonus = state.totalCents - state.principalMax;
+      principalCents = totalCents - Math.min(totalCents, bonus);
+    } else {
+      principalCents = state.totalCents ? Math.round(totalCents * state.principalMin / state.totalCents) : 0;
+    }
+    bonusCents = totalCents - principalCents;
+  }
   if (principalCents === null) {
     // An observed total limits both buckets without establishing which one was used.
     state.principalMin = Math.max(0, state.principalMin - totalCents);
@@ -56,6 +67,7 @@ function projectLedger(card, events) {
     totalCents: rules.principalCents + rules.bonusCents,
     principalMin: rules.principalCents,
     principalMax: rules.principalCents,
+    deduction: rules.deduction,
   } : null;
   let minutes = rules.minutes;
   let consumedMinutes = 0;

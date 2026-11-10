@@ -90,16 +90,16 @@ function newWalletEvent(card, events, input, today, recordedAt, lookupImage) {
     return { ...common, reconciliationId: source.id, observed: source.observed, before: projection.remaining, difference: source.difference };
   }
   if (type === 'reversal') {
-    if (input.confirmed !== true || !note) throw new WalletError('请确认冲正并填写原因。');
+    if (input.confirmed !== true || !note) throw new WalletError('请确认撤销并填写原因。');
     const target = live.find(event => event.id === input.targetId && reversible.has(event.type));
-    if (!target) throw new WalletError('该记录无法冲正，或已经冲正。', 409);
+    if (!target) throw new WalletError('该记录无法撤销，或已经撤销。', 409);
     if (target.status === 'pending' && live.some(event => event.confirmationFor === target.id)) {
-      throw new WalletError('请先冲正对应的实扣补录。', 409);
+      throw new WalletError('请先撤销对应的实扣补录。', 409);
     }
     const laterAdjustment = live.slice(live.indexOf(target) + 1).some(event => event.type === 'adjustment');
     if (laterAdjustment && (isConsumption(target) && target.status !== 'pending' ||
         ['refund', 'recharge', 'adjustment'].includes(target.type))) {
-      throw new WalletError('该流水已纳入后续余额校正，请先核对或冲正后续校正。', 409);
+      throw new WalletError('该流水已纳入后续余额校正，请先核对或撤销后续校正。', 409);
     }
     if (target.type === 'refund' && target.terminates &&
         live.slice(live.indexOf(target) + 1).some(event => event.type === 'refund' && event.terminates)) {
@@ -108,7 +108,7 @@ function newWalletEvent(card, events, input, today, recordedAt, lookupImage) {
     const balanceAffecting = isConsumption(target) && target.status !== 'pending' ||
       ['recharge', 'refund', 'adjustment'].includes(target.type);
     if (balanceAffecting && live.slice(live.indexOf(target) + 1).some(event => event.status === 'estimated')) {
-      throw new WalletError('后续有基于当时余额的规则估算，请先核对或冲正相关估算。', 409);
+      throw new WalletError('后续有基于当时余额的规则估算，请先核对或撤销相关估算。', 409);
     }
     return { ...common, targetId: target.id, balanceAffecting };
   }

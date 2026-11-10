@@ -100,21 +100,20 @@ test('stored card keeps actual purchase and immutable original plan and analysis
   assert.equal(wallet.list().cards.length, 1);
 });
 
-test('a total-only stored-value deduction keeps the exact total and constrains both buckets', t => {
+test('a total-only stored-value debit follows the confirmed deduction order', t => {
   const { wallet } = fixture(t);
   const review = reviewed('储值');
   const { cardId } = wallet.create(purchase(review), loader(review));
   const event = use({ debitAmount: '200', referencePrice: '220', extraPaid: '20' });
   const first = wallet.consume(cardId, event).card;
   assert.deepEqual(first.remaining, {
-    totalCents: 100000, principalCents: null, bonusCents: null,
-    principalRange: [80000, 100000], bonusRange: [0, 20000],
+    totalCents: 100000, principalCents: 80000, bonusCents: 20000,
+    principalRange: [80000, 80000], bonusRange: [20000, 20000],
   });
   assert.equal(first.events[0].extraPaidCents, 2000);
   assert.equal(wallet.consume(cardId, event).replayed, true);
   assert.equal(wallet.get(cardId).card.events.length, 1);
   assert.throws(() => wallet.consume(cardId, { ...event, debitAmount: '201' }), error => error.status === 409);
-  assert.throws(() => wallet.consume(cardId, use({ mode: 'estimate', referencePrice: '50' })), /本金与赠送金尚未分清/);
   const next = wallet.consume(cardId, use({ debitAmount: '200', debitPrincipal: '0' })).card;
   assert.equal(next.remaining.principalCents, 80000);
   assert.equal(next.remaining.bonusCents, 0);
@@ -293,7 +292,7 @@ test('stale checks are rejected and a split-only confirmation preserves the exac
   wallet.consume(cardId, use({ debitAmount: '200' }));
   assert.throws(() => adjust(stale.eventId), error => error.status === 409);
   const fresh = compare('1000', '850');
-  assert.equal(fresh.card.events[0].reconciliationStatus, 'split_review');
+  assert.equal(fresh.card.events[0].reconciliationStatus, 'needs_review');
   assert.equal(adjust(fresh.eventId).card.remaining.principalCents, 85000);
 });
 
@@ -502,4 +501,24 @@ test('time packs record only known actual minutes, validate unit and keep correc
   const corrected=wallet.record(cardId,{requestId:randomUUID(),type:'adjustment',reconciliationId:observation.eventId,confirmed:true,note:'核对账单'});
   assert.equal(corrected.card.remaining.minutes,480);
   assert.equal(corrected.card.events.find(event=>event.id===current.eventId).debit.minutes,90);
+});
+
+test('profile update completes stored split and visit validity', t => {
+  const { wallet } = fixture(t);
+  const storedReview = reviewed('储值');
+  const stored = wallet.create(purchase(storedReview, { deduction: 'unknown' }), loader(storedReview));
+  wallet.consume(stored.cardId, use({ debitAmount: '200' }));
+  assert.equal(wallet.get(stored.cardId).card.remaining.principalCents, null);
+  const updated = wallet.update(stored.cardId, { requestId: randomUUID(), deduction: 'principal_first' }).card;
+  assert.equal(updated.remaining.principalCents, 80000);
+  assert.equal(updated.remaining.bonusCents, 20000);
+  assert(updated.events.some(event => event.type === 'profile_update'));
+  const visitReview = reviewed('次数');
+  const visit = wallet.create(purchase(visitReview, { validity: { kind: 'unknown' } }), loader(visitReview));
+  const completed = wallet.update(visit.cardId, {
+    requestId: randomUUID(), activationDate: '2026-11-01',
+    validity: { kind: 'from_activation', days: 30 },
+  }).card;
+  assert.deepEqual(completed.plan.rules.validity, { kind: 'from_activation', days: 30 });
+  assert.equal(completed.activationDate, '2026-11-01');
 });

@@ -10,7 +10,7 @@ const { randomUUID } = require('node:crypto');
 const { createAgent } = require('./agent/agent');
 const { createWallet } = require('./wallet');
 const { createServer } = require('./server');
-const { selectTopics } = require('./agent/questions');
+const { selectTopics, polishMerchantQuestions } = require('./agent/questions');
 
 const ids = ['1', '2', '3'].map(value => value.repeat(64));
 const input = {
@@ -139,6 +139,24 @@ test('DeepSeek 理解续问前脱敏，且只接受已知主题', async () => {
   }), /主题无效/);
 });
 
+test('商家润色只传脱敏问题，拒绝新增金额或天数', async () => {
+  const request = ['可使用多久？手机号13800138000','工作日可用吗？'];
+  const options = answers => ({
+    apiKey:'test-credential',
+    fetchImpl:async (url,init) => {
+      const { messages } = JSON.parse(init.body);
+      const input = JSON.parse(messages[1].content);
+      assert.equal(input.questions.length,2);
+      assert(!messages[1].content.includes('13800138000'));
+      return { ok:true, json:async () => ({ choices:[{ message:{ content:JSON.stringify({ questions:answers }) } }] }) };
+    },
+  });
+  const polished = ['请问使用期限有多久？','请问工作日可以使用吗？'];
+  assert.deepEqual(await polishMerchantQuestions(request, options(polished)), polished);
+  await assert.rejects(polishMerchantQuestions(request, options(['请问可以使用30天吗？',polished[1]])),/格式不正确/);
+  await assert.rejects(polishMerchantQuestions(request, options([polished[0]])),/格式不正确/);
+});
+
 test('根首页、旧工作台和本地决策路由都可访问', async t => {
   const server = createServer(0);
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -163,6 +181,10 @@ test('根首页、旧工作台和本地决策路由都可访问', async t => {
   assert.match((await send('/home.html')).body, /购前分析/);
   assert.equal((await send('/agent-ui.js')).status, 200);
   assert.equal((await send('/agent.css')).status, 200);
+  assert.equal((await send('/agent-issues.js')).status, 200);
+  assert.equal((await send('/agent-issue-ui.js')).status, 200);
+  assert.equal((await send('/assets/home-threads.js')).status, 200);
+  assert.equal((await send('/assets/home-threads.css')).status, 200);
   assert.equal((await send('/agent/session.js')).status, 404);
   assert.equal((await send('/api/decision', { demoId: 'visits', ...input })).status, 200);
   assert.equal((await send('/api/agent/sessions', { demoId: 'visits' }, { 'X-KDZ-Local': '0' })).status, 403);
@@ -176,6 +198,7 @@ test('根首页、旧工作台和本地决策路由都可访问', async t => {
     { provider: 'local', topics: null });
   assert.equal((await send(endpoint + '/ask', { question: '' })).status, 400);
   assert.equal((await send(endpoint + '/comparison')).status, 409);
+  assert.equal((await send(endpoint + '/issues', { action: 'sync' })).status, 409);
   const capability = JSON.parse((await send('/api/agent/capabilities')).body);
   assert.deepEqual(Object.keys(capability), ['deepseek']);
   assert.equal(typeof capability.deepseek, 'boolean');

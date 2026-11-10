@@ -129,7 +129,6 @@ function status(state, message) {
 function lockResults() {
   purchase.hide();
   latest = null;
-  $('goPurchase').hidden = true;
   $('download').disabled = true;
   $('chartCondition').disabled = true;
   $('resultsPanel').inert = true;
@@ -239,9 +238,11 @@ function renderScenario(item, payload) {
   const card = element('article', undefined, 'panel result-card scenario-card');
   card.dataset.scenario = input.id;
   const heading = element('div', undefined, 'section-heading');
-  heading.append(element('h3', input.label), badge(scenarioStatus[result.status],
-    { calculated: 'success', conditional: 'warning', needs_input: 'warning', unsupported: 'danger' }[result.status]));
   const options = chart.projectedValues(payload, input.id, 'cash');
+  const diffOptions = chart.projectedValues(payload, input.id, 'difference');
+  const label = result.status === 'unsupported' && options.length ? '条件试算' : scenarioStatus[result.status];
+  heading.append(element('h3', input.label), badge(label,
+    options.length ? 'warning' : { calculated: 'success', conditional: 'warning', needs_input: 'warning', unsupported: 'danger' }[result.status]));
   const conditional = result.cash.totalCents === null && options.length > 0;
   const amount = conditional ? spread(options) : money(result.cash.totalCents);
   const usage = input.uses.length + ' 次 · 每 ' + $(input.id + 'Gap').value + ' 天一次';
@@ -250,7 +251,7 @@ function renderScenario(item, payload) {
     element('p', amount, 'metric'));
   card.append(definitionList([
     ['全部按次', money(result.payAsYouGoCents)],
-    ['经济差额', differenceText(result.economicDifferenceCents)],
+    ['经济差额', diffOptions.length ? spread(diffOptions) : differenceText(result.economicDifferenceCents)],
   ]));
   const payment = { actual: '已核对实付', offer: '已核对报价', assumption: '试算价格', unknown: '价格待核对' }[result.payment.source];
   const details = element('details', undefined, 'scenario-detail');
@@ -313,16 +314,94 @@ function renderPlanSummary(payload, base) {
       '权益依据会员有效期'];
   }
   const window = base?.result.window;
+  const rulesValidity = rules?.validity;
+  const validityValue = window?.endDate ?? (window?.status === 'known' ? '无固定截止' :
+    rulesValidity?.days ? '生效后 ' + rulesValidity.days + ' 天' :
+    rulesValidity?.kind === 'unlimited' ? '无固定截止' :
+    rulesValidity?.kind === 'fixed' ? rulesValidity.endDate : '待核对');
   const validityNote = base?.input.ruleAssumptions?.validity ? '截止日采用试算条件' :
     window?.startDate ? '生效日 ' + window.startDate : '期限以已核对条款为准';
-  $('planSummary').replaceChildren(
-    summaryCard('paid', '预付金额', money(payment?.amountCents), paymentNote),
-    summaryCard('layers', '套餐权益', ...entitlement),
-    summaryCard('calendar', '权益期限', window?.endDate ?? (window?.status === 'known' ? '无固定截止' : '待核对'), validityNote),
-    summaryCard('target', '正常情景', base ? base.input.uses.length + ' 次' : '待试算',
-      base ? '每 ' + $('baseGap').value + ' 天一次 · ' + ($('serviceId').value.trim() || '项目待填写') : '计划参数可编辑'),
-  );
+  const items = [
+    ['预付金额', money(payment?.amountCents), paymentNote],
+    ['套餐权益', ...entitlement],
+    ['权益期限', validityValue, validityNote],
+    ['正常情景', base ? base.input.uses.length + ' 次' : '待试算',
+      base ? '每 ' + $('baseGap').value + ' 天一次 · ' + ($('serviceId').value.trim() || '项目待填写') : '计划参数可编辑'],
+  ];
+  $('planSummary').replaceChildren(...items.map(([label, value, detail]) => {
+    const item = element('div', undefined, 'context-item');
+    item.append(element('span', label, 'context-label'), element('strong', value, 'context-value'), element('small', detail, 'context-detail'));
+    return item;
+  }));
   $('planSummary').hidden = false;
+}
+
+function renderBlocked(payload) {
+  const blocked = !payload.analysis || !payload.review.plan;
+  $('blockedPanel').hidden = !blocked;
+  document.body.dataset.blocked = String(blocked);
+  $('adjustPlan').hidden = blocked;
+  $('download').hidden = blocked;
+  for (const id of ['planSummary', 'decisionSummary', 'resultsPanel', 'planPanel', 'basisDrawer', 'questionsPanel']) {
+    $(id).hidden = blocked;
+  }
+  if (!blocked) {
+    $('planPanel').hidden = false;
+    $('basisDrawer').hidden = false;
+    $('download').hidden = false;
+    return;
+  }
+  $('resultsPanel').hidden = true;
+  purchase.hide();
+  $('download').disabled = true;
+  const review = payload.review;
+  const items = [];
+  const add = (label, detail, key) => {
+    if (!items.some(item => item.key === key)) items.push({ label, detail, key });
+  };
+  const type = review.fields.planType;
+  if (type?.status === 'conflicting') {
+    add('套餐类型存在冲突', '截图中的类型与权益单位指向不同卡型，请回到确认页选择准确类型。', 'planType');
+  } else if (!type?.value) {
+    add('套餐类型还没有值', '截图中未找到卡型，请回到确认页手动填写。', 'planType');
+  } else if (type.verification !== '用户核对') {
+    add('套餐类型待确认', '已提取「' + type.value + '」，回到确认页点一次「确认无误」即可。', 'planType');
+  }
+  const price = review.fields.price;
+  if (!price?.value) add('价格还没有值', '截图中未找到报价，请核对价格页。', 'price');
+  else if (price.verification !== '用户核对' && price.verification !== '试算假设') {
+    add('价格待确认', '已提取 ¥' + price.value + '，回到确认页确认后即可试算。', 'price');
+  }
+  if (!items.length) add('关键信息未确认', '请回到确认页检查套餐类型和价格。', 'planType');
+  $('blockedList').replaceChildren(...items.map(({ label, detail, key }) => {
+    const li = element('li');
+    const link = element('a', label);
+    link.href = sourceLink(key);
+    li.append(link, element('p', detail, 'muted'));
+    return li;
+  }));
+  $('blockedBack').href = sourceLink(items[0].key);
+  $('blockedBack').textContent = '去补充信息';
+  status('warning', '还差 ' + items.length + ' 项确认，才能开始试算。');
+}
+
+function showBlockError(message) {
+  document.body.dataset.blocked = 'true';
+  $('blockedPanel').hidden = false;
+  $('adjustPlan').hidden = true;
+  $('download').hidden = true;
+  purchase.hide();
+  for (const id of ['planSummary', 'decisionSummary', 'resultsPanel', 'planPanel', 'basisDrawer', 'questionsPanel', 'purchasePanel']) {
+    $(id).hidden = true;
+  }
+  const li = element('li');
+  const link = element('a', '回到套餐确认页');
+  link.href = sourceLink('planType');
+  li.append(link, element('p', message, 'muted'));
+  $('blockedList').replaceChildren(li);
+  $('blockedBack').href = sourceLink('planType');
+  $('blockedBack').textContent = '回到套餐确认页';
+  status('error', message);
 }
 
 function renderJudgment(payload, base) {
@@ -330,15 +409,64 @@ function renderJudgment(payload, base) {
   const value = result?.economicDifferenceCents ?? null;
   const options = chart.projectedValues(payload, 'base', 'difference');
   const risk = payload.questions[0]?.title ?? payload.ranges?.[0]?.title;
+  const unresolved = result?.unresolved ?? [];
+  const plan = payload.review.plan;
+  let guidance = null, action = null;
+  if (value === null && !options.length) {
+    if (!plan?.rules?.validity && plan?.type === 'time_pass') {
+      guidance = '这张卡的权益有效期还没有确认，先补齐「核销后期限」或「截止日」，才能判断能否覆盖计划。';
+      action = { label: '去确认有效期', href: sourceLink('expiryDays') };
+    } else if (unresolved.includes('referencePriceCents')) {
+      guidance = '还缺同店同服务的单次参考价。填好计划参数后，就能比较预付和按次支出。';
+      action = { label: '填写计划参数', plan: true, focus: 'referencePrice' };
+    } else if (unresolved.includes('extraFeesCents')) {
+      guidance = '如果这次没有额外费用，在计划里填 0 即可继续试算。';
+      action = { label: '填写额外费用', plan: true, focus: 'extraFees' };
+    } else if (unresolved.some(key => ['coverage', 'validity', 'bonusValidity', 'activationDate'].includes(key))) {
+      const routes = {
+        coverage: { text: '适用范围还没有确认。回到套餐确认页补充「适用范围」后，才能判断能否使用。', action: { label: '去确认适用范围', href: sourceLink('coverage') } },
+        validity: { text: '权益有效期还没有确认。回到套餐确认页补充「有效期」。', action: { label: '去确认有效期', href: sourceLink('expiryDays') } },
+        bonusValidity: { text: '赠送金有效期还没有确认。回到套餐确认页补充「赠送金期限」。', action: { label: '去确认赠送金期限', href: sourceLink('bonusDays') } },
+        activationDate: { text: '还缺实际或预计生效日。在计划里补上日期后即可计算。', action: { label: '填写生效日', plan: true, focus: 'activationDate' } },
+      };
+      const route = routes[unresolved.find(key => routes[key])];
+      guidance = route.text;
+      action = route.action;
+    } else if (unresolved.length) {
+      const labels = { referencePriceCents: '单次参考价', serviceId: '服务项目', startDate: '计划开始日', extraFeesCents: '额外费用' };
+      guidance = '还缺：' + unresolved.map(key => labels[key] ?? key).join('、') + '。补齐后即可计算。';
+    } else if (payload.questions?.length) {
+      guidance = '先回答下面「需要你确认」中的问题，或选择「暂不清楚」查看可算的条件结果。';
+    }
+  }
   $('judgmentStatus').textContent = value !== null ? scenarioStatus[result.status] :
-    options.length ? '条件对比' : '待核对';
+    options.length ? '条件对比' : '待补充';
   $('judgmentValue').textContent = value !== null ? differenceText(value) :
-    options.length ? spread(options) : '需补充条件';
+    options.length ? spread(options) : guidance ? '还需一步' : '需补充条件';
   $('judgmentText').textContent = value !== null ?
     (result.status === 'conditional' ? '在当前所列试算前提下，与相同消费计划的按次付费相比。' :
       '按本次计划和已核对的条件，与按次付费比较。') :
     options.length ? '备选条件下的经济差额。正值表示预付方案支出更少。' :
-      risk ?? '补充已知条款与计划参数后，再判断两种方案的经济差额。';
+      guidance ?? risk ?? '补充已知条款与计划参数后，再判断两种方案的经济差额。';
+  const actionNode = $('judgmentAction');
+  actionNode.replaceChildren();
+  if (action && value === null) {
+    if (action.plan) {
+      const button = element('button', action.label, 'secondary');
+      button.type = 'button';
+      button.addEventListener('click', () => {
+        $('planPanel').open = true;
+        $('planPanel').scrollIntoView({ block: 'start' });
+        $(action.focus || 'referencePrice').focus({ preventScroll: true });
+      });
+      actionNode.append(button);
+    } else {
+      const link = element('a', action.label, 'button secondary');
+      link.href = action.href;
+      actionNode.append(link);
+    }
+    actionNode.hidden = false;
+  } else actionNode.hidden = true;
   const facts = definitionList([
     ['按次对照支出', money(result?.payAsYouGoCents)],
     ['本计划内持平／更省', milestoneText(normalMilestone(payload, base))],
@@ -436,21 +564,35 @@ function renderEvidence(payload) {
   $('evidencePanel').hidden = false;
 }
 
+function hasNumbers(payload) {
+  return (payload.analysis?.scenarios ?? []).some(item => {
+    const total = item.result?.cash?.totalCents;
+    return (total !== null && total !== undefined) || chart.projectedValues(payload, item.input.id, 'cash').length > 0;
+  });
+}
+
 function render(payload) {
   $('sourceName').textContent = payload.review.name;
   $('sourceType').textContent = cardTypes[payload.review.type] ?? '类型待核对';
   $('sourceType').hidden = false;
   $('demoBadge').hidden = !payload.review.demo;
-  renderQuestions(payload.questions);
+  renderBlocked(payload);
+  const blocked = document.body.dataset.blocked === 'true';
+  renderQuestions(blocked ? [] : payload.questions);
+  if (blocked) {
+    $('download').disabled = true;
+    return;
+  }
   const scenarios = payload.analysis?.scenarios ?? [];
   const base = scenarios.find(item => item.input.id === 'base');
+  const numbers = hasNumbers(payload);
   renderPlanSummary(payload, base);
   renderJudgment(payload, base);
   renderKeyTerms(payload);
   renderRules(payload);
-  $('resultsPanel').hidden = !payload.analysis;
-  if (scenarios.length) chart.render(payload, money);
-  $('results').replaceChildren(...scenarios.map(item => renderScenario(item, payload)));
+  $('resultsPanel').hidden = !payload.analysis || !numbers;
+  if (scenarios.length && numbers) chart.render(payload, money);
+  $('results').replaceChildren(...(numbers ? scenarios.map(item => renderScenario(item, payload)) : []));
   $('resultScope').textContent = '持平点采用本情景录入的额外费用合计。退款规则和金额单独核实。';
   const assumptions = [...payload.assumptions ?? []];
   if (payload.ranges?.[0]?.context) assumptions.push('联合试算仅采用已标注的备选前提。');
@@ -462,16 +604,21 @@ function render(payload) {
   $('resultsPanel').setAttribute('aria-busy', 'false');
   $('download').disabled = !payload.analysis;
   renderEvidence(payload);
+  const basisCount = (payload.review.restrictions?.length ?? 0) +
+    Object.values(payload.review.fields).filter(term => term.status === 'conflicting' || term.status === 'potential_risk').length;
+  $('basisCount').textContent = basisCount ? basisCount + ' 项待核对' : '';
+  $('basisCount').dataset.tone = basisCount ? 'warning' : 'neutral';
 }
 
 function applyResult(payload, input) {
   latest = payload;
   render(payload);
   if (!analysisId) window.KDZRecentAnalysis.remember(payload, groupId);
-  if (!agentSession?.cardId) purchase.show(payload, input);
-  $('goPurchase').hidden = $('purchasePanel').hidden;
-  const message = payload.review.unsupportedType ?? '请先核对套餐类型。';
-  status(payload.analysis ? 'success' : 'warning', payload.analysis ? '已更新本次试算。' : message);
+  if (!agentSession?.cardId) {
+    if (hasNumbers(payload)) purchase.show(payload, input);
+    else purchase.hide();
+  }
+  if (payload.analysis) status('success', '已更新本次试算。');
 }
 
 function saveAgentInput(input, change) {
@@ -532,17 +679,7 @@ async function calculate(interactive = false, change = {}) {
       return;
     }
     latest = null;
-    status('error', '无法计算 · ' + error.message);
-    $('resultsPanel').hidden = true;
-    $('questionsPanel').hidden = true;
-    $('evidencePanel').hidden = true;
-    $('planSummary').hidden = true;
-    $('keyTermsPanel').hidden = true;
-    $('rulesPanel').hidden = true;
-    $('judgmentStatus').textContent = '计算未完成';
-    $('judgmentValue').textContent = '结果暂不可用';
-    $('judgmentText').textContent = '请核对输入或本机服务后重试。';
-    $('judgmentFacts').replaceChildren();
+    showBlockError(error.message);
   }
 }
 
@@ -553,10 +690,15 @@ $('clearAnswers').addEventListener('click', () => {
   else { answers = {}; skipped = []; calculate(); }
 });
 $('demoId').addEventListener('change', () => { markEdited(false); loadInputs(); calculate(); });
-$('goPurchase').addEventListener('click', () => {
-  $('purchaseDetails').open = true;
-  $('purchasePanel').scrollIntoView({ block: 'start' });
-  $('purchasePaid').focus({ preventScroll: true });
+$('adjustPlan').addEventListener('click', event => {
+  event.preventDefault();
+  $('planPanel').open = true;
+  $('planPanel').scrollIntoView({ block: 'start' });
+  $('startDate').focus({ preventScroll: true });
+});
+$('planPanel').addEventListener('toggle', () => {
+  if (!$('planPanel').open) return;
+  $('planPanel').scrollIntoView({ block: 'start' });
 });
 $('copy').addEventListener('click', async () => {
   try {

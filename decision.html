@@ -3,7 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Vericard · 消费决策看板</title>
+  <title>Vericard · 消费分析</title>
+  <script>
+    if (new URLSearchParams(location.search).has('group') && !new URLSearchParams(location.search).has('analysisId')) {
+      location.replace('analyze.html?' + location.search.slice(1));
+    }
+  </script>
   <link rel="stylesheet" href="design-system.css">
   <link rel="stylesheet" href="decision-dashboard.css">
 </head>
@@ -13,7 +18,7 @@
   <header class="shell-header">
     <nav class="breadcrumb" aria-label="页面位置">
       <a href="/home.html">工作台</a> <span data-icon="chevron"></span> <span>购前分析</span>
-      <span data-icon="chevron"></span> <a id="backToSource" href="extract.html">单套餐核对</a>
+      <span data-icon="chevron"></span> <a id="backToSource" href="extract.html">套餐确认</a>
       <span data-icon="chevron"></span>
       <span aria-current="page">消费分析</span>
     </nav>
@@ -26,7 +31,7 @@
     <header class="page-heading">
       <div class="page-copy">
         <p class="eyebrow">办卡前 · 情景试算</p>
-        <h1>消费决策看板</h1>
+        <h1>消费分析</h1>
         <div class="source-line">
           <p id="sourceName">正在读取套餐…</p>
           <span id="sourceType" class="badge" hidden></span>
@@ -38,114 +43,114 @@
         <label id="demoPicker" class="demo-picker">演示套餐
           <select id="demoId"><option value="stored">储值赠送</option><option value="visits">次数套餐</option><option value="time">期限会员</option></select>
         </label>
-        <a class="button secondary" href="#planPanel" data-icon="edit">调整计划</a>
-        <button id="goPurchase" type="button" hidden>确认已办卡，加入我的卡包</button>
+        <a id="adjustPlan" class="button secondary" href="#planPanel" data-icon="edit">调整计划</a>
       </div>
     </header>
 
-    <section id="planSummary" class="summary-grid" aria-label="套餐摘要" hidden></section>
+    <section id="blockedPanel" class="panel blocked-panel" hidden aria-labelledby="blockedHeading">
+      <p class="eyebrow">还差一步</p>
+      <h2 id="blockedHeading">这份套餐还不能计算</h2>
+      <ul id="blockedList"></ul>
+      <div class="actions"><a id="blockedBack" class="button" href="extract.html">去补充信息</a><a class="button ghost" href="/home.html">返回工作台</a></div>
+    </section>
+
+    <section id="planSummary" class="context-strip" aria-label="套餐摘要" hidden></section>
     <section id="decisionSummary" class="panel panel-featured decision-summary" aria-labelledby="judgmentHeading">
       <div class="judgment-top"><span data-icon="spark" class="judgment-icon"></span><span id="judgmentStatus" class="judgment-pill">正在计算</span></div>
       <p class="judgment-kicker" id="judgmentHeading">正常情景 · 当前判断</p>
       <p id="judgmentValue" class="metric">待计算</p>
       <p id="judgmentText">正在核对本次套餐与消费计划。</p>
+      <p id="judgmentAction" class="judgment-action" hidden></p>
       <dl id="judgmentFacts" class="judgment-facts"></dl>
     </section>
-    <div class="decision-layout">
-      <div class="main-column">
-        <section id="resultsPanel" class="results-stack" aria-label="消费成本结果" hidden>
-          <article class="panel chart-panel">
-            <div class="section-heading chart-heading">
-              <div><p class="eyebrow">预付 vs 按次</p><h2 id="chartTitle">不同使用次数下的总支出</h2></div>
-              <label id="chartConditionLabel" class="chart-condition" hidden>图表口径
-                <select id="chartCondition"></select>
-              </label>
-            </div>
-            <div id="chartLegend" class="chart-legend"></div>
-            <div id="costChart" class="cost-chart" aria-labelledby="chartTitle"></div>
-            <div id="lineControls" hidden>
-              <div class="line-control-row">
-                <label for="lineCursor">查看次数</label>
-                <input id="lineCursor" type="range" min="0" step="1" value="0">
-                <output id="linePointCount" for="lineCursor">第 0 次</output>
-              </div>
-              <div class="line-point-heading"><span id="linePointContext"></span><span id="lineBreakEven"></span></div>
-              <div class="line-point-values" aria-live="polite">
-                <div><span>预付总支出</span><strong id="linePrepaid"></strong></div>
-                <div><span>按次总支出</span><strong id="linePayg"></strong></div>
-                <div><span>经济差额</span><strong id="lineDifference"></strong></div>
-              </div>
-            </div>
-            <p id="chartCaption" class="muted"></p>
-          </article>
-          <div class="section-heading scenario-heading">
-            <div><h2>三种消费情景</h2><p class="muted">比较同一服务和清单下的预付与按次支出</p></div>
+
+    <div class="analysis-flow">
+      <section id="questionsPanel" class="panel questions-panel" hidden>
+        <div class="section-heading"><h2>需要你确认</h2><span id="questionCount" class="badge" data-tone="warning"></span></div>
+        <p class="muted">只问可能改变支出的条件，也可以选择暂不清楚。</p>
+        <div id="questions"></div>
+      </section>
+
+      <section id="resultsPanel" class="results-stack" aria-label="消费成本结果" hidden>
+        <div class="section-heading scenario-heading">
+          <div><h2>三种消费情景</h2><p class="muted">同一服务与清单下的预付和按次支出</p></div>
+        </div>
+        <div id="results" class="scenario-grid"></div>
+        <p id="resultScope" class="muted result-note"></p>
+        <article class="panel chart-panel">
+          <div class="section-heading chart-heading">
+            <div><p class="eyebrow">预付 vs 按次</p><h2 id="chartTitle">不同使用次数下的总支出</h2></div>
+            <label id="chartConditionLabel" class="chart-condition" hidden>图表口径
+              <select id="chartCondition"></select>
+            </label>
           </div>
-          <div id="results" class="scenario-grid"></div>
-          <p id="resultScope" class="muted result-note"></p>
-          <div id="ranges"></div>
-          <section id="assumptionsPanel" class="panel assumptions-panel" hidden>
-            <h2>本次计算前提</h2><ul id="assumptions"></ul>
-          </section>
-        </section>
-  <section id="planPanel" class="panel plan-panel" aria-labelledby="planHeading">
-    <div class="section-heading"><div><p class="eyebrow">情景参数</p><h2 id="planHeading">我的消费计划</h2></div><span class="badge" data-tone="neutral">输入后自动计算</span></div>
-    <form id="decisionForm">
-      <div class="input-grid">
-        <label>计划开始日 <input id="startDate" type="date" required></label>
-        <label>实际或预计生效日 <input id="activationDate" type="date"></label>
-        <label>计划服务项目 <input id="serviceId" maxlength="80" placeholder="与适用项目名称一致"></label>
-        <label>同店同服务按次参考价（元） <input id="referencePrice" type="number" min="0" step=".01" placeholder="未知留空"></label>
-        <label>额外费用合计（元） <input id="extraFees" type="number" min="0" step=".01" placeholder="无费用填 0"></label>
-        <label>预付试算价（元，可选） <input id="assumedPrice" type="number" min="0" step=".01" placeholder="留空用已核对报价或实付"></label>
-      </div>
-      <p class="muted">三种情景比较同一项服务。间隔表示两次消费之间的自然日数。生效日、使用频率、参考价和额外费用为本次输入。</p>
-      <div id="scenarioInputs" class="scenario-grid"></div>
-      <div class="actions">
-        <button type="submit">重新计算</button>
-        <button type="button" id="clearAnswers" class="secondary" hidden>重置追问回答</button>
-      </div>
-    </form>
-  </section>
-  <section id="purchasePanel" class="panel" hidden>
-    <details id="purchaseDetails">
-      <summary id="purchaseOpen">确认已办卡，加入我的卡包</summary>
-      <p class="muted">填写真实办卡信息并核对实际取得的权益。看板中的报价与试算假设单独保存在购前分析中。</p>
-      <form id="purchaseForm">
-        <div class="input-grid">
-          <label>实际支付（元）<input id="purchasePaid" type="number" min="0" step=".01" required></label>
-          <label>实际购买日<input id="purchaseDate" type="date" required></label>
-          <label>生效日（未知可留空）<input id="purchaseActivation" type="date"></label>
-        </div>
-        <div id="purchaseTerms" class="input-grid purchase-rules"></div>
-        <label class="confirm-check"><input id="purchaseConfirmed" type="checkbox" required> 我已实际办卡，并核对了上面的实付和权益</label>
-        <div class="actions">
-          <button id="purchaseSubmit" type="submit">保存到我的卡包</button>
-          <button id="purchaseRetry" class="secondary" type="button" hidden>重试上次提交</button>
-        </div>
-      </form>
-      <p id="purchaseStatus" role="status" aria-live="polite"></p>
-    </details>
-  </section>
-  <section id="evidencePanel" class="panel" hidden>
-    <div class="section-heading"><h2>条款证据与商家话术</h2><button id="copy" class="secondary" type="button">复制核实问题</button></div>
-    <label>可复制的商家问题 <textarea id="merchantText" rows="4" readonly></textarea></label>
-    <p id="copyStatus" role="status"></p>
-    <details><summary>查看条款状态、字段来源和证据</summary><div id="terms"></div></details>
-    <details><summary>查看本次工具调用</summary><ol id="trace"></ol></details>
-  </section>
-      </div>
-      <aside class="side-column" aria-label="条款核对与规则">
-        <section id="questionsPanel" class="panel questions-panel" hidden>
-          <div class="section-heading"><h2>优先核对</h2><span id="questionCount" class="badge" data-tone="warning"></span></div>
-          <p class="muted">先确认可能改变支出的条件。</p>
-          <div id="questions"></div>
-        </section>
-        <section id="keyTermsPanel" class="panel key-terms-panel" hidden>
+          <div id="chartLegend" class="chart-legend"></div>
+          <div id="costChart" class="cost-chart" aria-labelledby="chartTitle"></div>
+          <div id="lineControls" hidden>
+            <div class="line-control-row">
+              <label for="lineCursor">查看次数</label>
+              <input id="lineCursor" type="range" min="0" step="1" value="0">
+              <output id="linePointCount" for="lineCursor">第 0 次</output>
+            </div>
+            <div class="line-point-heading"><span id="linePointContext"></span><span id="lineBreakEven"></span></div>
+            <div class="line-point-values" aria-live="polite">
+              <div><span>预付总支出</span><strong id="linePrepaid"></strong></div>
+              <div><span>按次总支出</span><strong id="linePayg"></strong></div>
+              <div><span>经济差额</span><strong id="lineDifference"></strong></div>
+            </div>
+          </div>
+          <p id="chartCaption" class="muted"></p>
+        </article>
+      </section>
+
+      <details id="planPanel" class="panel plan-panel">
+        <summary><span class="eyebrow">情景参数</span><span id="planHeading" class="plan-summary-title">调整计划</span><span class="badge" data-tone="neutral">输入后自动计算</span></summary>
+        <form id="decisionForm">
+          <div class="input-grid">
+            <label>计划开始日 <input id="startDate" type="date" required></label>
+            <label>实际或预计生效日 <input id="activationDate" type="date"></label>
+            <label>计划服务项目 <input id="serviceId" maxlength="80" placeholder="与适用项目名称一致"></label>
+            <label>同店同服务按次参考价（元） <input id="referencePrice" type="number" min="0" step=".01" placeholder="未知留空"></label>
+            <label>额外费用合计（元） <input id="extraFees" type="number" min="0" step=".01" placeholder="无费用填 0"></label>
+            <label>预付试算价（元，可选） <input id="assumedPrice" type="number" min="0" step=".01" placeholder="留空用已核对报价或实付"></label>
+          </div>
+          <p class="muted">三种情景比较同一项服务。间隔表示两次消费之间的自然日数。生效日、使用频率、参考价和额外费用为本次输入。</p>
+          <div id="scenarioInputs" class="scenario-grid"></div>
+          <div class="actions">
+            <button type="submit">重新计算</button>
+            <button type="button" id="clearAnswers" class="secondary" hidden>重置追问回答</button>
+          </div>
+        </form>
+      </details>
+
+      <section id="purchasePanel" class="panel" hidden>
+        <details id="purchaseDetails">
+          <summary id="purchaseOpen">确认已办卡，加入我的卡包</summary>
+          <p class="muted">填写真实办卡信息并核对实际取得的权益。看板中的报价与试算假设单独保存在购前分析中。</p>
+          <form id="purchaseForm">
+            <div class="input-grid">
+              <label>实际支付（元）<input id="purchasePaid" type="number" min="0" step=".01" required></label>
+              <label>实际购买日<input id="purchaseDate" type="date" required></label>
+              <label>生效日（未知可留空）<input id="purchaseActivation" type="date"></label>
+            </div>
+            <div id="purchaseTerms" class="input-grid purchase-rules"></div>
+            <label class="confirm-check"><input id="purchaseConfirmed" type="checkbox" required> 我已实际办卡，并核对了上面的实付和权益</label>
+            <div class="actions">
+              <button id="purchaseSubmit" type="submit">保存到我的卡包</button>
+              <button id="purchaseRetry" class="secondary" type="button" hidden>重试上次提交</button>
+            </div>
+          </form>
+          <p id="purchaseStatus" role="status" aria-live="polite"></p>
+        </details>
+      </section>
+
+      <details id="basisDrawer" class="panel basis-drawer">
+        <summary>依据：条款、规则与话术 <span id="basisCount" class="badge" data-tone="neutral"></span></summary>
+        <section id="keyTermsPanel" class="key-terms-panel" hidden>
           <div class="section-heading"><h2>条款疑点</h2><a href="#evidencePanel">查看证据</a></div>
           <div id="keyTerms"></div>
         </section>
-        <section id="rulesPanel" class="panel rules-panel" hidden aria-labelledby="rulesHeading">
+        <section id="rulesPanel" class="rules-panel" hidden aria-labelledby="rulesHeading">
           <details>
             <summary id="rulesHeading">规则依据 <span id="ruleCount" class="badge" data-tone="neutral"></span></summary>
             <p class="muted">本次计算使用了哪些规则，哪些仍未落实。</p>
@@ -153,12 +158,24 @@
             <p id="rulePrecedence" class="muted rule-precedence"></p>
           </details>
         </section>
-      </aside>
+        <section id="evidencePanel" class="evidence-inline" hidden>
+          <div class="section-heading"><h2>条款证据与商家话术</h2><button id="copy" class="secondary" type="button">复制核实问题</button></div>
+          <label>可复制的商家问题 <textarea id="merchantText" rows="4" readonly></textarea></label>
+          <p id="copyStatus" role="status"></p>
+          <details><summary>查看条款状态、字段来源和证据</summary><div id="terms"></div></details>
+          <details><summary>查看本次工具调用</summary><ol id="trace"></ol></details>
+        </section>
+        <div id="ranges"></div>
+        <section id="assumptionsPanel" class="assumptions-panel" hidden>
+          <h2>本次计算前提</h2><ul id="assumptions"></ul>
+        </section>
+      </details>
     </div>
   </main>
 </div>
 <script src="app-shell.js" defer></script>
 <script src="wallet-client.js" defer></script><script src="purchase-ui.js" defer></script>
-<script src="recent-analysis.js" defer></script><script src="decision-chart.js" defer></script><script src="decision-ui.js" defer></script>
+<script src="recent-analysis.js" defer></script><script src="decision-chart.js" defer></script>
+<script src="decision-ui.js" defer></script>
 </body>
 </html>
