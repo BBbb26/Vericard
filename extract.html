@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Vericard · 套餐信息核对</title>
+  <link rel="stylesheet" href="design-system.css"><link rel="stylesheet" href="app-pages.css">
+</head>
+<body>
+<aside class="app-shell-sidebar" data-app-shell data-page="workspace" aria-label="Vericard 导航"></aside>
+<div class="shell-content">
+  <header class="shell-header">
+    <nav class="breadcrumb" aria-label="页面位置"><a href="/home.html">工作台</a><span data-icon="chevron"></span><span>购前分析</span><span data-icon="chevron"></span><span aria-current="page">单套餐核对</span></nav>
+    <div class="shell-header-actions"><span class="shell-local">本机运行</span><button id="save" class="secondary" type="button">保存项目</button></div>
+  </header>
+  <main class="product-page extract-page">
+    <header class="product-heading">
+      <p class="eyebrow">办卡前 · 截图取证</p>
+      <h1>套餐上传与信息核对</h1>
+      <p class="muted">核对截图里的价格、权益和使用限制，再继续试算。</p>
+      <p id="status" class="state-line" role="status" aria-live="polite" data-state="loading">正在读取本地项目…</p>
+    </header>
+    <div class="product-columns review-columns">
+      <div class="product-stack review-evidence">
+        <section id="uploadPanel" class="panel panel-featured" aria-labelledby="uploadHeading">
+          <div class="section-heading"><h2 id="uploadHeading">上传套餐截图</h2><span class="badge">本地 OCR</span></div>
+          <p id="typeGuide" class="muted">可选择多张 PNG 或 JPEG。请优先上传价格页及完整使用条款。</p>
+          <label class="file-drop">选择截图<input id="files" type="file" accept="image/png,image/jpeg" multiple></label>
+          <div class="actions"><button id="upload" type="button">上传并识别</button><button id="retry" class="secondary" type="button">识别未完成图片</button></div>
+          <p id="uploadHint" class="state-line" role="status" aria-live="polite" hidden></p>
+        </section>
+        <section class="panel evidence-panel">
+          <div class="section-heading"><h2>原图证据</h2><button id="backEditor" class="ghost" type="button">回到核对字段</button></div>
+          <p id="imageName" class="muted evidence-name">选择图片或字段证据。</p>
+          <div id="imageScroll" class="image-scroll"><div id="stage" class="evidence-stage"><img id="original" alt="所选商品截图" hidden><div id="box" hidden></div></div></div>
+          <a id="fullImage" target="_blank" rel="noopener" hidden>打开完整原图</a>
+          <p id="quote" class="evidence-quote" aria-live="polite"></p>
+          <details><summary>查看整张图的 OCR 原文</summary><div id="ocrText" class="raw-text"></div></details>
+          <details id="galleryPanel" hidden><summary>本组图片 · 切换与拆分</summary><div id="gallery"></div></details>
+        </section>
+      </div>
+      <div class="product-stack review-form-column">
+        <section class="panel">
+          <div class="section-heading"><h2>核对套餐信息</h2><span id="groupState" class="badge" data-tone="neutral">待载入</span></div>
+          <details class="group-picker">
+            <summary id="groupPickerTitle">切换套餐分组</summary><div id="groups" class="group-list"></div>
+            <div class="actions"><button id="newGroup" class="secondary" type="button">新建空组</button><button id="suggest" class="ghost" type="button">重新建议归组</button></div>
+            <p class="muted">建议归组依据截图时间、展示价和已识别的商家标题。重新归组前请保存或导出手工修改。</p>
+          </details>
+          <div id="empty" class="page-empty"><h3>准备核对一份套餐</h3><p>上传原图或新建空组后，可在这里核对并保存字段。</p></div>
+          <div id="editor" hidden>
+            <section class="review-summary" id="reviewSummary" aria-labelledby="reviewSummaryTitle">
+              <div class="review-summary-head">
+                <h3 id="reviewSummaryTitle">套餐摘要</h3>
+                <button id="aiSummarize" class="secondary" type="button">AI 整理</button>
+              </div>
+              <div id="knownChips" class="review-chips"></div>
+              <details class="review-unprovided" id="reviewUnprovided">
+                <summary>资料待补充 <span id="unknownCount"></span></summary>
+                <div id="unknownChips" class="review-chips"></div>
+              </details>
+            </section>
+            <div id="reviewHints" class="review-hints" hidden><h3>优先核对</h3><div id="hintItems"></div></div>
+            <div class="actions"><button id="toDecision" type="button">确认信息并继续分析</button><a href="/home.html" class="button ghost">返回工作台</a></div>
+            <details id="advancedReview" class="review-advanced">
+              <summary>编辑字段、来源和历史</summary>
+              <label>分组名称<input id="groupName"></label>
+              <label class="page-check"><input id="groupConfirmed" type="checkbox">已核对这些截图属于同一商品</label>
+              <div id="fields" class="review-fields"></div>
+              <label>补充说明 / 用户或商家确认记录<textarea id="groupNote" rows="3"></textarea></label>
+              <details>
+                <summary>证据导出与修改历史</summary>
+                <div class="actions"><button id="exportGroup" class="secondary" type="button">导出本组及原图证据</button></div>
+                <pre id="history" class="raw-text"></pre>
+              </details>
+            </details>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+<dialog id="aiDialog" class="shell-dialog ai-summary" aria-labelledby="aiTitle">
+  <div class="section-heading"><h2 id="aiTitle">AI 整理</h2><button id="aiClose" class="ghost" type="button">关闭</button></div>
+  <p id="aiStatus" class="state-line" role="status" aria-live="polite"></p>
+  <div id="aiMeta" class="ai-meta"></div>
+  <div id="aiFields"></div>
+  <div id="aiQuestions"></div>
+  <div id="aiEvidence"></div>
+  <div id="aiFill"></div>
+  <p class="muted ai-note">AI 草稿只用于快速理解。「填入未知项」和「采用」都只补空字段，不会覆盖已有内容；请继续核对。</p>
+  <div class="actions"><button id="aiCloseBottom" class="secondary" type="button">关闭</button></div>
+</dialog>
+<script src="app-shell.js" defer></script><script src="offer-terms.js" defer></script><script src="extract.js" defer></script><script src="extract-ui.js" defer></script>
+</body>
+</html>

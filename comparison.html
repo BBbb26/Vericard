@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Vericard · 多套餐比较</title>
+  <link rel="stylesheet" href="design-system.css"><link rel="stylesheet" href="app-pages.css"><link rel="stylesheet" href="comparison.css"><link rel="stylesheet" href="wallet-dashboard.css">
+</head>
+<body>
+<aside class="app-shell-sidebar" data-app-shell data-page="comparison" aria-label="Vericard 导航"></aside>
+<div class="shell-content">
+  <header class="shell-header">
+    <nav class="breadcrumb" aria-label="页面位置"><a href="/home.html">工作台</a><span data-icon="chevron"></span><span>购前分析</span><span data-icon="chevron"></span><span aria-current="page">多套餐比较</span></nav>
+    <div class="shell-header-actions"><span class="shell-local">本机识别</span><a id="compareAgentLink" class="button secondary" href="/" hidden>回到 AI 对话</a></div>
+  </header>
+  <main class="product-page product-stack comparison">
+    <header class="product-heading">
+      <p class="eyebrow">办卡前 · 同一需求，比较多种买法</p>
+      <h1>上传并比较套餐</h1>
+      <p class="muted">把备选套餐放在一起，按你的使用计划比较费用和覆盖范围。</p>
+    </header>
+    <nav class="compare-steps" aria-label="比较步骤">
+      <ol>
+        <li><button type="button" class="secondary" data-step="uploadHeading" aria-current="step"><span>1</span>准备方案</button></li>
+        <li><button type="button" class="secondary" data-step="profileHeading" disabled><span>2</span>使用计划</button></li>
+        <li><button type="button" class="secondary" data-step="resultHeading" disabled><span>3</span>比较结果</button></li>
+      </ol>
+    </nav>
+    <section class="panel panel-featured compare-upload" aria-labelledby="uploadHeading">
+      <div class="section-heading"><h2 id="uploadHeading" tabindex="-1">添加备选套餐</h2><span class="badge">本地 OCR</span></div>
+      <p class="muted">可一并上传商品页和条款页。识别后核对套餐价格、权益和使用限制。</p>
+      <div class="actions"><label class="button compare-file">选择截图<input id="compareFiles" type="file" accept="image/png,image/jpeg" multiple></label><button class="secondary" id="addOffer" type="button">手动添加</button><button class="secondary" id="importAgentOffer" type="button" hidden>带入对话中的套餐</button></div>
+      <p id="compareStatus" class="state-line" role="status" aria-live="polite">支持 2–5 个方案，每张 PNG 或 JPEG 不超过 12 MB。</p>
+    </section>
+    <section id="optionsSection" hidden aria-labelledby="optionsHeading">
+      <div class="section-heading"><h2 id="optionsHeading">核对已添加方案</h2><span id="offerCount" class="badge"></span></div>
+      <div id="offerList" class="compare-flow"></div>
+      <div class="actions"><button id="confirmOffers" type="button">确认方案，填写用法</button><button id="regroupOffers" class="secondary" type="button" hidden>按底部价格归组</button></div>
+      <p id="offerError" class="state-line" data-state="error" role="status" hidden></p>
+    </section>
+    <section id="profileSection" class="panel" hidden aria-labelledby="profileHeading">
+      <div class="section-heading"><h2 id="profileHeading" tabindex="-1">你准备怎么用？</h2>
+        <label class="compare-mode">比较场景<select id="compareMode"><option value="coffee">咖啡与按次消费</option><option value="study">自习室与按时使用</option></select></label>
+      </div>
+      <p class="muted">先填写使用量。日期和时段只在影响套餐适用性时补充。</p>
+      <form id="profileForm">
+        <div id="coffeeFields" class="input-grid">
+          <label>预计买几杯？<input id="cupCount" type="number" min="1" max="60" inputmode="numeric" placeholder="例如 10"></label>
+        </div>
+        <div id="studyFields" hidden>
+          <div class="input-grid">
+            <label>每周去几天？<input id="studyFrequency" type="number" min="1" max="7" inputmode="numeric" placeholder="例如 3"><output id="studyFrequencyDerived" hidden></output></label>
+            <label>每次待多久（小时）？<input id="studyHours" type="number" min="0.016" max="24" step="any" inputmode="decimal" placeholder="例如 2.5"></label>
+            <label>计划使用几周？<input id="studyWeeks" type="number" min="1" max="12" value="4"></label>
+          </div>
+        </div>
+        <details id="scheduleDetails">
+          <summary>补充消费日期或到访时段（可选）</summary>
+          <div class="input-grid">
+            <label>预计开始日<input id="profileStart" type="date"></label>
+            <label>通常几点开始<input id="profileTime" type="time"></label>
+            <label id="coffeeGapLabel">每隔几天买一次<input id="coffeeGap" type="number" min="1" max="365" placeholder="例如 3"></label>
+          </div>
+          <fieldset id="weekdays" class="compare-days" hidden><legend>具体哪几天？选填，勾选后按所选日期计算</legend></fieldset>
+        </details>
+        <label class="page-check"><input type="checkbox" id="sameProduct"><span id="sameLabel">这些券适用于我想买的同款商品</span></label>
+        <label class="page-check" id="mixLabel"><input type="checkbox" id="allowMix">我确认可以分别购买单次券和次卡来覆盖计划</label>
+        <div class="actions"><button type="submit" id="compareSubmit">比较怎么买</button></div>
+        <p id="profileError" class="state-line" data-state="error" role="status" hidden></p>
+      </form>
+    </section>
+    <section id="resultSection" hidden aria-labelledby="resultHeading">
+      <div class="panel panel-featured compare-judgment">
+        <div class="section-heading"><h2 id="resultHeading" tabindex="-1">比较结果</h2><span id="resultBadge" class="badge"></span></div>
+        <p id="resultTitle" class="compare-verdict" aria-live="polite"></p>
+        <p id="resultDetail" class="muted"></p>
+        <div id="resultQuestions" class="compare-questions"></div>
+        <details id="issueDetails" hidden><summary>查看其余条件</summary><ul id="resultIssues"></ul></details>
+      </div>
+      <section class="flat-section compare-overview" aria-labelledby="coverageHeading">
+        <div class="section-heading"><h2 id="coverageHeading">费用与覆盖</h2><span class="badge" id="coverageGoal"></span></div>
+        <p class="muted">覆盖条以同一份计划为满格。仅对能完整覆盖的方案绘制费用条。</p>
+        <div id="resultRows" class="compare-overview-rows"></div>
+      </section>
+      <section id="quickPlan" class="panel compare-quick-plan" aria-labelledby="quickPlanHeading">
+        <div class="section-heading"><h3 id="quickPlanHeading" tabindex="-1">调整用法，即时试算</h3><button class="ghost" id="fullPlan" type="button">完整计划</button></div>
+        <div id="quickCoffee" class="compare-quick-grid">
+          <label for="cupSlider">预计购买杯数 <output id="quickCupValue" for="cupSlider"></output><input id="cupSlider" type="range" min="1" max="30" value="10"></label>
+        </div>
+        <div id="quickStudy" hidden>
+          <div class="compare-quick-grid">
+            <label for="quickFrequency">每周到访 <output id="quickFrequencyValue" for="quickFrequency"></output><input id="quickFrequency" type="range" min="1" max="7" value="3"></label>
+            <label for="quickDuration">每次停留 <output id="quickDurationValue" for="quickDuration"></output><input id="quickDuration" type="range" min="30" max="720" step="30" value="240"></label>
+            <label for="quickTime">通常几点到<input id="quickTime" type="time"></label>
+            <label for="quickWeeks">计划周期（周）<input id="quickWeeks" type="number" min="1" max="12" value="4"></label>
+          </div>
+          <details id="quickSchedule"><summary id="quickScheduleTitle">选择具体星期（可选）</summary><fieldset id="quickWeekdays" class="compare-days"><legend>勾选后按具体星期计算</legend></fieldset></details>
+        </div>
+        <p id="quickPlanSummary" class="compare-plan-summary"></p>
+      </section>
+      <section id="comparisonChart" class="panel" hidden aria-labelledby="chartHeading">
+        <div class="section-heading"><h3 id="chartHeading">推荐何时切换</h3><span id="chartCount" class="badge"></span></div>
+        <p class="muted" id="chartHint"></p>
+        <label id="chartMetricLabel" hidden>探索维度<select id="chartMetric"><option value="frequency">每周到访天数</option><option value="duration">单次停留时长</option></select></label>
+        <div id="chartArea"></div>
+        <div id="chartLegend" class="compare-legend"></div>
+        <div id="chartReadout" class="compare-chart-readout"></div>
+        <div id="switchPoints" class="compare-chart-switches"></div>
+      </section>
+    </section>
+  </main>
+</div>
+<dialog id="sourceDialog" class="shell-dialog compare-source">
+  <form method="dialog" class="section-heading"><h2>原图依据</h2><button class="secondary" type="submit">关闭</button></form>
+  <p id="sourceQuote"></p><div id="sourceScroll" class="image-scroll"><div class="evidence-stage"><img id="sourceImage" alt="方案原始截图"><span id="sourceBox" hidden></span></div></div>
+  <div class="actions"><a id="sourceFull" target="_blank" rel="noopener">打开完整原图</a><button id="sourceReview" class="secondary" type="button" hidden>核对这项条款</button></div>
+</dialog>
+<script src="app-shell.js" defer></script><script src="wallet-client.js" defer></script><script src="offer-terms.js" defer></script><script src="extract.js" defer></script><script src="comparison.js" defer></script><script src="wallet-enroll-ui.js" defer></script><script src="comparison-ui.js" defer></script>
+</body>
+</html>
+

@@ -1,0 +1,12 @@
+/data/
+/HANDOFF.md
+/AGENT_PLAN.md
+/seed-reviewed.js
+/test-results.txt
+node_modules/
+.env
+.env.*
+*.key
+*.pem
+*.pfx
+*.log

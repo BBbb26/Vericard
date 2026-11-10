@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN" data-type="software">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="page-type" content="software">
+  <meta name="site-kind" content="software">
+  <meta name="description" content="上传套餐截图，核对条款，按你的用法试算。">
+  <title>Vericard · 套餐分析</title>
+  <link rel="stylesheet" href="design-system.css">
+  <link rel="stylesheet" href="agent.css">
+</head>
+<body class="agent-page">
+<aside class="app-shell-sidebar" data-app-shell data-page="agent" aria-label="Vericard 导航"></aside>
+<div class="shell-content">
+  <header class="shell-header">
+    <nav class="breadcrumb" aria-label="页面位置"><span aria-current="page">AI 助手</span></nav>
+    <div class="shell-header-actions"><span class="shell-local">本机运行</span></div>
+  </header>
+  <main id="agentMain" class="agent-main">
+    <header class="agent-intro" data-enter>
+      <p class="eyebrow agent-wordmark"><span data-icon="brand" aria-hidden="true"></span>Vericard</p>
+      <h1 id="agentTitle">今天想比较什么？</h1>
+      <p class="agent-intro-copy">上传套餐截图，或描述你想买的套餐和使用计划。</p>
+      <div id="agentBadges" class="agent-badges" aria-live="polite" hidden>
+        <span id="agentRecognized" class="agent-badge" data-icon="check" hidden><span></span></span>
+        <span id="agentPending" class="agent-badge agent-badge-pending" data-icon="message" hidden><span></span></span>
+      </div>
+    </header>
+
+    <form id="agentForm" class="agent-composer" novalidate aria-label="开始套餐分析">
+      <div id="agentComposer" class="agent-composer-box">
+        <label class="agent-visually-hidden" for="agentPrompt">问一个套餐问题</label>
+        <textarea id="agentPrompt" rows="2" maxlength="480" placeholder="例如：我每周去三次，哪种套餐更适合？" aria-describedby="agentHint"></textarea>
+        <ul id="agentAttachments" class="agent-attachments" aria-label="已选截图" hidden></ul>
+        <div class="agent-composer-actions">
+          <input class="agent-visually-hidden" id="agentFiles" type="file" accept="image/png,image/jpeg" multiple tabindex="-1" aria-label="选择套餐截图">
+          <button id="agentChoose" class="secondary agent-attach" type="button" data-icon="image"><span>上传图片</span></button>
+          <button id="agentUpload" class="agent-submit" type="submit" data-icon="send"><span>开始分析</span></button>
+        </div>
+      </div>
+      <p id="agentHint" class="agent-visually-hidden">支持 1–8 张 PNG 或 JPEG 截图，每张不超过 12 MB。</p>
+      <div class="agent-tools">
+        <details id="agentPlan">
+          <summary>填写使用计划</summary>
+          <div class="agent-inputs">
+            <label>计划使用的项目<input id="agentService" maxlength="120" placeholder="例如：日间自习"></label>
+            <label>单次参考价（元）<input id="agentPrice" type="number" min="0" step=".01"></label>
+            <label>计划开始日<input id="agentStart" type="date" required></label>
+            <label>预计核销生效日<input id="agentActivation" type="date"></label>
+            <label>计划次数<input id="agentCount" type="number" min="0" max="52" value="6" required></label>
+            <label>每隔几天用一次<input id="agentGap" type="number" min="1" max="365" value="7" required></label>
+            <label>额外费用合计（元）<input id="agentFees" type="number" min="0" step=".01" placeholder="没有费用时填 0"></label>
+          </div>
+          <button id="agentRecalculate" type="button" class="secondary" hidden>更新使用计划</button>
+        </details>
+        <label class="agent-model" id="agentModel">
+          <input id="agentDeepSeek" type="checkbox" disabled>
+          <span id="agentModelLabel">DeepSeek 未配置 · 本地分析</span>
+        </label>
+        <div class="agent-secondary">
+          <button id="agentDemo" type="button" class="ghost">体验次卡示例</button>
+          <button id="agentRetry" type="button" class="secondary" hidden>重试识别</button>
+          <button id="agentReset" type="button" class="ghost" hidden>开始新分析</button>
+        </div>
+      </div>
+      <div class="agent-runline">
+        <p id="agentStatus" class="state-line" role="status" aria-live="polite"></p>
+        <button id="agentCancel" class="ghost" type="button" hidden>取消等待</button>
+      </div>
+    </form>
+
+    <section id="conversation" class="agent-thread" aria-label="套餐对话" aria-live="polite" hidden></section>
+
+  </main>
+</div>
+<script src="app-shell.js" defer></script>
+<script src="wallet-client.js" defer></script>
+<script src="offer-terms.js" defer></script>
+<script src="extract.js" defer></script>
+<script src="comparison.js" defer></script>
+<script src="agent-ui.js" defer></script>
+</body>
+</html>

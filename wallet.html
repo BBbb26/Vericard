@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Vericard · 我的卡包</title>
+  <link rel="stylesheet" href="design-system.css"><link rel="stylesheet" href="app-pages.css"><link rel="stylesheet" href="wallet-dashboard.css">
+</head>
+<body>
+<aside class="app-shell-sidebar" data-app-shell data-page="wallet" aria-label="Vericard 导航"></aside>
+<div class="shell-content">
+  <header class="shell-header">
+    <nav class="breadcrumb" aria-label="页面位置"><a href="/home.html">工作台</a><span data-icon="chevron"></span><a href="wallet.html">我的卡包</a><span id="walletDetailCrumb" hidden aria-current="page">履约详情</span></nav>
+    <div class="shell-header-actions"><span class="shell-local">本机运行</span></div>
+  </header>
+  <main class="product-page wallet-v2">
+    <header class="product-heading">
+      <div class="wallet-v2-title"><div>
+        <p class="eyebrow">办卡后 · 权益管理</p>
+        <h1 id="walletTitle">我的卡包</h1>
+        <p id="walletIntro" class="muted">管理你的消费套餐与剩余权益。</p>
+      </div><button id="walletAdd" type="button" data-icon="plus" hidden>添加卡片</button></div>
+      <p id="walletStatus" class="state-line" data-state="loading" role="status" aria-live="polite">正在读取本地卡包…</p>
+    </header>
+    <section id="walletList" class="product-stack" hidden>
+      <div id="walletStats" class="product-grid" aria-label="卡包概览"></div>
+      <section id="emptyWallet" class="panel wallet-empty-v2" hidden>
+        <span class="wallet-empty-icon" data-icon="wallet"></span><h2>你还没有添加任何卡片</h2>
+        <p class="muted">可以登记已有卡片，或从比较结果加入实际购买的方案。</p>
+        <button id="walletEmptyAdd" type="button">添加第一张卡</button>
+      </section>
+      <div id="walletDashboard" class="product-stack" hidden>
+        <div class="wallet-dashboard-grid" id="walletMainPanels">
+          <section class="panel wallet-deck-panel" aria-labelledby="walletDeckHeading">
+            <div class="section-heading"><h2 id="walletDeckHeading">我的持卡</h2><button id="walletViewMode" class="ghost" type="button" aria-pressed="false">列表模式</button></div>
+            <div id="walletStackView" class="wallet-stack-view">
+              <button id="walletPrev" class="secondary wallet-stack-arrow" type="button" aria-label="上一张卡">‹</button>
+              <div id="walletDeck" class="wallet-deck" aria-label="卡片堆叠"></div>
+              <button id="walletNext" class="secondary wallet-stack-arrow" type="button" aria-label="下一张卡">›</button>
+            </div>
+            <div id="walletPositions" class="wallet-positions"></div>
+            <div id="walletListPicker" class="wallet-picker" hidden></div>
+          </section>
+          <section class="panel wallet-selected" aria-label="当前卡片权益"><div id="walletSelected"></div></section>
+        </div>
+        <nav id="walletFilters" class="wallet-filters" aria-label="卡片筛选"></nav>
+        <p id="walletFilteredEmpty" class="panel wallet-empty-v2" hidden>这个筛选下暂时没有卡片。</p>
+        <div class="wallet-dashboard-grid wallet-dashboard-bottom" id="walletBottomPanels">
+          <section class="panel wallet-recent" aria-labelledby="walletRecentTitle">
+            <div class="section-heading"><h2 id="walletRecentTitle">最近消费记录</h2>
+              <select id="walletRecordScope" aria-label="流水范围"><option value="card">当前卡片</option><option value="all">全部卡片</option></select></div>
+            <div id="walletRecent"></div>
+          </section>
+          <section class="panel wallet-usage-chart" aria-labelledby="walletUsageTitle">
+            <div class="section-heading"><h2 id="walletUsageTitle">使用概览</h2><span id="walletUsageType" class="badge"></span></div>
+            <div id="walletUsageChart"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <div id="walletDetail" class="product-stack wallet-detail" hidden>
+<section class="panel wallet-brief"><div class="section-heading"><h2>权益摘要</h2><a class="home-link" href="wallet.html">返回卡包</a></div>
+          <div id="walletHighlights"></div>
+          <div class="actions"><button id="openUsage" type="button" aria-haspopup="dialog">记录消费</button><button class="secondary" id="goReconcile" type="button">核对商家余额</button></div>
+        </section>
+<nav class="wallet-detail-tabs" role="tablist" aria-label="卡片详情">
+  <button id="detail-tab-ledger" type="button" class="secondary" role="tab" aria-selected="true" aria-controls="detail-pane-ledger" tabindex="0">消费流水</button>
+  <button id="detail-tab-rules" type="button" class="secondary" role="tab" aria-selected="false" aria-controls="detail-pane-rules" tabindex="-1">套餐规则</button>
+  <button id="detail-tab-usage" type="button" class="secondary" role="tab" aria-selected="false" aria-controls="detail-pane-usage" tabindex="-1">使用分析</button>
+  <button id="detail-tab-fulfillment" type="button" class="secondary" role="tab" aria-selected="false" aria-controls="detail-pane-fulfillment" tabindex="-1">履约核对</button>
+</nav>
+<div id="detail-pane-ledger" class="product-stack" role="tabpanel" tabindex="0" aria-labelledby="detail-tab-ledger">
+<section class="panel wallet-timeline"><div class="section-heading"><h2>消费流水</h2></div><div id="ledger"></div></section>
+</div>
+<div id="detail-pane-rules" class="product-stack" role="tabpanel" tabindex="0" aria-labelledby="detail-tab-rules" hidden>
+<section class="panel wallet-overview">
+          <div class="section-heading"><h2>套餐规则与开卡记录</h2><a href="wallet.html">返回卡包</a></div>
+          <div id="cardOverview"></div>
+          <details><summary>办卡规则与购前证据快照</summary><div id="cardSource"></div></details>
+        </section>
+</div>
+<div id="detail-pane-usage" class="product-stack" role="tabpanel" tabindex="0" aria-labelledby="detail-tab-usage" hidden>
+<section class="panel"><div class="section-heading"><h2>使用分析</h2><span id="detailUsageType" class="badge"></span></div><div id="detailUsageChart"></div></section>
+</div>
+<div id="detail-pane-fulfillment" class="product-stack" role="tabpanel" tabindex="0" aria-labelledby="detail-tab-fulfillment" hidden>
+<section id="fulfillmentPanel" class="panel">
+      <div class="section-heading"><h2>履约核验与证据</h2><button id="exportEvidence" type="button" class="secondary">导出消费证据</button></div>
+      <div id="fulfillmentChecks"></div>
+      <label>商家话术
+        <select id="merchantPurpose"><option value="debit">扣费与余额核实</option><option value="extension">延期询问</option><option value="refund">退款条件核实</option></select>
+        <textarea id="merchantCopyText" rows="4" readonly></textarea>
+      </label>
+      <button id="copyMerchant" type="button" class="secondary">复制话术</button>
+      <p id="evidenceStatus" role="status" aria-live="polite"></p>
+      <details>
+        <summary>中国大陆预付式消费公开依据</summary>
+        <p>最高人民法院司法解释第一条适用于生活消费中预付后多次或持续兑付的纠纷。第二十六条排除多用途预付卡。</p>
+        <p>第二十五条涉及诉讼中经营者控制证据且无正当理由拒交的情况，争议事实由法院结合个案认定。可先整理合同、支付凭证和扣减明细。</p>
+        <a href="https://www.court.gov.cn/zixun/xiangqing/459321.html" target="_blank" rel="noopener noreferrer">查看最高人民法院发布的司法解释全文</a>
+      </details>
+    </section>
+<section id="advancedPanel" class="panel">
+      <h2>对账与其他流水</h2>
+      <form id="advancedForm">
+        <label>流水类型<select id="advancedType"></select></label>
+        <p id="advancedHint" class="muted"></p>
+        <div id="advancedFields" class="input-grid"></div>
+        <label>备注或凭证来源<textarea id="advancedNote" rows="2" maxlength="1000"></textarea></label>
+        <label id="advancedConfirmLabel" class="confirm-check" hidden><input id="advancedConfirm" type="checkbox"><span id="advancedConfirmText"></span></label>
+        <div class="actions">
+          <button id="advancedSubmit" type="submit">保存流水</button>
+          <button id="advancedRetry" type="button" class="secondary" hidden>重试上次提交</button>
+        </div>
+      </form>
+      <p id="advancedStatus" class="state-line" role="status" aria-live="polite"></p>
+    </section>
+</div>
+<dialog id="usagePanel" class="shell-dialog wallet-usage-dialog" aria-labelledby="usageHeading">
+      <div class="section-heading"><h2 id="usageHeading">记录本次消费</h2><button id="closeUsage" class="ghost" type="button">关闭</button></div>
+      <form id="usageForm">
+        <div class="input-grid">
+          <label>消费日期<input id="usageDate" type="date" required></label>
+          <label>服务项目<input id="usageService" maxlength="120" required></label>
+          <label>同服务单次参考价（元，可选）<input id="usageReference" type="number" min="0" step=".01"></label>
+          <label>实际卡外支付（元，未知可留空）<input id="usageExtra" type="number" min="0" step=".01"></label>
+          <label>本次扣减
+            <select id="usageMode">
+              <option value="actual">录入实际扣减</option><option value="estimate">按已确认规则估算</option><option value="pending">待核对扣减</option>
+            </select>
+          </label>
+          <label id="debitAmountField">实际扣减总额（元）<input id="debitAmount" type="number" min="0" step=".01" required></label>
+          <label id="debitPrincipalField">其中本金（元，未知可留空）<input id="debitPrincipal" type="number" min="0" step=".01"></label>
+          <label id="debitVisitsField">实际扣减次数<input id="debitVisits" type="number" min="0" step="1" required></label>
+          <label id="debitMinutesField" hidden>商家实扣时长（分钟）<input id="debitMinutes" type="number" min="0" step="1"></label>
+          <label id="usageCoveredField">本次是否使用卡内权益
+            <select id="usageCovered"><option value="">请选择或待核对</option><option value="yes">是</option><option value="no">否</option></select>
+          </label>
+        </div>
+        <p id="usageHint" class="muted"></p>
+        <label>备注（可选）<textarea id="usageNote" rows="2" maxlength="1000"></textarea></label>
+        <div class="actions">
+          <button id="usageSubmit" type="submit">保存消费记录</button>
+          <button id="usageCancel" type="button" class="secondary" hidden>取消核对</button>
+          <button id="usageRetry" type="button" class="secondary" hidden>重试上次提交</button>
+        </div>
+      </form>
+      <p id="usageStatus" class="state-line" role="status" aria-live="polite"></p>
+    </dialog>
+    </div>
+  </main>
+</div>
+<dialog id="walletAddDialog" class="shell-dialog wallet-enroll" aria-labelledby="walletAddTitle">
+  <form method="dialog" class="section-heading"><h2 id="walletAddTitle">添加卡片</h2><button type="submit" class="ghost">关闭</button></form>
+  <p class="muted">只登记已实际购买的消费权益。</p>
+  <div class="wallet-add-options">
+    <button type="button" id="walletManualAdd">手动添加已有卡片</button>
+    <a class="button secondary" id="walletFromComparison" href="comparison.html#resultSection">从已完成比较添加</a>
+    <p id="walletAddHint" class="muted"></p>
+  </div>
+</dialog>
+
+<script src="app-shell.js" defer></script><script src="wallet-client.js" defer></script>
+<script src="offer-terms.js" defer></script><script src="extract.js" defer></script><script src="comparison.js" defer></script><script src="wallet-enroll-ui.js" defer></script><script src="wallet-charts.js" defer></script><script src="wallet-dashboard.js" defer></script><script src="wallet-p1-ui.js" defer></script><script src="wallet-ui.js" defer></script>
+</body>
+</html>
