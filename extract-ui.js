@@ -1,3 +1,5 @@
+if (typeof crypto !== 'undefined' && !crypto.randomUUID) { crypto.randomUUID = function(){return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c==='x'?r:(r&3|8);return v.toString(16)})}; }
+
 'use strict';
 const E=KDZExtract,T=KDZTerms,$=id=>document.getElementById(id);let images=[],groups=[],active=null,dirty=false,busy=false;
 const params = new URLSearchParams(location.search);
