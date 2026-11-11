@@ -197,7 +197,7 @@ function paymentFor(plan, scenario) {
 
 function calculateScenario(plan, scenario) {
   const rules = resolveRules(plan, scenario.ruleAssumptions);
-  const uses = scenario.uses.toSorted((a, b) => a.date.localeCompare(b.date));
+  const uses = scenario.uses.slice().sort((a, b) => a.date.localeCompare(b.date));
   const window = dateWindow(rules.validity, scenario.activationDate);
   const payment = paymentFor(plan, scenario);
   const refund = scenario.refund;
